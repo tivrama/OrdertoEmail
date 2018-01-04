@@ -1,6 +1,6 @@
 var request = require('request');
 var keys = require('./config.js');
-var emailTypes = require('./emailCodes.js');
+var emailNames = require('./emailNames.js');
 
 
 
@@ -33,7 +33,7 @@ var emailTypes = require('./emailCodes.js');
                 } else {
                     // add Alert types to the body
                     body = JSON.parse(body);
-                    body.emailTypes = emailTypes[req.body.retailer];
+                    body.emailTypes = emailNames[req.body.retailer];
                     res.json(body);
                 }
             });
@@ -46,6 +46,19 @@ var emailTypes = require('./emailCodes.js');
         app.post('/api/sendemail', function(req, res) {
 
             // Recieve template name, moniker, and json
+
+
+            // Call function to take template name, moniker and json, and format into post body for template processor
+
+
+            // Post to template processor
+
+
+            // Call function to take template processor response, email/names and format into Sparkpost Post
+
+            // Post to Sparkpost
+
+            // Send success to client
 
         });
 
