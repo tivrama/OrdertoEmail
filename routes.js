@@ -1,7 +1,6 @@
  // app/routes.js
 var request = require('request');
-var key = 'process.env.WORDNIK_API_KEY';
-// var express = require('express');
+
 
     module.exports = function(app) {
 
@@ -9,17 +8,19 @@ var key = 'process.env.WORDNIK_API_KEY';
             console.log('INSIDE GET!!!');
             var test = "Hello!!!";
                 res.send(test);
-            
+                // res.json(res);
         });
 
-        app.post('/api/checkWords', function(req, res) {
-            console.log('Inside checkWords Post: ', req.body);
+
+        // Call to get order info and return alerts type codes and names
+        app.post('/api/getorder', function(req, res) {
+            console.log('INSIDE POST');
             //get query from req
             var query = req.body.word;
             // make the request of reddit
-            request("http://api.wordnik.com:80/v4/word.json/" + query + "/examples?includeDuplicates=false&useCanonical=false&skip=0&limit=1&api_key=" + key, function(error, response, body) {
+            request("http://tracking.narvar.com/trackinginfo/bathandbodyworks/narvar-speedee?tracking_numbers=1Z8R904Y1305724427", function(error, response, body) {
                 if (error) {
-                  console.log('Something went wrong with wordnik', error);
+                  console.log('Call to the Order API failed', error);
                   res.send(error);
                 } else {
                   //send off the results
@@ -36,3 +37,10 @@ var key = 'process.env.WORDNIK_API_KEY';
         });
 
     };
+
+/*
+
+{
+    "hello":"World"
+}
+*/
