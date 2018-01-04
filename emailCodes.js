@@ -1,5 +1,5 @@
 module.exports = {
 	academy: [],
-  brownells: ['delivery', 'delayed'],
-  purchasingpower: []
+ 	brownells: ['delivery', 'delayed'],
+ 	purchasingpower: []
 };
