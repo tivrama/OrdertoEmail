@@ -1,6 +1,7 @@
  // app/routes.js
 var request = require('request');
-
+var keys = require('./config.js');
+var emailTypes = require('./emailCodes.js');
 
     module.exports = function(app) {
 
@@ -14,17 +15,27 @@ var request = require('request');
 
         // Call to get order info and return alerts type codes and names
         app.post('/api/getorder', function(req, res) {
-            console.log('INSIDE POST');
-            //get query from req
-            var query = req.body.word;
-            // make the request of reddit
-            request("http://tracking.narvar.com/trackinginfo/bathandbodyworks/narvar-speedee?tracking_numbers=1Z8R904Y1305724427", function(error, response, body) {
+
+            console.log('INSIDE POST: ', req.body);
+
+            // base 46 encode logon and password
+            var auth = new Buffer(req.body.logon + ":" + req.body.password).toString('base64');
+            var url = "https://ws.narvar.com/api/vi/orders/" + req.body.order
+
+            request.get({
+                headers: { Authorization: auth },
+                url: url
+            }, function(error, response, body) {
                 if (error) {
-                  console.log('Call to the Order API failed', error);
-                  res.send(error);
+                    console.log('Call to the Order API failed', error);
+                    res.send(error);
                 } else {
-                  //send off the results
-                  res.send(body);
+                    // add Alert types to the body
+                    console.log('retailer: ', emailTypes[req.body.retailer]);
+
+                    body.emails = emailTypes[req.body.retailer];
+                    console.log('BODY!!!!: ', body.data.emails);
+                    res.send(body);
                 }
             });
         });
@@ -38,9 +49,14 @@ var request = require('request');
 
     };
 
-/*
 
-{
-    "hello":"World"
-}
+
+/*
+request.post({
+  headers: {'content-type' : 'application/x-www-form-urlencoded'},
+  url:     'http://localhost/test2.php',
+  body:    "mes=heydude"
+}, function(error, response, body){
+  console.log(body);
+});
 */

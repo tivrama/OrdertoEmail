@@ -1,3 +1,10 @@
+var obj = {
+    logon: "1234",
+    password: "5678",
+    retailer: "brownells",
+    order: "order 123"
+}
+
 
 
 
@@ -10,11 +17,13 @@ $(document).ready(function(){
 });
 
 
+
 $(document).ready(function(){
-	
     $("button.secondCall").click(function(){
-        $.post('/api/getorder', function(data, status){
-            alert(data);
+        console.log('TEST');
+        $.post('/api/getorder', obj,
+        function(data, status){
+            alert("Data: " + data + "\nStatus: " + status);
         });
     });
 });
