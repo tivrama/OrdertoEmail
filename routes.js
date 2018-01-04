@@ -2,13 +2,18 @@ var request = require('request');
 var keys = require('./config.js');
 var emailTypes = require('./emailCodes.js');
 
+
+
     module.exports = function(app) {
+
+
 
         app.get('/api/test', function(req, res) {
             console.log('INSIDE GET!!!');
             var test = "Hello from inside /api/test - GET";
                 res.send(test);
         });
+
 
 
         // Call to get order info and return alerts type codes and names
@@ -32,6 +37,16 @@ var emailTypes = require('./emailCodes.js');
                     res.json(body);
                 }
             });
+        });
+
+
+
+
+        // Call to get order info and return alerts type codes and names
+        app.post('/api/sendemail', function(req, res) {
+
+            // Recieve template name, moniker, and json
+
         });
 
 
