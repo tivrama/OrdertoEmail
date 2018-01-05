@@ -1,127 +1,94 @@
 module.exports = {
+
+    ItemSchema: function (itemDetails) { // Used on order_items and 
+        this.name = "",
+        this.quantity = 0,
+        this.description_url = "",
+        this.product_sku = "",
+        this. attributes = {
+            color: "",
+            size: "",
+            style: "",
+            weight: "",
+            weight_unit: "",
+            price: "",
+            currency: "",
+            image_url: ""
+        }
+    },
+
+
+    ShipmentSchema: function (packageDetails) {
+        this.tracking_number = "",
+        this.carrier_moniker = "",
+        this.carrier_name = "",
+        this.carrier_status = "",
+        this.carrier_phone_number = "",
+        this.guaranteed_delivery_date = "",
+        this.tracking_url = "",
+        this.address = {
+            line1: "",
+            line2: "",
+            line3: "",
+            city: "",
+            state: "",
+            zip: "",
+            country: ""
+        },
+        this.shipment_date = "",
+        this.order_items = [] // itemSchema goes here
+    },
   
 
-	makeTempProcessorPayload: function (json, retailer){
+    MakeTempProcessorPayload: function (json, retailer) {
 
-var tempProcessorPayload = {
-	order_info: {
-			order_number: json.order_info.order_number,
-			order_date: json.order_info.order_date,
-			first_name: json.order_info.customer.first_name,
-			last_name: json.order_info.customer.last_name,
-			address: {
-				line1: json.order_info.customer.address.street_1,
-				line2: "",
-				line3: "",
-				city: "",
-				state: "",
-				zip: "",
-				country: ""
-			},
-		status: "",
-		current_shipment: {
-			tracking_number: "",
-			carrier_moniker: "",
-			carrier_name: "",
-			carrier_status: "",
-			guaranteed_delivery_date: "",
-			tracking_url: "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + json.order_info.shipments.tracking_number,
-			address: {
-				line1: "",
-				line2: "",
-				line3: "",
-				city: "",
-				state: "",
-				zip: "",
-				country: ""
-			},
-			shipment_date: "",
-			order_items: [
-				{
-					name: "",
-					quantity: 0,
-					description_url: "",
-					product_sku: "",
-					attributes: {
-						color: "",
-						size: "",
-						style: "",
-						weight: "",
-						weight_unit: "",
-						price: "",
-						currency: "",
-						image_url: ""
-					}
-				},
-				{
-					name: "",
-					quantity: 0,
-					description_url: "",
-					product_sku: "",
-					attributes: {
-						color: Black,
-						size: S,
-						style: "",
-						weight: "",
-						weight_unit: "",
-						price: "",
-						currency: "",
-						image_url: ""
-					}
-				}
-			]
-		},
 
-		multi_shipment: [
-			{
-				tracking_number: "",
-				carrier_moniker: "",
-				carrier_name: "",
-				carrier_status: "",
-				carrier_phone_number: "",
-				guaranteed_delivery_date: "",
-				tracking_url: "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=",
-				address: {
-					line1: "",
-					line2: "",
-					line3: "",
-					city: "",
-					state: "",
-					zip: "",
-					country: ""
-				}
-			}
+        var tempProcessorPayload = {
+        	order_info: {
+        			order_number: json.order_info.order_number,
+        			order_date: json.order_info.order_date,
+        			first_name: json.order_info.customer.first_name,
+        			last_name: json.order_info.customer.last_name,
+        			address: {
+        				line1: json.order_info.customer.address.street_1,
+        				line2: json.order_info.customer.address.street_2 ? json.order_info.customer.address.street_2 : "",
+        				line3: json.order_info.customer.address.street_3 ? json.order_info.customer.address.street_3 : "",
+        				city: json.order_info.customer.address.city,
+        				state: json.order_info.customer.address.state,
+        				zip: json.order_info.customer.address.zip,
+        				country: json.order_info.customer.address.country
+        			},
+        		status: "",
+        		current_shipment: {
+        			tracking_number: json.order_info.shipments.tracking_number,
+        			carrier_moniker: json.order_info.shipments.tracking_number,
+        			carrier_name: json.order_info.shipments.carrier,
+        			carrier_status: "",
+        			guaranteed_delivery_date: "",
+        			tracking_url: "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + json.order_info.shipments.tracking_number,
+        			address: {
+                        line1: json.order_info.shipments.shipped_to.address.street_1,
+                        line2: json.order_info.shipments.shipped_to.address.street_2 ? json.order_info.shipments.shipped_to.address.street_2 : "",
+                        line3: json.order_info.shipments.shipped_to.address.street_3 ? json.order_info.shipments.shipped_to.address.street_3 : "",
+                        city: json.order_info.shipments.shipped_to.address.city,
+                        state: json.order_info.shipments.shipped_to.address.state,
+                        zip: json.order_info.shipments.shipped_to.address.zip,
+                        country: json.order_info.shipments.shipped_to.address.country
+        			},
+        			shipment_date: json.order_info.shipments.ship_date,
+        			order_items: [] // itemSchema goes here
+        		},
 
-		],
+                multi_shipment: [], // shipmentSchema goes here
 
-		items_being_processed: [
-			{
-			name: "",
-			quantity: 0,
-			description_url: "",
-			product_sku: "",
-			attributes: {
-				color: "",
-				size: "",
-				style: "",
-				weight: "",
-				weight_unit: "",
-				price: "",
-				currency: "",
-				image_url: ""
-				}
-			}
-		]
-	}
+        		items_being_processed: [] // itemSchema goes here
+        	}
+    
+	    }; 
+
+    }
+
 }
-
-
-
-
-	}
-
-
-};
 
 /*
 {

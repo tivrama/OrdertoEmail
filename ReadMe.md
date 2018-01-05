@@ -1,7 +1,7 @@
 # Instructions:
 
 - clone repo and run npm i
-- make a file called server/config.js and add creds for sparkpost
+- make a file called server/config/config.js and add creds for sparkpost
 - nodemon
 - open on localhost:3000
 
