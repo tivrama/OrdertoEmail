@@ -1,11 +1,4 @@
-var obj = {
-    logon: "22615df5d6d440f28dcb80122a789a2e",
-    password: "3e68906aea364164a6dc230a87a84bf6",
-    retailer: "brownells",
-    order: "1507672400"
-}
 
-obj = JSON.stringify(obj);
 
 $(document).ready(function(){
     $("button.formSubmit").click(function(){
