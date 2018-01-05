@@ -1,6 +1,8 @@
+var path = require('path');
 var request = require('request');
-var keys = require('./config.js');
-var emailNames = require('./emailNames.js');
+var keys = require('./config/config.js');
+var emailNames = require('./config/emailNames.js');
+var helper = require('./js/helpfunctions.js');
 
 
 
@@ -45,11 +47,10 @@ var emailNames = require('./emailNames.js');
         // Call to get order info and return alerts type codes and names
         app.post('/api/sendemail', function(req, res) {
 
-            // Recieve template name, moniker, and json
+            var url = "https://template-processor-qa01.narvar.qa/templateprocessor/"+ req.body.retailer + "/templates/" + req.body.alertEmailType + "/generate";
 
-
-            // Call function to take template name, moniker and json, and format into post body for template processor
-
+            // Call function to json, and format into post body for template processor
+            var payload = helper.makeTempProcessorPayload(req.body.OrderAPIJSON, req.retailer)
 
             // Post to template processor
 
@@ -66,7 +67,7 @@ var emailNames = require('./emailNames.js');
         // frontend routes =========================================================
         // route to handle all requests
         app.get('*', function(req, res) {
-            res.sendfile('index.html'); // load index.html file
+            res.sendFile(path.join(__dirname, '../client', 'index.html'));
         });
 
     };

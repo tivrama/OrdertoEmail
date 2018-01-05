@@ -1,7 +1,7 @@
 # Instructions:
 
 - clone repo and run npm i
-- make a file called config.js and add creds for sparkpost
+- make a file called server/config.js and add creds for sparkpost
 - nodemon
 - open on localhost:3000
 
@@ -18,8 +18,9 @@ No need to always use the front end.  All calls can be make with curl or Postman
 - Second Call: http://localhost:3000/api/sendemail
 ```
 {
-	"alertEmailType": "<alert_Email_Type>",
-	"OrderAPIJSON": "Response_From_OrderAPI>",
+	"retailer": ""<Retailer_Mooniker>",
+	"alertEmailType": "<alert_Email_Type>", // numeric code of the email type
+	"OrderAPIJSON": "<Response_From_OrderAPI>",
 	"emailNames": {
 		"<name_of_recipient>": "<email_of_recipient>",
 		"<name_of_recipient>": "<email_of_recipient>"
@@ -61,3 +62,6 @@ Alternative Possible Flow 2:
 6) Server makes call 2 to Template Processer with data from Order API, and code for emay type.
 7) Server makes call 3 to Sparkpost to send the email.
 8) Call status to Sparkpost is sent to client and displayed to user.
+
+Future Features:
+Add Carrier and Tracking Number(s)

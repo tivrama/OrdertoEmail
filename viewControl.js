@@ -1,7 +1,8 @@
-
+console.log("HIIII!!!")
 
 $(document).ready(function(){
     $("button.formSubmit").click(function(){
+        console.log("Test in viewControl");
         $.get('/api/test', function(data, status){
             alert(data);
         });

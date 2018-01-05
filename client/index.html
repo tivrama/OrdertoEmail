@@ -5,7 +5,8 @@
         <title>Orders Into Emails</title>
         <meta name="description" content="Turn an order into an email">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="./viewControl.js"></script>
+    <script type="text/javascript" src="viewControl.js"></script>
+    <script type="text/javascript" src="state.js"></script>
     </head>
     <body>
         <h1>Order Into Emails!</h1>
@@ -14,6 +15,15 @@
         <button class="formSubmit">Form Submit</button>
         <button class="secondCall">Second Call</button>
 
+
+<!-- <script>$(document).ready(function(){
+    $("button.formSubmit").click(function(){
+        console.log("Test in viewControl");
+        $.get('/api/test', function(data, status){
+            alert(data);
+        });
+    });
+});</script> -->
 
     </body>
 </html>
