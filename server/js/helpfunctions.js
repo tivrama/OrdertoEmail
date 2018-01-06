@@ -38,30 +38,48 @@ module.exports = {
         this.shipment_date = "",
         this.order_items = [] // itemSchema goes here
     },
+
+    loopThroughOrderItems: function(itemsArray) {
+        var arrayOfFormattedItems = [];
+        for (var i = 0; i < itemsArray.length; i++) {
+            arrayOfFormattedItems.push(new ItemSchema(itemsArray[i]));
+        }
+        return arrayOfFormattedItems;
+    },
   
+    loopThroughShipments: function(itemsArray) {
+
+
+        var arrayOfFormattedShipments = [];
+        for (var i = 1; i < itemsArray.length; i++) { // index will start wt 1 as 0 will be already in the current shipment
+            arrayOfFormattedShipments.push(new ShipmentSchema(itemsArray[i]));
+        }
+        return arrayOfFormattedShipments;
+    },
+
 
     MakeTempProcessorPayload: function (json, retailer) {
 
 
         var tempProcessorPayload = {
         	order_info: {
-        			order_number: json.order_info.order_number,
-        			order_date: json.order_info.order_date,
-        			first_name: json.order_info.customer.first_name,
-        			last_name: json.order_info.customer.last_name,
-        			address: {
-        				line1: json.order_info.customer.address.street_1,
-        				line2: json.order_info.customer.address.street_2 ? json.order_info.customer.address.street_2 : "",
-        				line3: json.order_info.customer.address.street_3 ? json.order_info.customer.address.street_3 : "",
-        				city: json.order_info.customer.address.city,
-        				state: json.order_info.customer.address.state,
-        				zip: json.order_info.customer.address.zip,
-        				country: json.order_info.customer.address.country
-        			},
+    			order_number: json.order_info.order_number,
+    			order_date: json.order_info.order_date,
+    			first_name: json.order_info.customer.first_name,
+    			last_name: json.order_info.customer.last_name,
+    			address: {
+    				line1: json.order_info.customer.address.street_1,
+    				line2: json.order_info.customer.address.street_2 ? json.order_info.customer.address.street_2 : "",
+    				line3: json.order_info.customer.address.street_3 ? json.order_info.customer.address.street_3 : "",
+    				city: json.order_info.customer.address.city,
+    				state: json.order_info.customer.address.state,
+    				zip: json.order_info.customer.address.zip,
+    				country: json.order_info.customer.address.country
+    			},
         		status: "",
         		current_shipment: {
         			tracking_number: json.order_info.shipments.tracking_number,
-        			carrier_moniker: json.order_info.shipments.tracking_number,
+        			carrier_moniker: json.order_info.shipments.carrier,
         			carrier_name: json.order_info.shipments.carrier,
         			carrier_status: "",
         			guaranteed_delivery_date: "",
@@ -74,7 +92,7 @@ module.exports = {
                         state: json.order_info.shipments.shipped_to.address.state,
                         zip: json.order_info.shipments.shipped_to.address.zip,
                         country: json.order_info.shipments.shipped_to.address.country
-        			},
+                    },
         			shipment_date: json.order_info.shipments.ship_date,
         			order_items: [] // itemSchema goes here
         		},
@@ -83,8 +101,14 @@ module.exports = {
 
         		items_being_processed: [] // itemSchema goes here
         	}
-    
 	    }; 
+
+        // call function to add loop through shipment array (starting at 1)
+        if (json.order_info.shipments.length > 1) {
+            tempProcessorPayload.order_info.multi_shipment = loopThroughShipments(json.order_info.shipments);
+        }
+
+
 
     }
 

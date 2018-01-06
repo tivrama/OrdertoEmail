@@ -1,0 +1,252 @@
+{
+  "order": {
+    "order_info": [
+      {
+        "order_number": "1419552801",
+        "status": "SHIPPING",
+        "order_date": "2017-07-03T09:00:00Z",
+        "customer": {
+          "first_name": "ROGER",
+          "last_name": "HUNT",
+          "email": "rgrhnt@gmail.com",
+          "phone": null,
+          "address": {
+            "street_1": "6120 AIRPORT RD",
+            "street_2": "",
+            "city": "NAMPA",
+            "state": "ID",
+            "zip": "83687",
+            "country_code": "US"
+          },
+          "customer_type": "non Edge"
+        },
+        "order_items": [
+          {
+            "sku": "533-400-510",
+            "name": "R2170 REM 511/513/521 10-SHOT MAGAZINE",
+            "description": "R2170 REM 511/513/521 10-SHOT MAGAZINE",
+            "quantity": 1.0,
+            "unit_price": "19.9900",
+            "is_backordered_flag": false,
+            "item_image": "http://www.brownells.com/userdocs/products/p_533400510_1.jpg",
+            "item_url": "http://www.brownells.com/.aspx/sid=0/sku=533-400-510/sku/",
+            "fulfillment_status": "SHIPPING",
+            "category": [
+              "Magazines"
+            ],
+            "is_final_sale": false,
+            "attributes": {
+              "product_total": 19.9900,
+              "insurance": 0.0000,
+              "ca_document_fee": 0.0000,
+              "export_fee": 0.0000,
+              "sed_fee": 0.0000,
+              "cod_fee": 0.0000,
+              "gun_processing_fee": 0.0000,
+              "export_document_fee": 0.0000,
+              "shipping_restriction_charges": 0.0000,
+              "nra_round_up": 0.0000,
+              "misc_charges": 0.0000
+            }
+          },
+          {
+            "sku": "486-200-213",
+            "name": "213 COLT WOODSMAN 10RD MAGAZINE",
+            "description": "213 COLT WOODSMAN 10RD MAGAZINE",
+            "quantity": 1.0,
+            "unit_price": "0.0000",
+            "is_backordered_flag": true,
+            "item_image": "http://www.brownells.com/userdocs/products/p_486200213_2.jpg",
+            "item_url": "http://www.brownells.com/.aspx/sid=0/sku=486-200-213/sku/",
+            "fulfillment_status": "SHIPPING",
+            "category": [
+              "Magazines"
+            ],
+            "is_final_sale": false,
+            "attributes": {
+              "product_total": 19.9900,
+              "insurance": 0.0000,
+              "ca_document_fee": 0.0000,
+              "export_fee": 0.0000,
+              "sed_fee": 0.0000,
+              "cod_fee": 0.0000,
+              "gun_processing_fee": 0.0000,
+              "export_document_fee": 0.0000,
+              "shipping_restriction_charges": 0.0000,
+              "nra_round_up": 0.0000,
+              "misc_charges": 0.0000
+            }
+          }
+        ],
+        "shipments": [
+          {
+            "carrier": "UPS",
+            "carrier_service": "MI",
+            "items_info": [
+              {
+                "sku": "533-400-510",
+                "quantity": 1.0
+              }
+            ],
+            "shipped_to": {
+              "first_name": "ROGER",
+              "last_name": "HUNT",
+              "email": "rgrhnt@gmail.com",
+              "phone": null,
+              "address": {
+                "street_1": "6120 AIRPORT RD",
+                "street_2": "",
+                "city": "NAMPA",
+                "state": "ID",
+                "zip": "83687",
+                "country_code": "US"
+              },
+              "customer_type": "non Edge"
+            },
+            "ship_date": "2017-08-30T05:00:00Z",
+            "tracking_number": "92748999920510573155219493",
+            "attributes": {
+              "signature_required": "N"
+            }
+          }
+        ],
+        "selected_ship_method": "4-7 BD - STANDARD",
+        "billing": {
+          "amount": 23.9900,
+          "shipping_handling": 4.0000,
+          "tax_amount": 0.0000,
+          "billed_to": {
+            "first_name": "ROGER",
+            "last_name": "HUNT",
+            "email": "rgrhnt@gmail.com",
+            "phone": "208-994-1384",
+            "address": {
+              "street_1": "6120 AIRPORT RD",
+              "street_2": "",
+              "city": "NAMPA",
+              "state": "ID",
+              "zip": "83687",
+              "country_code": "US"
+            },
+            "customer_type": null
+          },
+          "payments": [
+            {
+              "method": "CREDIT CARD",
+              "is_gift_card": false
+            }
+          ]
+        }
+      },
+      {
+        "order_number": "1419552802",
+        "status": "SHIPPING",
+        "order_date": "2017-07-03T09:00:00Z",
+        "customer": {
+          "first_name": "ROGER",
+          "last_name": "HUNT",
+          "email": "rgrhnt@gmail.com",
+          "phone": null,
+          "address": {
+            "street_1": "6120 AIRPORT RD",
+            "street_2": "",
+            "city": "NAMPA",
+            "state": "ID",
+            "zip": "83687",
+            "country_code": "US"
+          },
+          "customer_type": "non Edge"
+        },
+        "order_items": [
+          {
+            "sku": "486-200-213",
+            "name": "213 COLT WOODSMAN 10RD MAGAZINE",
+            "description": "213 COLT WOODSMAN 10RD MAGAZINE",
+            "quantity": 1.0,
+            "unit_price": "29.9900",
+            "is_backordered_flag": false,
+            "item_image": "http://www.brownells.com/userdocs/products/p_486200213_2.jpg",
+            "item_url": "http://www.brownells.com/.aspx/sid=0/sku=486-200-213/sku/",
+            "fulfillment_status": "SHIPPING",
+            "category": [
+              "Magazines"
+            ],
+            "is_final_sale": false,
+            "attributes": {
+              "product_total": 29.9900,
+              "insurance": 0.0000,
+              "ca_document_fee": 0.0000,
+              "export_fee": 0.0000,
+              "sed_fee": 0.0000,
+              "cod_fee": 0.0000,
+              "gun_processing_fee": 0.0000,
+              "export_document_fee": 0.0000,
+              "shipping_restriction_charges": 0.0000,
+              "nra_round_up": 0.0000,
+              "misc_charges": 0.0000
+            }
+          }
+        ],
+        "shipments": [
+          {
+            "carrier": "UPS",
+            "carrier_service": "MI",
+            "items_info": [
+              {
+                "sku": "486-200-213",
+                "quantity": 1.0
+              }
+            ],
+            "shipped_to": {
+              "first_name": "ROGER",
+              "last_name": "HUNT",
+              "email": "rgrhnt@gmail.com",
+              "phone": null,
+              "address": {
+                "street_1": "6120 AIRPORT RD",
+                "street_2": "",
+                "city": "NAMPA",
+                "state": "ID",
+                "zip": "83687",
+                "country_code": "US"
+              },
+              "customer_type": "non Edge"
+            },
+            "ship_date": "2017-10-11T05:00:00Z",
+            "tracking_number": "92748999920510573155690674",
+            "attributes": {
+              "signature_required": "N"
+            }
+          }
+        ],
+        "selected_ship_method": "4-7 BD - STANDARD",
+        "billing": {
+          "amount": 29.9900,
+          "shipping_handling": 0.0000,
+          "tax_amount": 0.0000,
+          "billed_to": {
+            "first_name": "ROGER",
+            "last_name": "HUNT",
+            "email": "rgrhnt@gmail.com",
+            "phone": "208-994-1384",
+            "address": {
+              "street_1": "6120 AIRPORT RD",
+              "street_2": "",
+              "city": "NAMPA",
+              "state": "ID",
+              "zip": "83687",
+              "country_code": "US"
+            },
+            "customer_type": null
+          },
+          "payments": [
+            {
+              "method": "CREDIT CARD",
+              "is_gift_card": false
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
