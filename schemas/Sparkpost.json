@@ -1,0 +1,25 @@
+{
+  "options": {
+    "open_tracking": true,
+    "click_tracking": true,
+    "transactional": true
+  },
+  "recipients": [                      // Array of emails and names to get the templates 
+    {
+      "address": {
+        "email": "",
+        "name": ""
+      }
+    }
+  ],
+  "content": {
+    "from": {
+      "email": "@narvar.com",          // retailer + "@narvar.com"
+      "name": ""                 // retailer - make capital case
+    },
+    "text": "",                        // Not used - leave blank
+    "html": "",                        // Where the HTML from the TemplateProcessor response goes (this is a loooong string)
+    "subject": "",                     // "Your package is delayed..."
+    "reply_to": "no-reply@narvar.com"   
+  }
+}
