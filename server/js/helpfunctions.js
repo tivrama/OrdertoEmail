@@ -2,9 +2,9 @@ module.exports = {
 
 
 
-    ItemSchema: function (itemDetails) { // Used on order_items and 
+    ItemSchema: function (itemDetails, quantity) { // Used on order_items and 
         this.name = "",
-        this.quantity = 0,
+        this.quantity = quantity,
         this.description_url = "",
         this.product_sku = "",
         this. attributes = {
@@ -14,52 +14,44 @@ module.exports = {
 
 
 
-    ShipmentSchema: function (packageDetails, retailer) {
-        this.tracking_number = "",
-        this.carrier_moniker = "",
-        this.carrier_name = "",
-        this.carrier_status = "",
-        this.carrier_phone_number = "",
-        this.guaranteed_delivery_date = "",
-        this.tracking_url = "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + packageDetails.tracking_number,
-        this.address = {
-            line1: "",
-            line2: "",
-            line3: "",
-            city: "",
-            state: "",
-            zip: "",
-            country: ""
-        },
-        this.shipment_date = "",
-        this.order_items = [] // itemSchema goes here
+    ShipmentSchema: function (shipementDetails, retailer) {
+        
+        var newShipment = {
+            tracking_number: shipementDetails.tracking_number,
+            carrier_moniker: shipementDetails.carrier,
+            carrier_name: shipementDetails.carrier,
+            carrier_status: shipementDetails.carrier_service,
+            carrier_phone_number: "1.800.8000",
+            guaranteed_delivery_date: "",   // TODO:  Find this field
+            tracking_url: "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number,
+            address: {
+                line1: "",
+                line2: "",
+                line3: "",
+                city: "",
+                state: "",
+                zip: "",
+                country: ""
+            },
+            shipment_date: "",
+            order_items: [] // itemSchema goes here
+        }
+
+        return newShipment;
     },
 
 
 
-    // loopThroughOrderItems: function(itemsArray) {
-    //     var arrayOfFormattedItems = [];
-    //     for (var i = 0; i < itemsArray.length; i++) {
-    //         arrayOfFormattedItems.push(new ItemSchema(itemsArray[i]));
-    //     }
-    //     return arrayOfFormattedItems;
-    // },
-  
+    matchShipmentWithItems: function(shipmentsArray, itemsArray, retailer) {
+        
+        var remainingItems = itemsArray;    // make a copy which can be changed
+        var itemOrSku = "";                 // make var with will remember if sku or item_id is the primary key
+        var newShipmentOrCurrent = false;   // flag for determining if we make a new shipment, or add to current
 
-
-    // loopThroughShipments: function(itemsArray) {
-
-    //     var arrayOfFormattedShipments = [];
-    //     for (var i = 1; i < itemsArray.length; i++) { // index will start wt 1 as 0 will be already in the current shipment
-    //         arrayOfFormattedShipments.push(new ShipmentSchema(itemsArray[i]));
-    //     }
-    //     return arrayOfFormattedShipments;
-    // },
-
-
-
-    matchShipmentWithItems: function(shipmentsArray, itemsArray) {
-        var itemOrSku = "";
+        var shipmentsWithRemainingItems = { // object returned: has formatted shipments and any remaining items
+            formattedShipments: [],
+            remainingFormattedItems: []
+        };
 
         // loop through shipments
         for (var i = 0; i < shipmentsArray.length; i++) {
@@ -73,18 +65,21 @@ module.exports = {
                     var itemOrSku = "sku";
                 }
                 // loop through itemsArray and look for matching item or sku
-                for (var k = 0; k < itemsArray.length; k++) {
-                    // if itemOrSKU matchs, 
-                    if (itemsArray[k].itemOrSKU === shipmentsArray[i].items_info[j].itemOrSKU) {
+                for (var k = 0; k < remainingItems.length; k++) {
+                    // if itemOrSku matchs, 
+                    if (remainingItems[k].itemOrSku === shipmentsArray[i].items_info[j].itemOrSku) {
                         // create the shipment object 
+                        var newShipment = new ShipmentSchema(shipmentsArray[i], retailer);
+                        newShipmentOrCurrent = true;
 
+                        
                     }
                 }
             }
 
         }
 
-
+        return shipmentsWithRemainingItems;
 
     },
 
@@ -106,7 +101,7 @@ module.exports = {
     				city: json.order_info.customer.address.city,
     				state: json.order_info.customer.address.state,
     				zip: json.order_info.customer.address.zip,
-    				country: json.order_info.customer.address.country
+    				country: json.order_info.customer.address.country ? json.order_info.customer.address.country : ""
     			},
         		status: "",
         		current_shipment: {}, // this will get the first shipment object with matching items from shipmentSchema
@@ -117,16 +112,18 @@ module.exports = {
         	}
 	    }; 
 
-        // call function to add loop through shipment array (starting at 1)
-        if (json.order_info.shipments.length > 1) {
-            tempProcessorPayload.order_info.multi_shipment = loopThroughShipments(json.order_info.shipments);
-        }
+        // call function to make formated shipments with items, and any remaining formatted items which have not shipped
+        var shipmentsAndItems = loopThroughShipments(json.order_info.shipments, json.order_info.order_items, retailer);
+        
+        tempProcessorPayload.order_info.current_shipment = shipmentsAndItems.formattedShipments.shift();
+        tempProcessorPayload.order_info.multi_shipment = shipmentsAndItems.formattedShipments;
+        tempProcessorPayload.order_info.items_being_processed = shipmentsAndItems.remainingFormattedItems;
 
-
+        return tempProcessorPayload;
 
     }
 
-}
+};
 
 /*
 {

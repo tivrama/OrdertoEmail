@@ -19,6 +19,7 @@
       "carrier_moniker": "FedEx",
       "carrier_name": "FEDEX",
       "carrier_status": "",
+      "carrier_phone_number": "1.800.8000",
       "guaranteed_delivery_date": "2017-05-28T00:00:00Z",
       "tracking_url": "https://tracking.narvar.com/jcpenney/tracking/ups?tracking_numbers=TRFEDEX20170503183610122&bzip=null&order_number=qafedex201705031836101",
       "address": {
