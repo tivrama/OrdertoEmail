@@ -1,31 +1,27 @@
 module.exports = {
 
+
+
     ItemSchema: function (itemDetails) { // Used on order_items and 
         this.name = "",
         this.quantity = 0,
         this.description_url = "",
         this.product_sku = "",
         this. attributes = {
-            color: "",
-            size: "",
-            style: "",
-            weight: "",
-            weight_unit: "",
-            price: "",
-            currency: "",
-            image_url: ""
+            // these are custom and have to be fed individually.
         }
     },
 
 
-    ShipmentSchema: function (packageDetails) {
+
+    ShipmentSchema: function (packageDetails, retailer) {
         this.tracking_number = "",
         this.carrier_moniker = "",
         this.carrier_name = "",
         this.carrier_status = "",
         this.carrier_phone_number = "",
         this.guaranteed_delivery_date = "",
-        this.tracking_url = "",
+        this.tracking_url = "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + packageDetails.tracking_number,
         this.address = {
             line1: "",
             line2: "",
@@ -39,23 +35,59 @@ module.exports = {
         this.order_items = [] // itemSchema goes here
     },
 
-    loopThroughOrderItems: function(itemsArray) {
-        var arrayOfFormattedItems = [];
-        for (var i = 0; i < itemsArray.length; i++) {
-            arrayOfFormattedItems.push(new ItemSchema(itemsArray[i]));
-        }
-        return arrayOfFormattedItems;
-    },
+
+
+    // loopThroughOrderItems: function(itemsArray) {
+    //     var arrayOfFormattedItems = [];
+    //     for (var i = 0; i < itemsArray.length; i++) {
+    //         arrayOfFormattedItems.push(new ItemSchema(itemsArray[i]));
+    //     }
+    //     return arrayOfFormattedItems;
+    // },
   
-    loopThroughShipments: function(itemsArray) {
 
 
-        var arrayOfFormattedShipments = [];
-        for (var i = 1; i < itemsArray.length; i++) { // index will start wt 1 as 0 will be already in the current shipment
-            arrayOfFormattedShipments.push(new ShipmentSchema(itemsArray[i]));
+    // loopThroughShipments: function(itemsArray) {
+
+    //     var arrayOfFormattedShipments = [];
+    //     for (var i = 1; i < itemsArray.length; i++) { // index will start wt 1 as 0 will be already in the current shipment
+    //         arrayOfFormattedShipments.push(new ShipmentSchema(itemsArray[i]));
+    //     }
+    //     return arrayOfFormattedShipments;
+    // },
+
+
+
+    matchShipmentWithItems: function(shipmentsArray, itemsArray) {
+        var itemOrSku = "";
+
+        // loop through shipments
+        for (var i = 0; i < shipmentsArray.length; i++) {
+            // loop through items in current shipment
+            for (var j = 0; j < shipmentsArray[i].items_info.length; i++) {
+                // first check if item_id exists in shipments
+                if (shipmentsArray[i].items_info[j].item_id) {
+                    // set itemOrSku to 'item';
+                    var itemOrSku = "item_id";
+                } else {
+                    var itemOrSku = "sku";
+                }
+                // loop through itemsArray and look for matching item or sku
+                for (var k = 0; k < itemsArray.length; k++) {
+                    // if itemOrSKU matchs, 
+                    if (itemsArray[k].itemOrSKU === shipmentsArray[i].items_info[j].itemOrSKU) {
+                        // create the shipment object 
+
+                    }
+                }
+            }
+
         }
-        return arrayOfFormattedShipments;
+
+
+
     },
+
 
 
     MakeTempProcessorPayload: function (json, retailer) {
@@ -77,25 +109,7 @@ module.exports = {
     				country: json.order_info.customer.address.country
     			},
         		status: "",
-        		current_shipment: {
-        			tracking_number: json.order_info.shipments.tracking_number,
-        			carrier_moniker: json.order_info.shipments.carrier,
-        			carrier_name: json.order_info.shipments.carrier,
-        			carrier_status: "",
-        			guaranteed_delivery_date: "",
-        			tracking_url: "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + json.order_info.shipments.tracking_number,
-        			address: {
-                        line1: json.order_info.shipments.shipped_to.address.street_1,
-                        line2: json.order_info.shipments.shipped_to.address.street_2 ? json.order_info.shipments.shipped_to.address.street_2 : "",
-                        line3: json.order_info.shipments.shipped_to.address.street_3 ? json.order_info.shipments.shipped_to.address.street_3 : "",
-                        city: json.order_info.shipments.shipped_to.address.city,
-                        state: json.order_info.shipments.shipped_to.address.state,
-                        zip: json.order_info.shipments.shipped_to.address.zip,
-                        country: json.order_info.shipments.shipped_to.address.country
-                    },
-        			shipment_date: json.order_info.shipments.ship_date,
-        			order_items: [] // itemSchema goes here
-        		},
+        		current_shipment: {}, // this will get the first shipment object with matching items from shipmentSchema
 
                 multi_shipment: [], // shipmentSchema goes here
 
