@@ -1,6 +1,8 @@
 module.exports = {
 
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////TEMPLATE PROCESSOR//////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     ItemSchema: function (itemDetails, quantity) { // Used on order_items and 
         
@@ -117,7 +119,6 @@ module.exports = {
 
     MakeTempProcessorPayload: function (json, retailer) {
 
-
         var tempProcessorPayload = {
             order_info: {
                 order_number: json.order_info.order_number,
@@ -149,143 +150,39 @@ module.exports = {
         tempProcessorPayload.order_info.multi_shipment = shipmentsAndItems.formattedShipments;
         tempProcessorPayload.order_info.items_being_processed = shipmentsAndItems.remainingFormattedItems;
 
-console.log("CONSOLE LOG: ", tempProcessorPayload)
         return tempProcessorPayload;
 
+    },
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////SPARKPOST///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    MakeSparkpostPayload: function (templateResponse, retailer, recipients) {
+
+        var SparkpostPayload = {
+            options: {
+                open_tracking: true,
+                click_tracking: true,
+                transactional: true
+            },
+            recipients: recipients,
+            content: {
+                from: {
+                    email: retailer + "@narvar." + retailer + ".com",
+                    name: retailer
+                },
+                text: "",
+                html: templateResponse.body,
+                subject: templateResponse.subject,
+                reply_to: "no-reply@narvar.com"   
+            }
+        };
+
+        return SparkpostPayload;
     }
+
+
 
 };
-
-/*
-{
-    order_info: {
-        order_number: 1507672400,
-        order_date: 2018-01-02T10:27:24Z,
-        status: SHIPPING,
-        order_items: [
-            {
-                item_id: null,
-                retailer: null,
-                sku: 108-006-000,
-                name: FIREARMS RECORD BOOK (BLUE PRINTING),
-                description: FIREARMS RECORD BOOK (BLUE PRINTING),
-                quantity: 15,
-                unit_price: 2.99,
-                discount_amount: null,
-                discount_percent: null,
-                categories: null,
-                item_image: http://www.brownells.com/userdocs/products/p_108006000_1.jpg,
-                item_url: http://www.brownells.com/.aspx/sid=0/sku=108-006-000/sku/,
-                is_final_sale: false,
-                is_active: null,
-                fulfillment_status: SHIPPING,
-                is_gift: null,
-                final_sale_date: null,
-                product_type: null,
-                product_id: null,
-                line_number: null,
-                attributes: {
-                    insurance: 0,
-                    export_fee: 0,
-                    gun_processing_fee: 0,
-                    export_document_fee: 0,
-                    sed_fee: 0,
-                    ca_document_fee: 0,
-                    product_total: 44.85,
-                    shipping_restriction_charges: 0,
-                    nra_round_up: 0,
-                    misc_charges: 0,
-                    cod_fee: 0
-                },
-                dimensions: null,
-                is_backordered: null,
-                vendor: null,
-                item_promise_date: null,
-                pre_shipment: null,
-                return_reason_code: null
-            }
-        ],
-        shipments: [
-            {
-                carrier_service: SP,
-                items_info: [
-                    {
-                        quantity: 15,
-                        sku: 108-006-000
-                    }
-                ],
-                carrier: FEDEX,
-                shipped_to: {
-                    first_name: MATTHEW,
-                    last_name: JAMROG,
-                    phone: "",
-                    email: jamrogm@charter.net,
-                    fax: "",
-                    address: {
-                        street_1: 1614 142ND AVE,
-                        street_2: "",
-                        city: DORR,
-                        state: MI,
-                        zip: 49323-9427
-                    }
-                },
-                ship_date: 2018-01-04T06:00:00Z,
-                tracking_number: 9261297641699538878532,
-                pre_shipment: false
-            }
-        ],
-        billing: {
-            billed_to: {
-                first_name: MATTHEW,
-                last_name: JAMROG,
-                phone: 616-395-9300,
-                email: jamrogm@charter.net,
-                fax: "",
-                address: {
-                    street_1: 1614 142ND AVE,
-                    city: DORR,
-                    state: MI,
-                    zip: 49323-9427
-                }
-            },
-            amount: 48.8,
-            tax_amount: 0,
-            payments: [
-                {
-                    method: CREDIT CARD,
-                    is_gift_card: false
-                }
-            ]
-        },
-        customer: {
-            first_name: MATTHEW,
-            last_name: JAMROG,
-            phone: "",
-            email: jamrogm@charter.net,
-            fax: "",
-            address: {
-                street_1: 1614 142ND AVE,
-                city: DORR,
-                state: MI,
-                zip: 49323-9427
-            },
-            customer_id: "",
-            customer_type: non Edge
-        }
-    },
-    status: SUCCESS,
-    messages: [
-        {
-            code: response.status.success
-        }
-    ],
-    emailTypes: {
-        1458: delivery anticipation,
-        1459: delayed,
-        1460: delivered,
-        1461: delivered,
-        1462: delivery attempted,
-        2245: ship confirmation
-    }
-}
-*/
