@@ -50,10 +50,22 @@ var helper = require('./js/helpfunctions.js');
             var url = "https://template-processor-qa01.narvar.qa/templateprocessor/"+ req.body.retailer + "/templates/" + req.body.alertEmailType + "/generate";
 
             // Call function to json, and format into post body for template processor
-            var payload = helper.makeTempProcessorPayload(req.body.OrderAPIJSON, req.retailer)
-
+            var payload = helper.MakeTempProcessorPayload(req.body.OrderAPIJSON, req.body.retailer);
+            
             // Post to template processor
-
+            request.post({
+                headers: { "Content-Type" : "application/json" },
+                url: url,
+                body: JSON.stringify(payload)
+            }, function(error, response, body) {
+                if (error) {
+                    console.log('Call to the Template Processor failed', error);
+                    res.send(error);
+                } else {
+                    // add Alert types to the body
+                    res.send(body);
+                }
+            });
 
             // Call function to take template processor response, email/names and format into Sparkpost Post
 

@@ -2,15 +2,15 @@
   "order_info": {
     "order_number": "qafedex2017050318361012",
     "order_date": "2017-10-11",
-    "first_name": "Patricia",
-    "last_name": "Narvar",
+    "first_name": "First",
+    "last_name": "Second",
     "address": {
-      "line1": "55 W 20th Avenue",
+      "line1": "123 Main St",
       "line2": "",
       "line3": "",
-      "city": "San Mateo",
-      "state": "CA",
-      "zip": "94403",
+      "city": "Springfield",
+      "state": "IL",
+      "zip": "12345",
       "country": "US"
     },
     "status": "",
@@ -21,14 +21,14 @@
       "carrier_status": "",
       "carrier_phone_number": "1.800.8000",
       "guaranteed_delivery_date": "2017-05-28T00:00:00Z",
-      "tracking_url": "https://tracking.narvar.com/jcpenney/tracking/ups?tracking_numbers=TRFEDEX20170503183610122&bzip=null&order_number=qafedex201705031836101",
+      "tracking_url": "https://tracking.narvar.com/retailer/tracking/ups?tracking_numbers=TRFEDEX20170503183610122&bzip=null&order_number=qafedex201705031836101",
       "address": {
-        "line1": "605 E 5th Avenue",
+        "line1": "123 Main St",
         "line2": "",
         "line3": "",
-        "city": "San Mateo",
-        "state": "CA",
-        "zip": "94404",
+        "city": "Springfield",
+        "state": "IL",
+        "zip": "12345",
         "country": "US"
       },
       "shipment_date": "2017-05-23T12:16:01Z",
@@ -46,7 +46,7 @@
             "weight_unit": "",
             "price": "",
             "currency": "",
-            "image_url": "https://s7.ralphlauren.com/is/image/PoloGSI/s7-1265670_standard?$rl_470_pdp$"
+            "image_url": "https://retailer.com/is/image/PoloGSI/s7-1265670_standard?$rl_470_pdp$"
           }
         },
         {
@@ -62,7 +62,7 @@
             "weight_unit": "",
             "price": "",
             "currency": "",
-            "image_url": "https://s7.ralphlauren.com/is/image/PoloGSI/s7-1265634_standard?$rl_470_pdp$"
+            "image_url": "https://retailer.com/is/image/PoloGSI/s7-1265634_standard?$rl_470_pdp$"
           }
         }
       ]
@@ -75,14 +75,14 @@
         "carrier_status": "",
         "carrier_phone_number": "1.800.8000",
         "guaranteed_delivery_date": "2017-05-15T00:00:00Z",
-        "tracking_url": "https://www.narvar.com/jcpenney/tracking/ups?tracking_numbers=TRFEDEX20170303183610122&bzip=null&order_number=qafedex201703031836101",
+        "tracking_url": "https://www.narvar.com/retailer/tracking/ups?tracking_numbers=TRFEDEX20170303183610122&bzip=null&order_number=qafedex201703031836101",
         "address": {
-          "line1": "55 W 20th Avenue",
+          "line1": "123 Main St",
           "line2": "",
           "line3": "",
-          "city": "San Mateo",
-          "state": "CA",
-          "zip": "94403",
+          "city": "Springfield",
+          "state": "IL",
+          "zip": "12345",
           "country": "US"
         },
         "shipment_date": "2017-05-11T12:16:01Z",
@@ -100,7 +100,7 @@
               "weight_unit": "",
               "price": "",
               "currency": "",
-              "image_url": "https://s7.ralphlauren.com/is/image/PoloGSI/s7-1268636_standard?$rl_470_pdp$"
+              "image_url": "https://retailer.com/is/image/PoloGSI/s7-1268636_standard?$rl_470_pdp$"
             }
           }
         ]
@@ -120,7 +120,7 @@
           "weight_unit": "",
           "price": "",
           "currency": "",
-          "image_url": "https://s7.ralphlauren.com/is/image/PoloGSI/s7-1268636_standard?$rl_470_pdp$"
+          "image_url": "https://retailer.com/is/image/PoloGSI/s7-1268636_standard?$rl_470_pdp$"
         }
       }
     ]
