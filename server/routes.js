@@ -47,27 +47,46 @@ var helper = require('./js/helpfunctions.js');
         // Call to get order info and return alerts type codes and names
         app.post('/api/sendemail', function(req, res) {
 
-            var url = "https://template-processor-qa01.narvar.qa/templateprocessor/"+ req.body.retailer + "/templates/" + req.body.alertEmailType + "/generate";
-
+            var templateUrl = "https://template-processor-qa01.narvar.qa/templateprocessor/"+ req.body.retailer + "/templates/" + req.body.alertEmailType + "/generate";
+            var sparkpostUrl = "https://api.sparkpost.com/api/v1/transmissions";
             // Call function to json, and format into post body for template processor
-            var payload = helper.MakeTempProcessorPayload(req.body.OrderAPIJSON, req.body.retailer);
-            
+            var templatePayload = helper.MakeTempProcessorPayload(req.body.OrderAPIJSON, req.body.retailer);
+            var sparkpostPayload;
+
             // Post to template processor
             request.post({
                 headers: { "Content-Type" : "application/json" },
-                url: url,
-                body: JSON.stringify(payload)
+                url: templateUrl,
+                body: JSON.stringify(templatePayload)
             }, function(error, response, body) {
                 if (error) {
                     console.log('Call to the Template Processor failed', error);
                     res.send(error);
+                
                 } else {
-                    // add Alert types to the body
-                    res.send(body);
+                // Call function to take template processor response, email/names and format into Sparkpost Post
+                    sparkpostPayload = helper.MakeSparkpostPayload(response.body, req.body.retailer, req.body.recipients);
+                    // Post payload to Sparkpost
+                    request.post({
+                        headers: {
+                            "Authorization" : "Basic " + keys.sparkpost,
+                            "Content-Type" : "application/json",
+                            "Accept": "text/csv",
+                        },
+                        url: sparkpostUrl,
+                        body: JSON.stringify(sparkpostPayload)
+                    }, function (err, resp, spbody) {
+                        if (err) {
+                            console.log('Call to Sparkpost failed', error);
+                            res.send(err);
+
+                        } else {
+                            res.send(spbody);
+                        }
+                    });
                 }
             });
 
-            // Call function to take template processor response, email/names and format into Sparkpost Post
 
             // Post to Sparkpost
 
