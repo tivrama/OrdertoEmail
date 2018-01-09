@@ -1,0 +1,9 @@
+{
+	"retailer": "<Retailer_Mooniker>",
+	"alertEmailType": "<alert_Email_Type>", // numeric code of the email type
+	"OrderAPIJSON": "<Response_From_OrderAPI>",
+	"emailNames": {
+		"<name_of_recipient>": "<email_of_recipient>",
+		"<name_of_recipient>": "<email_of_recipient>"
+	}
+}
