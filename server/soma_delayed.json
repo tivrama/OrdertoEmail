@@ -1,0 +1,107 @@
+{
+  "test_name": "soma_Delayed",
+  "processor" : "emailFoundation",
+  "template_name": "delivered",
+  "subject": "{ { { chooseTitle content.title.text content.title.textPartial order_info } } }",
+  "html": "{ {> retailer-preview-text showOrderInfo=true } } { {> retailer-header-menu logoAlign='center' imageUrl='http://www.ralphlauren.com/?utm_campaign=NarvarAlerts&utm_content=Transactional&utm_medium=RLE&utm_source=Email'} }<wrapper class='border-divider'>&nbsp</wrapper> { {> retailer-order-number center=true} } <spacer size='{ {content.spacing} }' /> { {> retailer-body} } <spacer size='{ {multiply content.spacing 2} }' /> { {> retailer-shipment-vertical items=order_info.current_shipment.order_items show-button=false center=true} } <spacer size='{ {content.spacing} }' /> { {> retailer-tracking-button-secondary text=content.trackingButton.text href=content.trackingButton.href  params='&utm_campaign=NarvarAlerts&utm_content=Transactional&utm_medium=RLE&utm_source=Email'} } <spacer size='{ {multiply content.spacing 2} }' /> <wrapper class='centeralign'>{ {> retailer-image-grid imageList=content.marketing.items} }</wrapper> <spacer size='{ {content.spacing} }' /> { {> retailer-multiship center-title=true outline=true} } <spacer size='{ {content.spacing} }' /> { {> retailer-unshipped} } <spacer size='{ {content.spacing} }' /> { {> retailer-callout} } <spacer size=' {multiply content.spacing 2} }' />",
+  "css": "$retailer-color-primary: #000000; $retailer-color-secondary: #000000; $retailer-color-text: #000000; $retailer-color-caption: lighten($#000000, 10%); $retailer-color-button-primary: #000000; $retailer-color-cta: #000000; $retailer-color-section-title: transparent; $retailer-color-logo-bg: transparent; $retailer-color-nav-bg: #FFFFFF; $retailer-color-nav-bg-border: #CCCCCC; $retailer-color-nav-border: lighten($retailer-color-nav-bg, 10%); $retailer-color-nav-link: #666666; $retailer-color-body: #FFFFFF; $retailer-color-field: #FFFFFF !important; $retailer-color-hr: #d1d1d1; $retailer-color-grey-dark: #000000; $retailer-color-grey-medium: #333333; $retailer-color-grey-light: #ccc; $retailer-color-grey-bright: #000000; $retailer-font-fallback: Helvetica; $retailer-font-primary: Helvetica Neue, #{$retailer-font-fallback}; $retailer-font-secondary: Helvetica Neue, #{$retailer-font-fallback}; $retailer-font-text: Univers-Light, #{$retailer-font-fallback}; $retailer-recommendations-image-max-height: 175px; $logo-align: left; .tracking-button-primary-fullwidth td{width: 700px; width: 700px !important; text-align: center; text-align: center !important;} .multishipment-shipment-edd+p{margin-top: 5px;margin-top: 5px !important; line-height: 24px; line-height: 24px !important;} .multishipment-shipment-edd,.multishipment-shipment-number{line-height: 24px; line-height: 24px !important;} .item-vertical table th{padding: 0 10px; padding: 0 10px !important;} .multishipment-shipment-item-link-image img{ width:100%; width:100% !important; height: auto; height: auto !important; }  .heroimagealign th{text-align: center; text-align: center !important;} .tracking-button-secondary-fullwidth td{width: 700px; width: 700px !important; text-align: center; text-align: center !important;} .edd-date {color: #000000;color: #000000 !important;font-size:24px;font-size:24px !important;} $retailer-logo-width: 335px; $retailer-logo-height: 25px; .header-logo img{width: 335px; height: auto; height: auto !important;} .multishipment-shipment-edd, .multishipment-shipment-edd+p {padding-right: 15px; display: inline-block;} .centeralign th {text-align: center; text-align: center !important;} @media only screen and (min-width: 596px) {.header-menu-items a span {color: #333333;color: #333333 !important; font-size: 12px;font-size: 12px !important;}} @media only screen and (max-width: 596px) {.body .header-menu-items span {font-size:10px;font-size:10px !important;} .header-menu-items a{padding: 0px 1px;padding: 0px 1px !important;} .header-menu img {max-width: 200px;max-width: 200px !important; height: auto;height: auto !important;} .header-menu-items th.field:nth-child(6) { width: auto; width: auto !important;}} .header-menu {border-bottom: 1px solid #CCCCCC;border-bottom: 1px solid #CCCCCC !important;} .border-divider {border-top: 1px solid #CCCCCC; border-top: 1px solid #CCCCCC !important;} .header-menu-items a span{font-family: 'Helvetica Neue',#{$retailer-font-fallback}; font-family: 'Helvetica Neue',#{$retailer-font-fallback} !important;} .header-menu-items th.field:nth-child(6) { width: 16%;} @media only screen and (max-width: 380px) {.body .header-menu-items a span {font-size:8px;font-size:8px !important;}}",
+  "fonts": "@font-face{font-family:Helvetica Neue;src:url(https://assets.narvar.com/retailers/soma/fonts/Helvetica Neue.ttf) format('embedded-opentype'),url(https://assets.narvar.com/retailers/soma/fonts/Helvetica Neue.ttf) format('woff'),url(https://assets.narvar.com/retailers/soma/fonts/Helvetica Neue.ttf) format('truetype'),url(https://assets.narvar.com/retailers/soma/fonts/Helvetica Neue.ttf) format('svg');font-weight:400;font-style:normal;mso-font-alt:'Arial'} @font-face{font-family:Helvetica Neue;src:url(https://assets.narvar.com/retailers/soma/fonts/Helvetica Neue.ttf) format('embedded-opentype'),url(https://assets.narvar.com/retailers/soma/fonts/Helvetica Neue.ttf) format('woff'),url(https://assets.narvar.com/retailers/soma/fonts/Helvetica Neue.ttf) format('truetype'),url(https://assets.narvar.com/retailers/soma/fonts/Helvetica Neue.ttf) format('svg');font-weight:400;font-style:normal;mso-font-alt:'Arial'}",
+  "conditions": ["futureEdd", "firstName", "multiShipment", "unshipped", "currentShipment"],
+  "content": {
+    "custom_logo_href": "https://assets.narvar.com/retailers/soma/NAV_D_2017110371_Logo_en_US@2x.png",
+    "template": "delivered",
+    "preview_text": "Thanks again for shopping with us!",
+    "logo_height": "25",
+    "logo_width": "335",
+    "spacing": "15",
+    "header": {
+      "order": {
+        "number": "Order #: { { { {raw} } } }{ {order_number} }{ { { {/raw} } } }",
+        "date": "Order date: { { { {raw} } } }{ { {orderDate order_date} } }{ { { {/raw} } } }"
+      }
+    },
+    "title": {
+      "text": "Your package has arrived",
+      "textPartial": "Your package has arrived"
+    },
+    "orderDetails": {
+      "title": "Package Details:"
+    },
+    "body": {
+      "text": "Hi {{{{raw}}}}{{{first_name}}}{{{{/raw}}}}, <br/>Sorry for the delay. Sometimes this happens. Please click the tracking button below, for the latest status of your package. Your package will now deliver:"
+    },
+    "edd": {
+      "text": ""
+    },
+    "trackingButton": {
+      "text": "SEE FULL ORDER DETAILS",
+      "trackingtext": "TRACK THIS PACKAGE",
+      "href": "{ {current_shipment.tracking_url} }",
+      "fullOrderHref": "https://www.soma.com/store/?utm_source=POS&utm_medium=narvar&utm_content=logo"
+    },
+    "menu": [
+      {
+        "link": "https://www.soma.com/store/category/bras/cat40089?utm_source=POS&utm_medium=narvar&utm_content=bras",
+        "text": "Bras"
+      }, {
+        "link": "",
+        "text": ""
+      }, {
+        "link": "",
+        "text": ""
+      }, {
+        "link": "",
+        "text": ""
+      }
+    ],
+    "callout": {
+      "title": "CAN'T FIND YOUR ORDER?",
+      "text": "This happens sometimes. The first thing to do is to check the bushes, front and back porches, and other possible delivery spots such as with your neighbors. Carriers also occasionally mark packages “Delivered” before they’re dropped off. Please contact the carrier if it’s been more than two hours since you got a delivery notification.",
+      "links": [
+        {
+          "text": "More Questions?",
+          "href": "https://www.soma.com/store/page.jsp"
+        }
+      ]
+    },
+    "legal": {
+      "text": ""
+    },
+    "marketing": {
+      "items": [
+        {
+          "src": "https://assets.narvar.com/retailers/soma/MKTG_M_G_20170213__en_US@2x.jpg",
+          "href": ""
+        },
+        {
+          "src": "https://assets.narvar.com/retailers/soma/MKTG_M_G_20170213__en_US@2x.jpg",
+          "href": ""
+        }
+      ]
+    },
+    "attributes": ["color","size","quantity"],
+    "shipment_attributes": "{ {#if shipmentOrigin.[idx].attributes.color} } <span>Color: { {shipmentOrigin.[idx].attributes.color} }</span><br /> { {/if} } { {#if shipmentOrigin.[idx].attributes.size} } <span>Size: { {shipmentOrigin.[idx].attributes.size} }</span><br /> { {/if} } { {#if shipmentOrigin.[idx].quantity} } <span>Quantity: { {shipmentOrigin.[idx].quantity} }</span><br /> { {/if} }",
+    "item": {
+      "name": "{ { {shipmentOrigin.[idx].name} } }"
+    },
+    "multiShipment": {
+      "title": "Remaining Items in this Order:",
+      "shipped": {
+        "edd": "Arriving { { {decoratedDate multi_shipment.[ndx].guaranteed_delivery_date} } }",
+        "trackingNumber": "{ { {multi_shipment.[ndx].carrier_name} } } Tracking # { { {multi_shipment.[ndx].tracking_number} } }",
+        "trackingButton": "Track This Package",
+        "item": {
+          "name": "{ { {multi_shipment.[ndx].order_items.[idx].name} } }"
+        }
+      }
+    },
+    "unshipped": {
+      "edd": "Being processed...",
+      "trackingButton": "See Full Order Details",
+      "trackingUrl": "https://www.soma.com/store/?utm_source=POS&utm_medium=narvar&utm_content=logo",
+      "item": {
+        "name": "{ { {items_being_processed.[{ {@index} }].name} } }"
+      }
+    }
+  }
+}

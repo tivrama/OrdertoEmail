@@ -9,22 +9,24 @@ No need to always use the front end.  All calls can be make with curl or Postman
 - First Call: http://localhost:3000/api/getorder
 ```
 {
-    "logon": "<Retailer_Logon>",
-    "password": "<Retailer_Password>",
-    "retailer": "<Retailer_Mooniker>",
-    "order": "<Valid_Order_Number>"
+  "logon": "<Retailer_Logon>",
+  "password": "<Retailer_Password>",
+  "retailer": "<Retailer_Mooniker>",
+  "order": "<Valid_Order_Number>"
 }
 ```
 - Second Call: http://localhost:3000/api/sendemail
 ```
 {
-	"retailer": ""<Retailer_Mooniker>",
-	"alertEmailType": "<alert_Email_Type>", // numeric code of the email type
-	"OrderAPIJSON": "<Response_From_OrderAPI>",
-	"emailNames": {
-		"<name_of_recipient>": "<email_of_recipient>",
-		"<name_of_recipient>": "<email_of_recipient>"
-	}
+  "retailer": ""<Retailer_Mooniker>",       // saved in front end state
+  "alertEmailType": "<alert_Email_Type>",   // numeric code of the email type
+  "OrderAPIJSON": "<Response_From_First_Call>",
+  "emailNames": {
+    "address": {
+      "email": "<email_of_recipient>",
+      "name": "<name_of_recipient>"
+    }
+  }
 }
 ```
 
@@ -62,6 +64,3 @@ Alternative Possible Flow 2:
 6) Server makes call 2 to Template Processer with data from Order API, and code for emay type.
 7) Server makes call 3 to Sparkpost to send the email.
 8) Call status to Sparkpost is sent to client and displayed to user.
-
-Future Features:
-Add Carrier and Tracking Number(s)
