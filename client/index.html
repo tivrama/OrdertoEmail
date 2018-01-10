@@ -10,20 +10,35 @@
     </head>
     <body>
         <h1>Order Into Emails!</h1>
-        <p>add an order number</p>
-        
-        <button class="formSubmit">Form Submit</button>
-        <button class="secondCall">Second Call</button>
 
 
-<!-- <script>$(document).ready(function(){
-    $("button.formSubmit").click(function(){
-        console.log("Test in viewControl");
-        $.get('/api/test', function(data, status){
-            alert(data);
-        });
-    });
-});</script> -->
+        <br>
+
+        <form id="target" action="test()">
+            <fieldset>
+                <legend>Personal information:</legend>
+                Retailer Moniker:<br>
+                <input type="text" id="retailer" required="true" placeholder="Enter Retailer Moniker"><br>
+                Logon:<br>
+                <input type="text" id="logon" required="true" placeholder="Enter Logon"><br>
+                Password:<br>
+                <input type="password" id="password" required="true" placeholder="Enter Password"><br>
+                Order:<br>
+                <input type="text" id="order" required="true" placeholder="Enter Order"><br>
+                <input type="submit" value="Get Email Types"><input type="reset">
+            </fieldset>
+        </form>
+
+
+<select name="emailTypes">
+  <option value="delivery">Delivery</option>
+  <option value="anticipation">Anticipation</option>
+  <option value="delay">Delayed</option>
+  <option value="undeliverable">Undeliverable</option>
+</select>
+
+
+
 
     </body>
 </html>
