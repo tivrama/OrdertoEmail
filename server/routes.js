@@ -81,17 +81,12 @@ var helper = require('./js/helpfunctions.js');
                             res.send(err);
 
                         } else {
+                            // Send success to client
                             res.send(spbody);
                         }
                     });
                 }
             });
-
-
-            // Post to Sparkpost
-
-            // Send success to client
-
         });
 
 

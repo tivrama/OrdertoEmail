@@ -161,6 +161,8 @@ module.exports = {
 
     MakeSparkpostPayload: function (templateResponse, retailer, recipients) {
 
+        templateResponse = JSON.parse(templateResponse);
+        
         var SparkpostPayload = {
             options: {
                 open_tracking: true,
@@ -170,7 +172,7 @@ module.exports = {
             recipients: recipients,
             content: {
                 from: {
-                    email: retailer + "@narvar." + retailer + ".com",
+                    email: retailer + "@narvar.com",
                     name: retailer
                 },
                 text: "",
