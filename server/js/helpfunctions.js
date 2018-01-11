@@ -28,7 +28,7 @@ module.exports = {
             carrier_name: shipementDetails.carrier,
             carrier_status: shipementDetails.carrier_service ? shipementDetails.carrier_service : "",
             carrier_phone_number: "1.800.8000",
-            guaranteed_delivery_date: "",   // TODO:  Find this field
+            guaranteed_delivery_date: shipementDetails.ship_date,   // This field will populate date on Delayed emails TODO: make function to increment date forward
             tracking_url: "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number,
             address: {
                 line1: shipementDetails.shipped_to.address.street_1 ? shipementDetails.shipped_to.address.street_1 : "",
