@@ -51,7 +51,10 @@ $(document).ready(function(){
             currentState = data.emailTypes
         });
 
-      // alert('logon: ', event.target);
+        // add elements to show the dropdown options, and take emails
+
+
+
       event.preventDefault();
     });
 });
