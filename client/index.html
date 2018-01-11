@@ -14,7 +14,7 @@
 
         <br>
 
-        <form id="target" action="test()">
+        <form id="step1">
             <fieldset>
                 <legend>Personal information:</legend>
                 Retailer Moniker:<br>
@@ -30,13 +30,27 @@
         </form>
 
 
-<select name="emailTypes">
-  <option value="delivery">Delivery</option>
-  <option value="anticipation">Anticipation</option>
-  <option value="delay">Delayed</option>
-  <option value="undeliverable">Undeliverable</option>
-</select>
 
+
+        <form id="step2">
+            <fieldset>
+                <legend>Select email type and recipients:</legend>
+                Email Alert Type:<br>
+                <select name="emailTypes" id="emailList">
+<!--                     <option value="delivery">Delivery</option>
+                    <option value="anticipation">Anticipation</option>
+                    <option value="delay">Delayed</option>
+                    <option value="undeliverable">Undeliverable</option> -->
+                </select><br>
+                Name:<br>
+                <input type="text" id="name" required="true" placeholder="Enter Name" disabled><br>
+                email:<br>
+                <input type="text" id="email" required="true" placeholder="Enter Email" disabled><br>
+                <input type="submit" id="send2" value="Send Email" disabled><input type="reset">
+            </fieldset>
+        </form>
+
+        <!-- <button id="resetAll">Reset Everything</button> -->
 
 
 

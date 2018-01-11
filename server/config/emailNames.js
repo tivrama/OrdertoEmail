@@ -43,7 +43,7 @@ module.exports = {
 	},
 	brownells: {
 		1459: "delayed",
-		1460: "delivered",
+		1460: "delivered shipped",
 		1458: "delivery anticipation",
 		2245: "ship confirmation",
 		1462: "delivery attempted",

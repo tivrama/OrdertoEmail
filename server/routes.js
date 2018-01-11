@@ -49,6 +49,7 @@ var helper = require('./js/helpfunctions.js');
 
             var templateUrl = "https://template-processor-qa01.narvar.qa/templateprocessor/"+ req.body.retailer + "/templates/" + req.body.alertEmailType + "/generate";
             var sparkpostUrl = "https://api.sparkpost.com/api/v1/transmissions";
+
             // Call function to json, and format into post body for template processor
             var templatePayload = helper.MakeTempProcessorPayload(req.body.OrderAPIJSON, req.body.retailer);
             var sparkpostPayload;
