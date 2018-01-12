@@ -1,6 +1,6 @@
 var path = require('path');
 var request = require('request');
-var keys = process.env.SPARK_POST_KEY || require('./config/config.js');
+var keys = process.env.SPARK_POST_KEY || require('./config/config.js').sparkpost;
 var emailNames = require('./config/emailNames.js');
 var helper = require('./js/helpfunctions.js');
 
@@ -77,7 +77,7 @@ var helper = require('./js/helpfunctions.js');
                     // Post payload to Sparkpost
                     request.post({
                         headers: {
-                            "Authorization" : "Basic " + keys.sparkpost,
+                            "Authorization" : "Basic " + keys,
                             "Content-Type" : "application/json",
                             "Accept": "text/csv",
                         },
