@@ -64,3 +64,7 @@ Alternative Possible Flow 2:
 6) Server makes call 2 to Template Processer with data from Order API, and code for emay type.
 7) Server makes call 3 to Sparkpost to send the email.
 8) Call status to Sparkpost is sent to client and displayed to user.
+
+TODO:
+- If no shipment obj is on the order, then let the front end know
+- Allow user to add in shipment info
