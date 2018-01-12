@@ -34,8 +34,8 @@ var currentState = state.alertEmailTypes;
 
 // put values in here for testing
 var sample1 = {
-    logon: "",
-    password: "",
+    logon: "22615df5d6d440f28dcb80122a789a2e",
+    password: "3e68906aea364164a6dc230a87a84bf6",
     retailer: "brownells",
     order: "1507672400"
 }
@@ -54,13 +54,13 @@ $(document).ready(function(){
 
 
         // Toggle this for testing
-        $.post('/api/getorder', currentState1, function(data, status){
-        // $.post('/api/getorder', sample1, function(data, status){
+        // $.post('/api/getorder', currentState1, function(data, status){
+        $.post('/api/getorder', sample1, function(data, status){
             console.log("Data: " + data.order_info.order_number + "\nStatus: " + status);
             currentState2.OrderAPIJSON = data;
             currentState = data.emailTypes;
 
-            var a = '<option value="';
+            var a = '<option class="li" value="';
             var b = '">'
             var c = '</option>';
             // Loop through currentState and make dropdown values
@@ -110,23 +110,73 @@ $(document).ready(function(){
 });
 
 
-// Reset the whole page
+// Reset form 1
 $(document).ready(function(){
-    $( "#resetAll" ).submit(function( event ) {
+    $( "#reset1" ).click(function( event ) {
 
         currentState1 = state.call1schema;
         currentState2 = state.call2schema;
         currentState = state.alertEmailTypes;
 
-        $("#name").addAttr("disabled");
-        $("#email").addAttr("disabled");
-        $("#send2").addAttr("disabled");
+        $("#name").attr("disabled");
+        $("#email").attr("disabled");
+        $("#send2").attr("disabled");
 
-        // TODO: Reset Form Values
+        // Reset Form Values
+        $("#retailer").val("");
+        $("#logon").val("");
+        $("#password").val("");
+        $("#order").val("");
 
-    event.preventDefault();
+        $("option").remove();
+        $("#name").val("");
+        $("#email").val("");
+
+        event.preventDefault();
     });
+});
 
+
+// Reset form 2
+$(document).ready(function(){
+    $( "#reset2" ).click(function( event ) {
+
+        currentState1 = state.call1schema;
+        currentState = state.alertEmailTypes;
+
+
+        // Reset Form Values
+        $("#name").val("");
+        $("#email").val("");
+
+        event.preventDefault();
+    });
+});
+
+// Reset the whole page
+$(document).ready(function(){
+    $( "#resetAll" ).click(function( event ) {
+
+        currentState1 = state.call1schema;
+        currentState2 = state.call2schema;
+        currentState = state.alertEmailTypes;
+
+        $("#name").attr("disabled");
+        $("#email").attr("disabled");
+        $("#send2").attr("disabled");
+
+        // Reset Form Values
+        $("#retailer").val("");
+        $("#logon").val("");
+        $("#password").val("");
+        $("#order").val("");
+
+        $("option").remove();
+        $("#name").val("");
+        $("#email").val("");
+
+        event.preventDefault();
+    });
 });
 
 

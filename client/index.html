@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="viewControl.js"></script>
     <script type="text/javascript" src="state.js"></script>
+    <link type="text/css" rel="stylesheet" href="styles.css"></link>
     </head>
     <body>
         <h1>Order Into Emails!</h1>
@@ -18,14 +19,14 @@
             <fieldset>
                 <legend>Personal information:</legend>
                 Retailer Moniker:<br>
-                <input type="text" id="retailer" required="true" placeholder="Enter Retailer Moniker"><br>
+                <input type="text" id="retailer" class="fieldInput" required="true" placeholder="Enter Retailer Moniker"><br>
                 Logon:<br>
-                <input type="text" id="logon" required="true" placeholder="Enter Logon"><br>
+                <input type="text" id="logon" class="fieldInput" required="true" placeholder="Enter Logon"><br>
                 Password:<br>
-                <input type="password" id="password" required="true" placeholder="Enter Password"><br>
+                <input type="password" id="password" class="fieldInput" required="true" placeholder="Enter Password"><br>
                 Order:<br>
-                <input type="text" id="order" required="true" placeholder="Enter Order"><br>
-                <input type="submit" value="Get Email Types"><input type="reset">
+                <input type="text" id="order" class="fieldInput" required="true" placeholder="Enter Order"><br>
+                <input type="submit" value="Get Email Types"><input  id="reset1" type="reset">
             </fieldset>
         </form>
 
@@ -36,21 +37,16 @@
             <fieldset>
                 <legend>Select email type and recipients:</legend>
                 Email Alert Type:<br>
-                <select name="emailTypes" id="emailList">
-<!--                     <option value="delivery">Delivery</option>
-                    <option value="anticipation">Anticipation</option>
-                    <option value="delay">Delayed</option>
-                    <option value="undeliverable">Undeliverable</option> -->
-                </select><br>
+                <select name="emailTypes" class="fieldInput" id="emailList"></select><br>
                 Name:<br>
-                <input type="text" id="name" required="true" placeholder="Enter Name" disabled><br>
+                <input type="text" id="name" class="fieldInput" required="true" placeholder="Enter Name" disabled><br>
                 email:<br>
-                <input type="text" id="email" required="true" placeholder="Enter Email" disabled><br>
-                <input type="submit" id="send2" value="Send Email" disabled><input type="reset">
+                <input type="text" id="email" class="fieldInput" required="true" placeholder="Enter Email" disabled><br>
+                <input type="submit" id="send2" value="Send Email" disabled><input id="reset2" type="reset">
             </fieldset>
         </form>
 
-        <!-- <button id="resetAll">Reset Everything</button> -->
+        <button id="resetAll">Reset Everything</button>
 
 
 
