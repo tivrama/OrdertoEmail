@@ -5,15 +5,16 @@ module.exports = {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     ItemSchema: function (itemDetails, quantity) { // Used on order_items and 
-        
+
         var newItem = {  
             name: itemDetails.name,
             quantity: quantity,
-            description_url: itemDetails.description,
-            product_sku: itemDetails.sku,
-            attributes: itemDetails.attributes
+            description_url: itemDetails.description ? itemDetails.description : "",
+            product_sku: itemDetails.sku ? itemDetails.sku : "",
+            attributes: itemDetails.attributes ? itemDetails.attributes : {}
         };
-        newItem.attributes.image_url = itemDetails.item_image;
+
+        newItem.attributes.image_url = itemDetails.item_image ? itemDetails.item_image : "";
 
         return newItem;
     },
@@ -58,48 +59,54 @@ module.exports = {
             formattedShipments: [],
             remainingFormattedItems: []
         };
-        // loop through shipments
-        for (var i = 0; i < shipmentsArray.length; i++) {
 
-            // loop through items in current shipment
-            for (var j = 0; j < shipmentsArray[i].items_info.length; j++) {
+        // Add check for shipments
+        if (shipmentsArray) {
+            // loop through shipments
+            for (var i = 0; i < shipmentsArray.length; i++) {
 
-                // first check if item_id exists in shipments
-                if (shipmentsArray[i].items_info[j].item_id) {
-                    // set itemOrSku to 'item';
-                    var itemOrSku = "item_id";
-                } else {
-                    var itemOrSku = "sku";
-                }
+                // loop through items in current shipment
+                for (var j = 0; j < shipmentsArray[i].items_info.length; j++) {
 
-                // loop through itemsArray and look for matching item or sku
-                for (var k = 0; k < remainingItems.length; k++) {
-                    // if itemOrSku matchs, 
-                    if (remainingItems[k][itemOrSku] === shipmentsArray[i].items_info[j][itemOrSku]) {
-
-                        // check if we are in a current shipment
-                        if (!newShipmentOrCurrent) {
-                            // create the shipment object 
-                            var newShipment = new this.ShipmentSchema(shipmentsArray[i], retailer);
-                            newShipmentOrCurrent = true;
-                        } 
-
-                        // create a new item
-                        var newItem = new this.ItemSchema(remainingItems[k], shipmentsArray[i].items_info[j].quantity)
-                        // subtract the amount of  shipped items from the copy array of items
-                        remainingItems[k].quantity = shipmentsArray[i].items_info[j].quantity - remainingItems[k].quantity;
-
-                        // add new item to current shipment
-                        newShipment.order_items.push(newItem);
+                    // first check if item_id exists in shipments
+                    if (shipmentsArray[i].items_info[j].item_id) {
+                        // set itemOrSku to 'item';
+                        var itemOrSku = "item_id";
+                    } else {
+                        var itemOrSku = "sku";
                     }
 
-                    // reset newShipment
-                    newShipmentOrCurrent = false;
-                }
-            }
+                    // loop through itemsArray and look for matching item or sku
+                    for (var k = 0; k < remainingItems.length; k++) {
+                        // if itemOrSku matchs, 
+                        if (remainingItems[k][itemOrSku] === shipmentsArray[i].items_info[j][itemOrSku]) {
 
-            // unshift the current shipment into the array to be returned
-            shipmentsWithRemainingItems.formattedShipments.unshift(newShipment);
+                            // check if we are in a current shipment
+                            if (!newShipmentOrCurrent) {
+                                // create the shipment object 
+                                var newShipment = new this.ShipmentSchema(shipmentsArray[i], retailer);
+                                newShipmentOrCurrent = true;
+                            } 
+
+                            // create a new item
+                            var newItem = new this.ItemSchema(remainingItems[k], shipmentsArray[i].items_info[j].quantity)
+                            // subtract the amount of  shipped items from the copy array of items
+                            remainingItems[k].quantity = shipmentsArray[i].items_info[j].quantity - remainingItems[k].quantity;
+
+                            // add new item to current shipment
+                            newShipment.order_items.push(newItem);
+                        }
+
+                        // reset newShipment
+                        newShipmentOrCurrent = false;
+                    }
+                }
+            } 
+
+                // unshift the current shipment into the array to be returned
+                shipmentsWithRemainingItems.formattedShipments.unshift(newShipment);
+        } else {
+            return false;
         }
 
         // format any remaining items
@@ -129,7 +136,7 @@ module.exports = {
                     line1: json.order_info.customer.address.street_1 ? json.order_info.customer.address.street_1 : "",
                     line2: json.order_info.customer.address.street_2 ? json.order_info.customer.address.street_2 : "",
                     line3: json.order_info.customer.address.street_3 ? json.order_info.customer.address.street_3 : "",
-                    city: json.order_info.customer.address.city,
+                    city: json.order_info.customer.address.city ? json.order_info.customer.address.city: "",
                     state: json.order_info.customer.address.state,
                     zip: json.order_info.customer.address.zip,
                     country: json.order_info.customer.address.country ? json.order_info.customer.address.country : ""
@@ -146,11 +153,15 @@ module.exports = {
         // call function to make formated shipments with items, and any remaining formatted items which have not shipped
         var shipmentsAndItems = this.matchShipmentWithItems(json.order_info.shipments, json.order_info.order_items, retailer);
         
-        tempProcessorPayload.order_info.current_shipment = shipmentsAndItems.formattedShipments.pop();
-        tempProcessorPayload.order_info.multi_shipment = shipmentsAndItems.formattedShipments;
-        tempProcessorPayload.order_info.items_being_processed = shipmentsAndItems.remainingFormattedItems;
+        if (shipmentsAndItems === false) {
+            return false
+        } else {
+            tempProcessorPayload.order_info.current_shipment = shipmentsAndItems.formattedShipments.pop();
+            tempProcessorPayload.order_info.multi_shipment = shipmentsAndItems.formattedShipments;
+            tempProcessorPayload.order_info.items_being_processed = shipmentsAndItems.remainingFormattedItems;
 
-        return tempProcessorPayload;
+            return tempProcessorPayload;
+        }
 
     },
 
@@ -162,7 +173,7 @@ module.exports = {
     MakeSparkpostPayload: function (templateResponse, retailer, recipients) {
 
         templateResponse = JSON.parse(templateResponse);
-        
+// console.log("templateResponse: ", templateResponse)        
         var SparkpostPayload = {
             options: {
                 open_tracking: true,
@@ -177,7 +188,7 @@ module.exports = {
                 },
                 text: "",
                 html: templateResponse.body,
-                subject: templateResponse.subject,
+                subject: templateResponse.subject ? templateResponse.subject : "Update on you package",
                 reply_to: "no-reply@narvar.com"   
             }
         };

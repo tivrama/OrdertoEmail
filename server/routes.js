@@ -54,6 +54,13 @@ var helper = require('./js/helpfunctions.js');
             var templatePayload = helper.MakeTempProcessorPayload(req.body.OrderAPIJSON, req.body.retailer);
             var sparkpostPayload;
 
+
+            if (templatePayload === false) {
+                console.log('No items shipped, so no dice', templatePayload);
+                res.send("Looks like nothing has shipped on this order... sorry...");
+            }
+
+
             // Post to template processor
             request.post({
                 headers: { "Content-Type" : "application/json" },
