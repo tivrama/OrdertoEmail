@@ -34,8 +34,8 @@ var currentState = state.alertEmailTypes;
 
 // put values in here for testing
 var sample1 = {
-    logon: "22615df5d6d440f28dcb80122a789a2e",
-    password: "3e68906aea364164a6dc230a87a84bf6",
+    logon: "",
+    password: "",
     retailer: "brownells",
     order: "1507672400"
 }
