@@ -34,11 +34,12 @@ var currentState = state.alertEmailTypes;
 
 // put values in here for testing
 var sample1 = {
-    logon: "22615df5d6d440f28dcb80122a789a2e",
-    password: "3e68906aea364164a6dc230a87a84bf6",
+    logon: "",
+    password: "",
     retailer: "brownells",
     order: "1507672400"
 }
+
 
 
 
@@ -46,17 +47,37 @@ var sample1 = {
 $(document).ready(function(){
     $( "#step1" ).submit(function( event ) {
         
-        currentState1.retailer = $("#retailer").val();
-        currentState2.retailer = currentState1.retailer
+        var lintedRetailer = $("#retailer").val().toLowerCase().replace(/[-]/gi, '_');
+
+        currentState1.retailer = lintedRetailer;
+        currentState2.retailer = currentState1.retailer;
         currentState1.logon = $("#logon").val();
         currentState1.password = $("#password").val();
         currentState1.order = $("#order").val();
 
 
         // Toggle this for testing
-        // $.post('/api/getorder', currentState1, function(data, status){
-        $.post('/api/getorder', sample1, function(data, status){
+        $.post('/api/getorder', currentState1, function(data, status){
+        // $.post('/api/getorder', sample1, function(data, status){
+
+            // add catch if ordernumber does not exist
+            if (data.status === "FAILURE") {
+                alert("Sorry... We can't find that order");
+                return;
+            }
+
+            if (data.status === null) {
+                alert("Sorry... Those credentials are not working");
+                return;
+            }
+
+            if (!data.emailTypes) {
+                alert("The Retailer Moniker is not right");
+                return;
+            }
+
             console.log("Data: " + data.order_info.order_number + "\nStatus: " + status);
+
             currentState2.OrderAPIJSON = data;
             currentState = data.emailTypes;
 
@@ -65,9 +86,9 @@ $(document).ready(function(){
             var c = '</option>';
             // Loop through currentState and make dropdown values
             for (var key in currentState) {
-                var d =  a + currentState[key] + b + currentState[key] + c;
+                var emailListItem =  a + currentState[key] + b + currentState[key] + c;
                 // add each new element to the dropdown
-                 $(emailList).append(d);
+                 $(emailList).append(emailListItem);
             }
             // remove disabled attribute from form 2
             $("#name").removeAttr("disabled");

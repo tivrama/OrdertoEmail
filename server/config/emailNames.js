@@ -49,6 +49,14 @@ module.exports = {
 		1462: "delivery attempted",
 		1461: "delivered"
 	},
+	brownells_staging: {
+		1459: "delayed",
+		1460: "delivered shipped",
+		1458: "delivery anticipation",
+		2245: "ship confirmation",
+		1462: "delivery attempted",
+		1461: "delivered"
+	},
 	samsclub: {
 		3738: "delivery attempted",
 		3737: "delivered",
@@ -106,6 +114,11 @@ module.exports = {
 		16123: "delayed",               
 		16122: "delivery anticipation"
 	},
+	dwr_staging: {
+		16124: "delivered",               
+		16123: "delayed",               
+		16122: "delivery anticipation"
+	},
 	academy: {          
 		17236: "delivered",
 		17235: "delayed",
@@ -135,7 +148,15 @@ module.exports = {
 		29780: "delayed",
 		29779: "delivery anticipation"
 	},
+	ralphlauren_staging: {
+		29781: "delivered",
+		29780: "delayed",
+		29779: "delivery anticipation"
+	},
 	jcpenney: {
+		48433: "delivered"
+	},
+	jcpenney_staging: {
 		48433: "delivered"
 	},
 	chicos: {
