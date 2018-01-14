@@ -80,7 +80,6 @@ Flow 3: (TODO)
 
 
 TODO:
-- If there is no shipment object in the order API reponse, let user know it will be stubbed in
 - Defaulet object button. - call for retailer email types, then stub in all data
 - If no shipment obj is on the order, then let the front end know
 - Allow user to add in shipment info

@@ -110,6 +110,8 @@ module.exports = {
         }
         // Error catch
         if (shipmentsArray) {
+
+console.log("Shipments: ", shipmentsArray)            
             // loop through shipments
             for (var i = 0; i < shipmentsArray.length; i++) {
 
@@ -127,7 +129,7 @@ module.exports = {
                     // loop through itemsArray and look for matching item or sku
                     for (var k = 0; k < remainingItems.length; k++) {
                         // if itemOrSku matchs, 
-                        if (remainingItems[k][itemOrSku] === shipmentsArray[i].items_info[j][itemOrSku]) {
+                        if (remainingItems[k][itemOrSku] === [i].items_info[j][itemOrSku]) {
 
                             // check if we are in a current shipment
                             if (!newShipmentOrCurrent) {
@@ -135,7 +137,7 @@ module.exports = {
                                 var newShipment = new this.ShipmentSchema(shipmentsArray[i], retailer);
 
                                 newShipmentOrCurrent = true;
-                            } 
+                            }
 
                             // create a new item
                             var newItem = new this.ItemSchema(remainingItems[k], shipmentsArray[i].items_info[j].quantity)
