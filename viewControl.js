@@ -24,8 +24,6 @@ var state = {
      
 };
 
-
-
 var currentState1 = state.call1schema;
 var currentState2 = state.call2schema;
 var currentState = state.alertEmailTypes;
@@ -34,10 +32,10 @@ var currentState = state.alertEmailTypes;
 
 // put values in here for testing
 var sample1 = {
-    logon: "",
-    password: "",
-    retailer: "brownells",
-    order: "1507672400"
+    logon: "9768613d9e8d4731adc00c6db771efaf",
+    password: "2b9318ee06d840b38ba9f4f232a7fc9c",
+    retailer: "purchasingpower",
+    order: "18982234"
 }
 
 
@@ -57,8 +55,8 @@ $(document).ready(function(){
 
 
         // Toggle this for testing
-        $.post('/api/getorder', currentState1, function(data, status){
-        // $.post('/api/getorder', sample1, function(data, status){
+        // $.post('/api/getorder', currentState1, function(data, status){
+        $.post('/api/getorder', sample1, function(data, status){
 
             // add catch if ordernumber does not exist
             if (data.status === "FAILURE") {
@@ -74,6 +72,10 @@ $(document).ready(function(){
             if (!data.emailTypes) {
                 alert("The Retailer Moniker is not right");
                 return;
+            }
+
+            if (!data.order_info.shipments) {
+                alert("Nothing on this order has shipped.  That's OK, we'll stub in a shipment.  But know that we'll be making that part up")
             }
 
             console.log("Data: " + data.order_info.order_number + "\nStatus: " + status);
@@ -131,10 +133,7 @@ $(document).ready(function(){
 });
 
 
-// Reset form 1
-$(document).ready(function(){
-    $( "#reset1" ).click(function( event ) {
-
+var resetEverything = function() {
         currentState1 = state.call1schema;
         currentState2 = state.call2schema;
         currentState = state.alertEmailTypes;
@@ -152,6 +151,14 @@ $(document).ready(function(){
         $("option").remove();
         $("#name").val("");
         $("#email").val("");
+}
+
+
+// Reset form 1
+$(document).ready(function(){
+    $( "#reset1" ).click(function( event ) {
+
+        resetEverything();
 
         event.preventDefault();
     });
@@ -165,7 +172,6 @@ $(document).ready(function(){
         currentState1 = state.call1schema;
         currentState = state.alertEmailTypes;
 
-
         // Reset Form Values
         $("#name").val("");
         $("#email").val("");
@@ -178,23 +184,7 @@ $(document).ready(function(){
 $(document).ready(function(){
     $( "#resetAll" ).click(function( event ) {
 
-        currentState1 = state.call1schema;
-        currentState2 = state.call2schema;
-        currentState = state.alertEmailTypes;
-
-        $("#name").attr("disabled");
-        $("#email").attr("disabled");
-        $("#send2").attr("disabled");
-
-        // Reset Form Values
-        $("#retailer").val("");
-        $("#logon").val("");
-        $("#password").val("");
-        $("#order").val("");
-
-        $("option").remove();
-        $("#name").val("");
-        $("#email").val("");
+        resetEverything();
 
         event.preventDefault();
     });
