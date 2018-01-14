@@ -110,11 +110,9 @@ module.exports = {
         }
         // Error catch
         if (shipmentsArray) {
-
-console.log("Shipments: ", shipmentsArray)            
+           
             // loop through shipments
             for (var i = 0; i < shipmentsArray.length; i++) {
-
                 // loop through items in current shipment
                 for (var j = 0; j < shipmentsArray[i].items_info.length; j++) {
 
@@ -129,7 +127,7 @@ console.log("Shipments: ", shipmentsArray)
                     // loop through itemsArray and look for matching item or sku
                     for (var k = 0; k < remainingItems.length; k++) {
                         // if itemOrSku matchs, 
-                        if (remainingItems[k][itemOrSku] === [i].items_info[j][itemOrSku]) {
+                        if (remainingItems[k][itemOrSku] === shipmentsArray[i].items_info[j][itemOrSku]) {
 
                             // check if we are in a current shipment
                             if (!newShipmentOrCurrent) {
@@ -137,7 +135,7 @@ console.log("Shipments: ", shipmentsArray)
                                 var newShipment = new this.ShipmentSchema(shipmentsArray[i], retailer);
 
                                 newShipmentOrCurrent = true;
-                            }
+                            } 
 
                             // create a new item
                             var newItem = new this.ItemSchema(remainingItems[k], shipmentsArray[i].items_info[j].quantity)
@@ -147,19 +145,20 @@ console.log("Shipments: ", shipmentsArray)
                             // add new item to current shipment
                             newShipment.order_items.push(newItem);
                         }
-
-                        // reset newShipment
-                        newShipmentOrCurrent = false;
                     }
                 }
-            } 
-
+                // reset newShipment
+                newShipmentOrCurrent = false;
                 // unshift the current shipment into the array to be returned
                 shipmentsWithRemainingItems.formattedShipments.unshift(newShipment);
+
+            } 
+
+
         } else {
             return false;
         }
-
+console.log("SHIPMENTS: ", shipmentsWithRemainingItems.formattedShipments)
         // format any remaining items
         for (var l = 0; l < remainingItems.length; l++) {
             if (remainingItems[l].quantity > 0) {
