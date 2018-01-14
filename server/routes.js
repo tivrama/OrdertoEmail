@@ -3,7 +3,7 @@ var request = require('request');
 var keys = process.env.SPARK_POST_KEY || require('./config/config.js').sparkpost;
 var emailNames = require('./config/emailNames.js');
 var helper = require('./js/helpfunctions.js');
-
+var fakeOrder = require('./config/order.js');
 
 
     module.exports = function(app) {
@@ -24,7 +24,6 @@ var helper = require('./js/helpfunctions.js');
             // base 46 encode logon and password
             var auth = new Buffer(req.body.logon + ":" + req.body.password).toString('base64');
             var url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
-
             request.get({
                 headers: { Authorization: "Basic " + auth },
                 url: url
@@ -32,9 +31,16 @@ var helper = require('./js/helpfunctions.js');
                 if (error) {
                     console.log('Call to the Order API failed', error);
                     res.send(error);
+                  
                 } else {
                     // add Alert types to the body
                     body = JSON.parse(body);
+
+                    if (body.status === "ERROR") {
+                        body.status = "SUCCESS";
+                        body.order_info = fakeOrder;
+                    }
+
                     body.emailTypes = emailNames[req.body.retailer];
                     res.json(body);
                 }

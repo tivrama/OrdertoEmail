@@ -126,7 +126,7 @@
                     },
                     {
                         "quantity": 1,
-                        "sku": "108-006-000-2"
+                        "sku": "108-006-002"
                     }
                 ],
                 "carrier": "FEDEX",
@@ -172,7 +172,7 @@
                     }
                 },
                 "ship_date": "2018-01-04T06:00:00Z",
-                "tracking_number": "12345678910111213141516-2",
+                "tracking_number": "12345678910111213141517",
                 "pre_shipment": false
             }
         ],
