@@ -12,41 +12,40 @@
     <body>
         <h1>Order Into Emails!</h1>
 
+        <fieldset>
 
-        <br>
+            <legend>Send Email by Order:</legend>
+            <form id="step1">
+                <fieldset>
+                    <legend>Personal information:</legend>
+                    Retailer Moniker:<br>
+                    <input type="text" id="retailer" class="fieldInput" required="true" placeholder="Enter Retailer Moniker"><br>
+                    Logon:<br>
+                    <input type="text" id="logon" class="fieldInput" required="true" placeholder="Enter Logon"><br>
+                    Password:<br>
+                    <input type="password" id="password" class="fieldInput" required="true" placeholder="Enter Password"><br>
+                    Order:<br>
+                    <input type="text" id="order" class="fieldInput" required="true" placeholder="Enter Order"><br>
+                    <input type="submit" value="Get Email Types"><input  id="reset1" type="reset">
+                </fieldset>
+            </form>
 
-        <form id="step1">
-            <fieldset>
-                <legend>Personal information:</legend>
-                Retailer Moniker:<br>
-                <input type="text" id="retailer" class="fieldInput" required="true" placeholder="Enter Retailer Moniker"><br>
-                Logon:<br>
-                <input type="text" id="logon" class="fieldInput" required="true" placeholder="Enter Logon"><br>
-                Password:<br>
-                <input type="password" id="password" class="fieldInput" required="true" placeholder="Enter Password"><br>
-                Order:<br>
-                <input type="text" id="order" class="fieldInput" required="true" placeholder="Enter Order"><br>
-                <input type="submit" value="Get Email Types"><input  id="reset1" type="reset">
-            </fieldset>
-        </form>
+            <form id="step2">
+                <fieldset>
+                    <legend>Select email type and recipients:</legend>
+                    Email Alert Type:<br>
+                    <select name="emailTypes" class="fieldInput" id="emailList"></select><br>
+                    Name:<br>
+                    <input type="text" id="name" class="fieldInput" required="true" placeholder="Enter Name" disabled><br>
+                    email:<br>
+                    <input type="text" id="email" class="fieldInput" required="true" placeholder="Enter Email" disabled><br>
+                    <input type="submit" id="send2" value="Send Email" disabled><input id="reset2" type="reset">
+                </fieldset>
+            </form>
 
-
-
-
-        <form id="step2">
-            <fieldset>
-                <legend>Select email type and recipients:</legend>
-                Email Alert Type:<br>
-                <select name="emailTypes" class="fieldInput" id="emailList"></select><br>
-                Name:<br>
-                <input type="text" id="name" class="fieldInput" required="true" placeholder="Enter Name" disabled><br>
-                email:<br>
-                <input type="text" id="email" class="fieldInput" required="true" placeholder="Enter Email" disabled><br>
-                <input type="submit" id="send2" value="Send Email" disabled><input id="reset2" type="reset">
-            </fieldset>
-        </form>
-
-        <button id="resetAll">Reset Everything</button>
+            <button id="resetAll">Reset Everything</button>
+            
+        </fieldset>
 
 
 
