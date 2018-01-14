@@ -20,27 +20,70 @@ module.exports = {
     },
 
 
+    FakeShipmentSchema: function (itemsArray) {
+
+        var newFakeShipment = {
+            tracking_number: "1ZV90R483A26143820",
+            carrier: "UPS",
+            carrier_name: "UPS",
+            carrier_service: "UG",
+            carrier_status: "",
+            carrier_phone_number: "1.800.8000",
+            guaranteed_delivery_date: "",   // This field will populate date on Delayed emails TODO: make function to increment date forward
+            shipped_to: {
+                first_name: "Joe",
+                last_name: "Schmoe",
+                phone: "",
+                email: "test@narvar.com",
+                fax: "",
+                address: {
+                    street_1: "123 Main St",
+                    street_2: "",
+                    city: "Springfield",
+                    state: "IL",
+                    zip: "12345-6789"
+                }
+            },
+            shipment_date: new Date(),
+            pre_shipment: false,
+            items_info: [] // itemSchema goes here
+        }
+
+        // Loop through itemsArray and make sure everything shipped
+        for (var i = 0; i < itemsArray.length; i++) {
+            var item = {
+                quantity: itemsArray[i].quantity,
+                item_id: itemsArray[i].item_id ? itemsArray[i].item_id : null,
+                sku: itemsArray[i].sku ? itemsArray[i].sku : null
+            };
+            newFakeShipment.items_info.push(item)
+        }
+
+        return newFakeShipment;
+    },
+
+
 
     ShipmentSchema: function (shipementDetails, retailer) {
         
         var newShipment = {
-            tracking_number: shipementDetails.tracking_number,
-            carrier_moniker: shipementDetails.carrier,
-            carrier_name: shipementDetails.carrier,
+            tracking_number: shipementDetails.tracking_number ? shipementDetails.tracking_number : "1ZV90R483A26143820",
+            carrier_moniker: shipementDetails.carrier ? shipementDetails.carrier : "UPS",
+            carrier_name: shipementDetails.carrier ? shipementDetails.carrier: "UPS",
             carrier_status: shipementDetails.carrier_service ? shipementDetails.carrier_service : "",
             carrier_phone_number: "1.800.8000",
-            guaranteed_delivery_date: shipementDetails.ship_date,   // This field will populate date on Delayed emails TODO: make function to increment date forward
-            tracking_url: "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number,
+            guaranteed_delivery_date: shipementDetails.ship_date ? shipementDetails.ship_date : "",   // This field will populate date on Delayed emails TODO: make function to increment date forward
+            tracking_url: shipementDetails.tracking_number ? "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number : "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=1ZV90R483A26143820",
             address: {
-                line1: shipementDetails.shipped_to.address.street_1 ? shipementDetails.shipped_to.address.street_1 : "",
+                line1: shipementDetails.shipped_to.address.street_1 ? shipementDetails.shipped_to.address.street_1 : "123 Main St",
                 line2: shipementDetails.shipped_to.address.street_2 ? shipementDetails.shipped_to.address.street_2 : "",
                 line3: shipementDetails.shipped_to.address.street_3 ? shipementDetails.shipped_to.address.street_3 : "",
-                city: shipementDetails.shipped_to.address.city ? shipementDetails.shipped_to.address.city : "",
-                state: shipementDetails.shipped_to.address.state ? shipementDetails.shipped_to.address.state : "",
-                zip: shipementDetails.shipped_to.address.zip ? shipementDetails.shipped_to.address.zip : "",
+                city: shipementDetails.shipped_to.address.city ? shipementDetails.shipped_to.address.city : "Springfield",
+                state: shipementDetails.shipped_to.address.state ? shipementDetails.shipped_to.address.state : "IL",
+                zip: shipementDetails.shipped_to.address.zip ? shipementDetails.shipped_to.address.zip : "12345",
                 country: shipementDetails.shipped_to.address.country ? shipementDetails.shipped_to.address.country : ""
             },
-            shipment_date: shipementDetails.ship_date ? shipementDetails.ship_date : "",
+            shipment_date: shipementDetails.ship_date ? shipementDetails.ship_date : new Date(),
             order_items: [] // itemSchema goes here
         }
 
@@ -60,7 +103,12 @@ module.exports = {
             remainingFormattedItems: []
         };
 
-        // Add check for shipments
+        if (shipmentsArray === undefined) {
+            shipmentsArray = [];
+            var fakeShipment = new this.FakeShipmentSchema(itemsArray);
+            shipmentsArray.push(fakeShipment);
+        }
+        // Error catch
         if (shipmentsArray) {
             // loop through shipments
             for (var i = 0; i < shipmentsArray.length; i++) {
@@ -85,6 +133,7 @@ module.exports = {
                             if (!newShipmentOrCurrent) {
                                 // create the shipment object 
                                 var newShipment = new this.ShipmentSchema(shipmentsArray[i], retailer);
+
                                 newShipmentOrCurrent = true;
                             } 
 
@@ -155,6 +204,7 @@ module.exports = {
         
         if (shipmentsAndItems === false) {
             return false
+            
         } else {
             tempProcessorPayload.order_info.current_shipment = shipmentsAndItems.formattedShipments.pop();
             tempProcessorPayload.order_info.multi_shipment = shipmentsAndItems.formattedShipments;

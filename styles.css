@@ -1,3 +1,16 @@
+ body {
+ 	font-family: arial;
+ }
+
+
+.boarderBox {
+	font-size: 35px;
+}
+
+.formBox {
+	font-size: 25px;
+}
+
 .fieldInput {
 	width: 400px;
 }
