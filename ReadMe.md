@@ -5,9 +5,11 @@ https://ordertoemail.herokuapp.com/
 # Run Locally
 - clone repo , cd into the folder, and run ```npm i```
 - make a file called ```server/config/config.js``` and add creds for sparkpost.  The file should look like this:
-```module.exports = {
+```
+module.exports = {
   sparkpost: '<sparkpost-key>',
-};```
+};
+```
 - run ```nodemon``` or ```npm start```
 - open on ```localhost:3000```
 
