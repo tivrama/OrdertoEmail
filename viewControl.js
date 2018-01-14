@@ -32,10 +32,10 @@ var currentState = state.alertEmailTypes;
 
 // put values in here for testing
 var sample1 = {
-    logon: "9768613d9e8d4731adc00c6db771efaf",
-    password: "2b9318ee06d840b38ba9f4f232a7fc9c",
-    retailer: "purchasingpower",
-    order: "18982234"
+    logon: "",
+    password: "",
+    retailer: "",
+    order: ""
 }
 
 
@@ -45,6 +45,9 @@ var sample1 = {
 $(document).ready(function(){
     $( "#step1" ).submit(function( event ) {
         
+        // Reset everyting in form 2
+        resetForm2();
+
         var lintedRetailer = $("#retailer").val().toLowerCase().replace(/[-]/gi, '_');
 
         currentState1.retailer = lintedRetailer;
@@ -53,10 +56,13 @@ $(document).ready(function(){
         currentState1.password = $("#password").val();
         currentState1.order = $("#order").val();
 
+        // if (currentState1.order === "") {
+        //     currentState1.order = false;
+        // }
 
         // Toggle this for testing
-        // $.post('/api/getorder', currentState1, function(data, status){
-        $.post('/api/getorder', sample1, function(data, status){
+        // $.post('/api/getorder', sample1, function(data, status){
+        $.post('/api/getorder', currentState1, function(data, status){
 
             // add catch if ordernumber does not exist
             if (data.status === "FAILURE") {
@@ -153,6 +159,13 @@ var resetEverything = function() {
         $("#email").val("");
 }
 
+var resetForm2 = function() {
+        currentState = state.alertEmailTypes;
+
+        $("option").remove();
+        $("#name").val("");
+        $("#email").val("");
+}
 
 // Reset form 1
 $(document).ready(function(){
