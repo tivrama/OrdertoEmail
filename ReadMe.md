@@ -1,17 +1,19 @@
 https://ordertoemail.herokuapp.com/
 
-## Instructions:
+# Instructions:
 
-# Run Locally
+## Run Locally
 - clone repo , cd into the folder, and run ```npm i```
 - make a file called ```server/config/config.js``` and add creds for sparkpost.  The file should look like this:
-```module.exports = {
+```
+module.exports = {
   sparkpost: '<sparkpost-key>',
-};```
+};
+```
 - run ```nodemon``` or ```npm start```
 - open on ```localhost:3000```
 
-# Make API Calls
+## Make API Calls
 No need to always use the front end.  All calls can be make with curl or Postman.  All calls are Posts.  Use these schemas:
 - First Call: ```https://ordertoemail.herokuapp.com/api/getorder``` or ```http://localhost:3000/api/getorder```
 ```
@@ -41,7 +43,7 @@ No need to always use the front end.  All calls can be make with curl or Postman
 
 
 
-# TODOs
+## TODOs
 
 Flow 1:
 1) Server presents homepage (only monker, auth and order number fields shown).
