@@ -1,14 +1,19 @@
 https://ordertoemail.herokuapp.com/
 
-# Instructions:
+## Instructions:
 
-- clone repo and run npm i
-- make a file called server/config/config.js and add creds for sparkpost
-- nodemon
-- open on localhost:3000
+# Run Locally
+- clone repo , cd into the folder, and run ```npm i```
+- make a file called ```server/config/config.js``` and add creds for sparkpost.  The file should look like this:
+```module.exports = {
+  sparkpost: '<sparkpost-key>',
+};```
+- run ```nodemon``` or ```npm start```
+- open on ```localhost:3000```
 
+# Make API Calls
 No need to always use the front end.  All calls can be make with curl or Postman.  All calls are Posts.  Use these schemas:
-- First Call: http://localhost:3000/api/getorder
+- First Call: ```https://ordertoemail.herokuapp.com/api/getorder``` or ```http://localhost:3000/api/getorder```
 ```
 {
   "logon": "<Retailer_Logon>",
@@ -17,30 +22,26 @@ No need to always use the front end.  All calls can be make with curl or Postman
   "order": "<Valid_Order_Number>"
 }
 ```
-- Second Call: http://localhost:3000/api/sendemail
+- Second Call: ```https://ordertoemail.herokuapp.com/api/sendemail``` or ```http://localhost:3000/api/sendemail```
 ```
 {
-  "retailer": ""<Retailer_Mooniker>",       // saved in front end state
-  "alertEmailType": "<alert_Email_Type>",   // numeric code of the email type
-  "OrderAPIJSON": "<Response_From_First_Call>",
-  "emailNames": {
-    "address": {
-      "email": "<email_of_recipient>",
-      "name": "<name_of_recipient>"
+  "retailer": "<Retailer_Mooniker>",         // saved in front end state
+  "alertEmailType": "<alert_Email_Type>",    // numeric code of the email type
+  "OrderAPIJSON": "<Response_From_OrderAPI>",
+  "recipients": [
+    {
+      "address": {
+        "email": "<email_of_recipient>",
+        "name": "<name_of_recipient>"
+      }
     }
-  }
+  ]
 }
 ```
 
 
-# User entery fields:
-Reailer Moniker
-Logon
-Password
-Order number
-To email addresses and names
-select alert type
 
+# TODOs
 
 Flow 1:
 1) Server presents homepage (only monker, auth and order number fields shown).
@@ -77,6 +78,7 @@ Flow 3: (TODO)
 
 
 TODO:
+- If there is no shipment object in the order API reponse, let user know it will be stubbed in
 - Defaulet object button. - call for retailer email types, then stub in all data
 - If no shipment obj is on the order, then let the front end know
 - Allow user to add in shipment info
