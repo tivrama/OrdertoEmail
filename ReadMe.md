@@ -42,22 +42,20 @@ No need to always use the front end.  All calls can be make with curl or Postman
 ```
 
 
-
-## TODOs
-
 Flow 1:
-1) Server presents homepage (only monker, auth and order number fields shown).
+1) Server presents homepage (only monker, auth and order number fields are availble for use in the first call).
 2) User fills in the 4 fields.
 3) Post to server with user entered data.
 4) Server makes call 1 to Order API with logon, password, order number. Response has Order API JSON.
 5) Server adds retailer email types to Order API JSON and sends to Client.
-6) Client displayes aprroval of credentials, high level order details, dropdown or email types, an fields for entering name and email recipients.
+6) Client displayes aprroval of credentials, dropdown or email types, and activates fields for entering name and email recipients.
 7) Client posts to Server with user entered data (email type, emails and mames).
 8) Server converts Order API data into Sparkpost fromatted data.
 9) Server makes call 2 to Template Processer with data from Order API, and code for email type.
 10) Server makes call 3 to Sparkpost to send the email.
 11) Call status to Sparkpost is sent to client and displayed to user.
 
+## TODOs
 
 Flow 2: (TODO)
 1) Server presents homepage (all fields shown)
@@ -80,7 +78,5 @@ Flow 3: (TODO)
 
 
 TODO:
-- Defaulet object button. - call for retailer email types, then stub in all data
-- If no shipment obj is on the order, then let the front end know
 - Allow user to add in shipment info
 - Display actual email in a new tab (find \" and replace with "). save as .html and serve in an new tab

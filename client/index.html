@@ -6,6 +6,8 @@
         <title>Orders Into Emails</title>
         <meta name="description" content="Turn an order into an email">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script type="text/javascript" src="viewControl.js"></script>
         <script type="text/javascript" src="state.js"></script>
         <link type="text/css" rel="stylesheet" href="styles.css"></link>
@@ -13,9 +15,12 @@
 
     <body>
 
-        <h1>Order Into Emails!</h1>
+        <header class="header">
+            <h1 class="topHeader">Order Into Emails</h1>
+        </header>
 
-        <fieldset>
+
+        <fieldset class="flow1">
 
             <legend class="boarderBox">Send Email by Order</legend>
 
@@ -29,7 +34,7 @@
                     Password:<br>
                     <input type="password" id="password" class="fieldInput" required="true" placeholder="Enter Password"><br>
                     Order:<br>
-                    <input type="text" id="order" class="fieldInput" placeholder="Enter Order - It's OK to leave this blank"><br>
+                    <input type="text" id="order" class="fieldInput" placeholder="Enter Order Number - It's OK to leave this blank"><br>
                     <input type="submit" value="Get Email Types"><input  id="reset1" type="reset">
                 </fieldset>
             </form>
