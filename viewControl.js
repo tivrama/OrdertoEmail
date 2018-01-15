@@ -56,30 +56,26 @@ $(document).ready(function(){
         currentState1.password = $("#password").val();
         currentState1.order = $("#order").val();
 
-        // if (currentState1.order === "") {
-        //     currentState1.order = false;
-        // }
-
         // Toggle this for testing
         // $.post('/api/getorder', sample1, function(data, status){
         $.post('/api/getorder', currentState1, function(data, status){
 
-            // add catch if ordernumber does not exist
+            // catch if ordernumber does not exist
             if (data.status === "FAILURE") {
                 alert("Sorry... We can't find that order");
                 return;
             }
-
+            // catch if bad credentials
             if (data.status === null) {
                 alert("Sorry... Those credentials are not working");
                 return;
             }
-
+            // catch if moniker not found
             if (!data.emailTypes) {
                 alert("The Retailer Moniker is not right");
                 return;
             }
-
+            // warning if order had not shipped
             if (!data.order_info.shipments) {
                 alert("Nothing on this order has shipped.  That's OK, we'll stub in a shipment.  But know that we'll be making that part up")
             }
@@ -203,5 +199,14 @@ $(document).ready(function(){
     });
 });
 
+
+// MODAL Section
+//   $( function() {
+//     $( "#dialog" ).dialog();
+//   } );
+
+// <div id="dialog" title="Basic dialog">
+//   <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+// </div>
 
 
