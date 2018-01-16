@@ -15,7 +15,7 @@
   "content": {
     "from": {
       "email": "@narvar.com",          // retailer + "@narvar.com"
-      "name": ""                 // retailer - make capital case
+      "name": ""                       // retailer - make capital case
     },
     "text": "",                        // Not used - leave blank
     "html": "",                        // Where the HTML from the TemplateProcessor response goes (this is a loooong string)
