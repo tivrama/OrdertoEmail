@@ -29,7 +29,7 @@ module.exports = {
             carrier_service: "UG",
             carrier_status: "",
             carrier_phone_number: "1.800.8000",
-            guaranteed_delivery_date: "",   // This field will populate date on Delayed emails TODO: make function to increment date forward
+            guaranteed_delivery_date: new Date(),
             shipped_to: {
                 first_name: "Joe",
                 last_name: "Schmoe",
@@ -72,7 +72,7 @@ module.exports = {
             carrier_name: shipementDetails.carrier ? shipementDetails.carrier: "UPS",
             carrier_status: shipementDetails.carrier_service ? shipementDetails.carrier_service : "",
             carrier_phone_number: "1.800.8000",
-            guaranteed_delivery_date: shipementDetails.ship_date ? shipementDetails.ship_date : "",   // This field will populate date on Delayed emails TODO: make function to increment date forward
+            guaranteed_delivery_date: shipementDetails.ship_date ? shipementDetails.ship_date : new Date(),
             tracking_url: shipementDetails.tracking_number ? "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number : "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=1ZV90R483A26143820",
             address: {
                 line1: shipementDetails.shipped_to.address.street_1 ? shipementDetails.shipped_to.address.street_1 : "123 Main St",
@@ -95,7 +95,7 @@ module.exports = {
     matchShipmentWithItems: function(shipmentsArray, itemsArray, retailer) {
         
         var remainingItems = itemsArray;    // make a copy which can be changed
-        var itemOrSku = "";                 // make var with will remember if sku or item_id is the primary key
+        var itemOrSku = "";                 // var will remember if sku or item_id is the primary key
         var newShipmentOrCurrent = false;   // flag for determining if we make a new shipment, or add to current
 
         var shipmentsWithRemainingItems = { // object returned: has formatted shipments and any remaining items
@@ -140,7 +140,7 @@ module.exports = {
                             // create a new item
                             var newItem = new this.ItemSchema(remainingItems[k], shipmentsArray[i].items_info[j].quantity)
                             // subtract the amount of  shipped items from the copy array of items
-                            remainingItems[k].quantity = shipmentsArray[i].items_info[j].quantity - remainingItems[k].quantity;
+                            remainingItems[k].quantity = remainingItems[k].quantity - shipmentsArray[i].items_info[j].quantity;
 
                             // add new item to current shipment
                             newShipment.order_items.push(newItem);
@@ -158,7 +158,6 @@ module.exports = {
         } else {
             return false;
         }
-console.log("SHIPMENTS: ", shipmentsWithRemainingItems.formattedShipments)
         // format any remaining items
         for (var l = 0; l < remainingItems.length; l++) {
             if (remainingItems[l].quantity > 0) {
@@ -224,7 +223,7 @@ console.log("SHIPMENTS: ", shipmentsWithRemainingItems.formattedShipments)
     MakeSparkpostPayload: function (templateResponse, retailer, recipients) {
 
         templateResponse = JSON.parse(templateResponse);
-// console.log("templateResponse: ", templateResponse)        
+       
         var SparkpostPayload = {
             options: {
                 open_tracking: true,
