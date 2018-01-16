@@ -13,8 +13,7 @@ body {
     display: flex;
     font-size: 1.15rem;
     height: 60px;
-    padding: 0 20px;
-    
+    padding: 0 20px;  
     width: 100%;
 }
 
@@ -63,5 +62,6 @@ body {
 }
 
 #resetAll:active {
-	background-color:#1399d6
+	background-color: #1399d6;
+	color: #ffffff;
 }

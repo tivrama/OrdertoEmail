@@ -119,9 +119,6 @@ $(document).ready(function(){
         // add emails
         currentState2.recipients[0].address.name = $("#name").val();
         currentState2.recipients[0].address.email = $("#email").val();
-        // currentState2 = JSON.stringify(currentState2);
-
-        console.log("currentState2: ", currentState2.OrderAPIJSON)
 
         // send off to make an email
         $.post('/api/sendemail', currentState2, function(data, status){

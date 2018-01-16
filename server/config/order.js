@@ -6,7 +6,7 @@ module.exports = {
         {
             item_id: null,
             retailer: null,
-            sku: "108-006-000",
+            sku: "000001",
             name: "Labrador Puppy",
             description: "Fresh from the mill",
             quantity: 7,
@@ -43,7 +43,7 @@ module.exports = {
         {
             item_id: null,
             retailer: null,
-            sku: "108-006-002",
+            sku: "000002",
             name: "Full Grown Labrador - Male",
             description: "Slighly used, but well loved",
             quantity: 1,
@@ -80,7 +80,7 @@ module.exports = {
         {
             item_id: null,
             retailer: null,
-            sku: "108-006-003",
+            sku: "000003",
             name: "Cattle Dog",
             description: "Good at hearding cattle, dinner guests, children",
             quantity: 1,
@@ -113,6 +113,43 @@ module.exports = {
             item_promise_date: null,
             pre_shipment: null,
             return_reason_code: null
+        },
+        {
+            item_id: null,
+            retailer: null,
+            sku: "000004",
+            name: "Golden Doodle Puppy",
+            description: "Hyper Allogenic Poodle Golden Retreiver Mix",
+            quantity: 1,
+            unit_price: 1399.99,
+            discount_amount: null,
+            discount_percent: null,
+            categories: null,
+            item_image: "https://assets.narvar.com/retailers/peninsula/doodle.png",
+            item_url: "https://assets.narvar.com/retailers/peninsula/doodle.png",
+            is_final_sale: false,
+            is_active: null,
+            fulfillment_status: "",
+            is_gift: null,
+            final_sale_date: null,
+            product_type: null,
+            product_id: null,
+            line_number: null,
+            attributes: {
+                color: "Tan",
+                size: "S",
+                style: "",
+                weight: "",
+                weight_unit: "",
+                price: 1399.99,
+                currency: ""
+            },
+            dimensions: null,
+            is_backordered: true,
+            vendor: null,
+            item_promise_date: null,
+            pre_shipment: null,
+            return_reason_code: null
         }
     ],
     shipments: [
@@ -121,11 +158,11 @@ module.exports = {
             items_info: [
                     {
                         quantity: 5,
-                        sku: "108-006-000"
+                        sku: "000001"
                     },
                     {
                         quantity: 1,
-                        sku: "108-006-002"
+                        sku: "000002"
                     }
                 ],
             carrier: "FEDEX",
@@ -152,7 +189,7 @@ module.exports = {
             items_info: [
                 {
                     quantity: 2,
-                    sku: "108-006-000"
+                    sku: "000001"
                 }
             ],
             carrier: "FEDEX",
@@ -172,6 +209,33 @@ module.exports = {
             },
             ship_date: "2018-01-04T06:00:00Z",
             tracking_number: "12345678910111213141517",
+            pre_shipment: false
+        },
+        {
+            carrier_service: "SP",
+            items_info: [
+                {
+                    quantity: 1,
+                    sku: "000003"
+                }
+            ],
+            carrier: "FEDEX",
+            shipped_to: {
+                first_name: "Joe",
+                last_name: "Schmoe",
+                phone: "",
+                email: "test@narvar.com",
+                fax: "",
+                address: {
+                    street_1: "123 Main St",
+                    street_2: "",
+                    city: "Springfield",
+                    state: "IL",
+                    zip: "12345-6789"
+                }
+            },
+            ship_date: "2018-01-04T06:00:00Z",
+            tracking_number: "12345678910111213141518",
             pre_shipment: false
         }
     ],
