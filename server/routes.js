@@ -59,7 +59,7 @@ var fakeOrder = require('./config/order.js');
             // Call function to json, and format into post body for template processor
             var templatePayload = helper.MakeTempProcessorPayload(req.body.OrderAPIJSON, req.body.retailer);
             var sparkpostPayload;
-
+// console.log("TMPLATE: ", templatePayload)
 
             if (templatePayload === false) {
                 console.log('No items shipped, so no dice', templatePayload);

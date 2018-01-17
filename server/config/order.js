@@ -274,7 +274,7 @@ module.exports = {
             state: "IL",
             zip: "12345-6789"
             },
-        customer_id: "",
+        customer_id: "customer_numero_uno",
         customer_type: ""
     }
 };
