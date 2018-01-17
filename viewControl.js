@@ -68,6 +68,8 @@ $(document).ready(function(){
             // catch if bad credentials
             if (data.status === null) {
                 alert("Sorry... Those credentials are not working");
+// $("#dialog").dialog("open");
+
                 return;
             }
             // catch if moniker not found
@@ -122,7 +124,7 @@ $(document).ready(function(){
 
         // send off to make an email
         $.post('/api/sendemail', currentState2, function(data, status){
-
+            // data = JSON.parse(data);
             console.log("Data: " + data + "\nStatus: " + status);
 
         });

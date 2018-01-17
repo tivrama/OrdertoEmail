@@ -133,7 +133,6 @@ module.exports = {
                             if (!newShipmentOrCurrent) {
                                 // create the shipment object 
                                 var newShipment = new this.ShipmentSchema(shipmentsArray[i], retailer);
-
                                 newShipmentOrCurrent = true;
                             } 
 
@@ -179,6 +178,7 @@ module.exports = {
             order_info: {
                 order_number: json.order_info.order_number,
                 order_date: json.order_info.order_date,
+                customer_id: json.order_info.customer.customer_id ? json.order_info.customer.customer_id : "",
                 first_name: json.order_info.customer.first_name,
                 last_name: json.order_info.customer.last_name ? json.order_info.customer.last_name : "",
                 address: {
@@ -223,7 +223,8 @@ module.exports = {
     MakeSparkpostPayload: function (templateResponse, retailer, recipients) {
 
         templateResponse = JSON.parse(templateResponse);
-       
+        retailer = retailer.replace(/[_]/gi, '-')
+
         var SparkpostPayload = {
             options: {
                 open_tracking: true,
@@ -238,7 +239,7 @@ module.exports = {
                 },
                 text: "",
                 html: templateResponse.body,
-                subject: templateResponse.subject ? templateResponse.subject : "Update on you package",
+                subject: templateResponse.subject ? templateResponse.subject : "Update on your package",
                 reply_to: "no-reply@narvar.com"   
             }
         };
