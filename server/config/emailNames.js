@@ -185,7 +185,7 @@ module.exports = {
 		25142: "delivered",
 		25141: "delayed"
 	},
-	athleta-staging: {
+	athleta_staging: {
 		25143: "delivery attempted",
 		25142: "delivered",
 		25141: "delayed"
@@ -209,7 +209,7 @@ module.exports = {
 	chicos: {
 		50647: "delayed"
 	},
-	chicos-staging: {
+	chicos_staging: {
 		50647: "delayed"
 	},
 	toms: {
