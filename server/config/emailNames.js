@@ -27,6 +27,12 @@ module.exports = {
 		534: "delayed",
 		49882: "ship confirmation"
 	},
+	finishline_staging: {
+		536: "delivery attempted",
+		535: "delivered",
+		534: "delayed",
+		49882: "ship confirmation"
+	},
 	hankypanky: {
 		47: "delivered"
 	},
@@ -62,6 +68,11 @@ module.exports = {
 		3737: "delivered",
 		3736: "delayed"
 	},
+	samsclub_staging: {
+		3738: "delivery attempted",
+		3737: "delivered",
+		3736: "delayed"
+	},
 	theblacktux: {
 		4121: "Try On delivery",
 		4311: "Return On The Way",
@@ -78,6 +89,11 @@ module.exports = {
 		6871: "delivery anticipation"
 	},
 	oldnavy: {
+		4153: "delivery attempted",
+		4152: "delivered",
+		4151: "delayed"
+	},
+	oldnavy_staging:  {
 		4153: "delivery attempted",
 		4152: "delivered",
 		4151: "delayed"
@@ -109,6 +125,13 @@ module.exports = {
 		13795: "Damaged",
 		11415: "delivery anticipation"
 	},
+	purchasingpowerstaging: {
+		13680: "Undeliverable",
+		11417: "delivered",
+		11416: "delayed",
+		13795: "Damaged",
+		11415: "delivery anticipation"
+	},
 	dwr: {
 		16124: "delivered",               
 		16123: "delayed",               
@@ -125,10 +148,24 @@ module.exports = {
 		17234: "delivery anticipation",
 		24979: "ship confirmation"
 	},
+	academystaging: {          
+		17236: "delivered",
+		17235: "delayed",
+		17234: "delivery anticipation",
+		24979: "ship confirmation"
+	},
 	nativecos: {
 		17280: "delivered"
 	},
+	nativecos_staging: {
+		17280: "delivered"
+	},
 	gap: {
+		20967: "delivery attempted",
+		20966: "delivered",
+		20965: "delayed"
+	},
+	gap_staging: {
 		20967: "delivery attempted",
 		20966: "delivered",
 		20965: "delayed"
@@ -138,7 +175,17 @@ module.exports = {
 		24984: "delayed",
 		25146: "delivery attempted"
 	},
+	bananarepublic_staging: {
+		24985: "delivered",
+		24984: "delayed",
+		25146: "delivery attempted"
+	},
 	athleta: {
+		25143: "delivery attempted",
+		25142: "delivered",
+		25141: "delayed"
+	},
+	athleta-staging: {
 		25143: "delivery attempted",
 		25142: "delivered",
 		25141: "delayed"
@@ -160,6 +207,9 @@ module.exports = {
 		48433: "delivered"
 	},
 	chicos: {
+		50647: "delayed"
+	},
+	chicos-staging: {
 		50647: "delayed"
 	},
 	toms: {
