@@ -29,7 +29,7 @@ module.exports = {
             carrier_service: "UG",
             carrier_status: "",
             carrier_phone_number: "1.800.8000",
-            guaranteed_delivery_date: new Date(),
+            guaranteed_delivery_date: new Date().toString(),
             shipped_to: {
                 first_name: "Joe",
                 last_name: "Schmoe",
@@ -44,7 +44,7 @@ module.exports = {
                     zip: "12345-6789"
                 }
             },
-            shipment_date: new Date(),
+            shipment_date: new Date().toString(),
             pre_shipment: false,
             items_info: [] // itemSchema goes here
         }
@@ -72,7 +72,7 @@ module.exports = {
             carrier_name: shipementDetails.carrier ? shipementDetails.carrier: "UPS",
             carrier_status: shipementDetails.carrier_service ? shipementDetails.carrier_service : "",
             carrier_phone_number: "1.800.8000",
-            guaranteed_delivery_date: shipementDetails.ship_date ? shipementDetails.ship_date : new Date(),
+            guaranteed_delivery_date: shipementDetails.ship_date ? shipementDetails.ship_date : new Date().toString(),
             tracking_url: shipementDetails.tracking_number ? "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number : "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=1ZV90R483A26143820",
             address: {
                 line1: shipementDetails.shipped_to.address.street_1 ? shipementDetails.shipped_to.address.street_1 : "123 Main St",
@@ -83,7 +83,7 @@ module.exports = {
                 zip: shipementDetails.shipped_to.address.zip ? shipementDetails.shipped_to.address.zip : "12345",
                 country: shipementDetails.shipped_to.address.country ? shipementDetails.shipped_to.address.country : ""
             },
-            shipment_date: shipementDetails.ship_date ? shipementDetails.ship_date : new Date(),
+            shipment_date: shipementDetails.ship_date ? shipementDetails.ship_date : new Date().toString(),
             order_items: [] // itemSchema goes here
         }
 
