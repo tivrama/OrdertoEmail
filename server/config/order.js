@@ -1,6 +1,6 @@
 module.exports = {
     order_number: "1234567891",
-    order_date: "2018-01-02T10:27:24Z",
+    order_date: new Date().toString(),
     status: "SHIPPING",
     order_items: [
         {
@@ -180,7 +180,7 @@ module.exports = {
                     zip: "12345-6789"
                 }
             },
-            ship_date: "2018-01-04T06:00:00Z",
+            ship_date: new Date().toString(),
             tracking_number: "12345678910111213141516",
             pre_shipment: false
         },
@@ -207,7 +207,7 @@ module.exports = {
                     zip: "12345-6789"
                 }
             },
-            ship_date: "2018-01-04T06:00:00Z",
+            ship_date: new Date().toString(),
             tracking_number: "12345678910111213141517",
             pre_shipment: false
         },
@@ -234,7 +234,7 @@ module.exports = {
                     zip: "12345-6789"
                 }
             },
-            ship_date: "2018-01-04T06:00:00Z",
+            ship_date: new Date().toString(),
             tracking_number: "12345678910111213141518",
             pre_shipment: false
         }
