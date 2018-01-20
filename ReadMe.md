@@ -20,7 +20,7 @@ No need to always use the front end.  All calls can be make with curl or Postman
 {
   "logon": "<Retailer_Logon>",
   "password": "<Retailer_Password>",
-  "retailer": "<Retailer_Mooniker>",
+  "retailer": "<Retailer_Moniker>",
   "order": "<Valid_Order_Number>"
 }
 ```
