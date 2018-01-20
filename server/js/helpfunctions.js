@@ -170,26 +170,42 @@ module.exports = {
 
     },
 
+    MakeAddress: function (json, source) {
 
+        if (source === "customer"){
+            var address = {
+                line1: json.order_info.customer.address.street_1 ? json.order_info.customer.address.street_1 : "",
+                line2: json.order_info.customer.address.street_2 ? json.order_info.customer.address.street_2 : "",
+                line3: json.order_info.customer.address.street_3 ? json.order_info.customer.address.street_3 : "",
+                city: json.order_info.customer.address.city ? json.order_info.customer.address.city: "",
+                state: json.order_info.customer.address.state ? json.order_info.customer.address.state: "",
+                zip: json.order_info.customer.address.zip ? json.order_info.customer.address.zip : "",
+                country: json.order_info.customer.address.country ? json.order_info.customer.address.country : ""
+            };
+        } else {
+            var address = {
+                line1: json.order_info.billing.billed_to.address.street_1 ? json.order_info.billing.billed_to.address.street_1 : "",
+                line2: json.order_info.billing.billed_to.address.street_2 ? json.order_info.billing.billed_to.address.street_2 : "",
+                line3: json.order_info.billing.billed_to.address.street_3 ? json.order_info.billing.billed_to.address.street_3 : "",
+                city: json.order_info.billing.billed_to.address.city ? json.order_info.billing.billed_to.address.city: "",
+                state: json.order_info.billing.billed_to.address.state ? json.order_info.billing.billed_to.address.state: "",
+                zip: json.order_info.billing.billed_to.address.zip ? json.order_info.billing.billed_to.address.zip : "",
+                country: json.order_info.billing.billed_to.address.country ? json.order_info.billing.billed_to.address.country : ""
+            };
+        }
+
+        return address;
+    },
 
     MakeTempProcessorPayload: function (json, retailer) {
-
+        
         var tempProcessorPayload = {
             order_info: {
                 order_number: json.order_info.order_number,
                 order_date: json.order_info.order_date,
-                customer_id: json.order_info.customer.customer_id ? json.order_info.customer.customer_id : "",
                 first_name: json.order_info.customer.first_name,
                 last_name: json.order_info.customer.last_name ? json.order_info.customer.last_name : "",
-                address: {
-                    line1: json.order_info.customer.address.street_1 ? json.order_info.customer.address.street_1 : "",
-                    line2: json.order_info.customer.address.street_2 ? json.order_info.customer.address.street_2 : "",
-                    line3: json.order_info.customer.address.street_3 ? json.order_info.customer.address.street_3 : "",
-                    city: json.order_info.customer.address.city ? json.order_info.customer.address.city: "",
-                    state: json.order_info.customer.address.state,
-                    zip: json.order_info.customer.address.zip,
-                    country: json.order_info.customer.address.country ? json.order_info.customer.address.country : ""
-                },
+                address: {},
                 status: "",
                 current_shipment: {}, // this will get the first shipment object with matching items from shipmentSchema
 
@@ -199,6 +215,18 @@ module.exports = {
             }
         }; 
 
+        // Check if customer object has values
+        if (json.order_info.customer.address) {
+            tempProcessorPayload.order_info.customer_id = json.order_info.customer.customer_id ? json.order_info.customer.customer_id : "";
+            tempProcessorPayload.order_info.address = new this.MakeAddress(json, "customer");
+        } else {
+            if (json.order_info.customer) {
+                if(json.order_info.customer.customer_id) {
+                    tempProcessorPayload.order_info.customer_id = json.order_info.customer.customer_id;
+                }
+            }
+            tempProcessorPayload.order_info.address = new this.MakeAddress(json, "order_info");
+        }
         // call function to make formated shipments with items, and any remaining formatted items which have not shipped
         var shipmentsAndItems = this.matchShipmentWithItems(json.order_info.shipments, json.order_info.order_items, retailer);
         
