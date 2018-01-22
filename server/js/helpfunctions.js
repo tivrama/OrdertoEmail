@@ -108,9 +108,9 @@ module.exports = {
             var fakeShipment = new this.FakeShipmentSchema(itemsArray);
             shipmentsArray.push(fakeShipment);
         }
+
         // Error catch
         if (shipmentsArray) {
-           
             // loop through shipments
             for (var i = 0; i < shipmentsArray.length; i++) {
                 // loop through items in current shipment
@@ -131,7 +131,7 @@ module.exports = {
 
                             // check if we are in a current shipment
                             if (!newShipmentOrCurrent) {
-                                // create the shipment object 
+                                // create the shipment object
                                 var newShipment = new this.ShipmentSchema(shipmentsArray[i], retailer);
                                 newShipmentOrCurrent = true;
                             } 
@@ -182,7 +182,7 @@ module.exports = {
                 zip: json.order_info.customer.address.zip ? json.order_info.customer.address.zip : "",
                 country: json.order_info.customer.address.country ? json.order_info.customer.address.country : ""
             };
-        } else {
+        } else { // Otherwise, ues address info from the billing object
             var address = {
                 line1: json.order_info.billing.billed_to.address.street_1 ? json.order_info.billing.billed_to.address.street_1 : "",
                 line2: json.order_info.billing.billed_to.address.street_2 ? json.order_info.billing.billed_to.address.street_2 : "",
@@ -229,7 +229,7 @@ module.exports = {
         }
         // call function to make formated shipments with items, and any remaining formatted items which have not shipped
         var shipmentsAndItems = this.matchShipmentWithItems(json.order_info.shipments, json.order_info.order_items, retailer);
-        
+
         if (shipmentsAndItems === false) {
             return false
             
