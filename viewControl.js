@@ -124,8 +124,13 @@ $(document).ready(function(){
 
         // send off to make an email
         $.post('/api/sendemail', currentState2, function(data, status){
-            // data = JSON.parse(data);
             console.log("Data: " + data + "\nStatus: " + status);
+            data = JSON.parse(data);
+            if (data.results.total_accepted_recipients > 0) {
+                alert("The email was sent")
+            } else {
+                alert("Something went wrong.  Could be the order. Please try a different order or leave the order field blank.")
+            }
 
         });
 
