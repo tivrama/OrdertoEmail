@@ -203,7 +203,7 @@ module.exports = {
             order_info: {
                 order_number: json.order_info.order_number,
                 order_date: json.order_info.order_date,
-                first_name: json.order_info.customer.first_name,
+                first_name: json.order_info.customer.first_name,  //TODO: Catch if no customer Object
                 last_name: json.order_info.customer.last_name ? json.order_info.customer.last_name : "",
                 address: {},
                 status: "",
