@@ -24,21 +24,11 @@ var state = {
      
 };
 
+// Set initial state
 var currentState1 = state.call1schema;
 var currentState2 = state.call2schema;
 var currentState = state.alertEmailTypes;
-
-
-
-// put values in here for testing
-var sample1 = {
-    logon: "",
-    password: "",
-    retailer: "",
-    order: ""
-}
-
-
+var emailCount = 1;
 
 
 // First call
@@ -56,8 +46,6 @@ $(document).ready(function(){
         currentState1.password = $("#password").val();
         currentState1.order = $("#order").val();
 
-        // Toggle this for testing
-        // $.post('/api/getorder', sample1, function(data, status){
         $.post('/api/getorder', currentState1, function(data, status){
 
             // catch if ordernumber does not exist
@@ -68,8 +56,6 @@ $(document).ready(function(){
             // catch if bad credentials
             if (data.status === null) {
                 alert("Sorry... Those credentials are not working");
-// $("#dialog").dialog("open");
-
                 return;
             }
             // catch if moniker not found
@@ -100,11 +86,30 @@ $(document).ready(function(){
             $("#name").removeAttr("disabled");
             $("#email").removeAttr("disabled");
             $("#send2").removeAttr("disabled");
+            $("#addRow").removeAttr("disabled");
         });
 
-      event.preventDefault();
+        event.preventDefault();
     });
 });
+
+
+
+// Add emails to list
+$(document).ready(function(){
+    $( "#addRow" ).click(function( event ) {
+        console.log("Inside add row")
+        // make new item
+        var previousLine = emailCount;
+        emailCount++;
+        var newLine = '<input type="text" id="name' + emailCount + '" class="fieldInput" required="true" placeholder="Enter Name"><br>email:<br><input type="text" id="email' + emailCount + '" class="fieldInput" required="true" placeholder="Enter Email"><br>'
+console.log(newLine)
+        $( email1 ).append(newLine);
+
+        event.preventDefault();
+    });
+});
+
 
 
 // Second call
@@ -119,8 +124,8 @@ $(document).ready(function(){
         }
 
         // add emails
-        currentState2.recipients[0].address.name = $("#name").val();
-        currentState2.recipients[0].address.email = $("#email").val();
+        currentState2.recipients[0].address.name = $("#name1").val();
+        currentState2.recipients[0].address.email = $("#email1").val();
 
         // send off to make an email
         $.post('/api/sendemail', currentState2, function(data, status){
@@ -134,7 +139,7 @@ $(document).ready(function(){
 
         });
 
-    event.preventDefault();
+        event.preventDefault();
     });
 });
 
@@ -204,13 +209,18 @@ $(document).ready(function(){
 });
 
 
+
 // MODAL Section
 //   $( function() {
 //     $( "#dialog" ).dialog();
 //   } );
 
+// Create element and append to the dom
 // <div id="dialog" title="Basic dialog">
 //   <p>TSorry... Those credentials are not working</p>
 // </div>
+
+// Open the modal
+// $("#dialog").dialog("open");
 
 
