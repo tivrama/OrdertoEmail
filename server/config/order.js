@@ -167,8 +167,8 @@ module.exports = {
                 ],
             carrier: "FEDEX",
             shipped_to: {
-                first_name: "John",
-                last_name: "Smith",
+                first_name: "Buckaroo",
+                last_name: "Banzai",
                 phone: "",
                 email: "test@narvar.com",
                 fax: "",
@@ -194,8 +194,8 @@ module.exports = {
             ],
             carrier: "FEDEX",
             shipped_to: {
-                first_name: "John",
-                last_name: "Smith",
+                first_name: "Buckaroo",
+                last_name: "Banzai",
                 phone: "",
                 email: "test@narvar.com",
                 fax: "",
@@ -221,8 +221,8 @@ module.exports = {
             ],
             carrier: "FEDEX",
             shipped_to: {
-                first_name: "John",
-                last_name: "Smith",
+                first_name: "Buckaroo",
+                last_name: "Banzai",
                 phone: "",
                 email: "test@narvar.com",
                 fax: "",
@@ -241,8 +241,8 @@ module.exports = {
     ],
     billing: {
         billed_to: {
-            first_name: "John",
-            last_name: "Smith",
+            first_name: "Buckaroo",
+            last_name: "Banzai",
             phone: "123-456-7891",
             email: "test@narvar.com",
             fax: "",
@@ -263,8 +263,8 @@ module.exports = {
         ]
     },
     customer: {
-        first_name: "John",
-        last_name: "Smith",
+        first_name: "Buckaroo",
+        last_name: "Banzai",
         phone: "",
         email: "test@narvar.com",
         fax: "",
