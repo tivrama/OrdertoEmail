@@ -215,6 +215,15 @@ module.exports = {
             }
         }; 
 
+        if (json.order_info.customer.first_name) {
+            tempProcessorPayload.order_info.first_name = json.order_info.customer.first_name;
+            tempProcessorPayload.order_info.last_name = json.order_info.customer.last_name;
+        } else {          
+            tempProcessorPayload.order_info.first_name = json.order_info.billing.billed_to.first_name;
+            tempProcessorPayload.order_info.last_name = json.order_info.billing.billed_to.last_name;
+        }
+
+
         // Check if customer object has values
         if (json.order_info.customer.address) {
             tempProcessorPayload.order_info.customer_id = json.order_info.customer.customer_id ? json.order_info.customer.customer_id : "";
@@ -237,7 +246,7 @@ module.exports = {
             tempProcessorPayload.order_info.current_shipment = shipmentsAndItems.formattedShipments.pop();
             tempProcessorPayload.order_info.multi_shipment = shipmentsAndItems.formattedShipments;
             tempProcessorPayload.order_info.items_being_processed = shipmentsAndItems.remainingFormattedItems;
-
+console.log("tempProcessorPayload: ", tempProcessorPayload)
             return tempProcessorPayload;
         }
 
