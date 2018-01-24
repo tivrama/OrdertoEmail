@@ -44,6 +44,11 @@ body {
 	margin-bottom: 10px;
 }
 
+.fieldInput-2 {
+	width: 400px;
+	margin-bottom: 0px;
+}
+
 .buttonLarge {
 	height: 25px;
 	border-radius: 4px;
@@ -55,6 +60,16 @@ body {
 
 #reset2 {
 	margin-left: 20px;
+}
+
+#addRow {
+	float: right;
+	margin-right: 15px;
+}
+
+#removeRow {
+	float: right;
+	margin-right: 5px;
 }
 
 #resetAll {

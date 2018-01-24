@@ -29,6 +29,7 @@ var currentState1 = state.call1schema;
 var currentState2 = state.call2schema;
 var currentState = state.alertEmailTypes;
 var emailCount = 1;
+var previousLine = 0
 
 
 // First call
@@ -83,8 +84,8 @@ $(document).ready(function(){
                  $(emailList).append(emailListItem);
             }
             // remove disabled attribute from form 2
-            $("#name").removeAttr("disabled");
-            $("#email").removeAttr("disabled");
+            $("#name1").removeAttr("disabled");
+            $("#email1").removeAttr("disabled");
             $("#send2").removeAttr("disabled");
             $("#addRow").removeAttr("disabled");
         });
@@ -98,17 +99,46 @@ $(document).ready(function(){
 // Add emails to list
 $(document).ready(function(){
     $( "#addRow" ).click(function( event ) {
-        console.log("Inside add row")
+        
+        if (emailCount >= 4) {
+            alert("That's all for this round");
+            return;
+        }
+
         // make new item
-        var previousLine = emailCount;
+        previousLine = emailCount;
         emailCount++;
-        var newLine = '<input type="text" id="name' + emailCount + '" class="fieldInput" required="true" placeholder="Enter Name"><br>email:<br><input type="text" id="email' + emailCount + '" class="fieldInput" required="true" placeholder="Enter Email"><br>'
-console.log(newLine)
-        $( email1 ).append(newLine);
+        var newLine = '<div id=' + emailCount + '>Name:<br><input type="text" id="name' + emailCount + '" class="fieldInput-2" placeholder="Enter Name"><br>email:<br><input type="email" id="email' + emailCount + '" class="fieldInput" placeholder="Enter Email"><br></div>';
+        $( emailRecipients ).append(newLine);
+
+        if (previousLine === 1) {
+            var deleteRowButton = '<button id="removeRow" type="button">Remove a Row</button>';
+            $( controls ).append(deleteRowButton);
+        }
 
         event.preventDefault();
     });
 });
+
+
+
+// Remove a row
+$(document).ready(function(){
+     $('body').on('click', "#removeRow", function () {
+
+        var id = '#' + emailCount;
+        $( id ).remove();
+        emailCount--;
+        previousLine--;
+
+        if (emailCount === 1) {
+            $( '#removeRow' ).remove();
+        }
+
+        event.preventDefault();
+    });
+});
+
 
 
 
@@ -144,6 +174,22 @@ $(document).ready(function(){
 });
 
 
+var resetEmailRows = function() {
+    if (emailCount > 1) {
+        for (var i = emailCount; i > 1; i--) {
+            var id = '#' + emailCount;
+            $( id ).remove();
+            emailCount--;
+            previousLine--;
+
+            if (emailCount === 1) {
+                $( '#removeRow' ).remove();
+            }
+        }
+    }
+
+}
+
 var resetEverything = function() {
         currentState1 = state.call1schema;
         currentState2 = state.call2schema;
@@ -162,6 +208,8 @@ var resetEverything = function() {
         $("option").remove();
         $("#name").val("");
         $("#email").val("");
+
+        resetEmailRows();
 }
 
 var resetForm2 = function() {
@@ -170,6 +218,8 @@ var resetForm2 = function() {
         $("option").remove();
         $("#name").val("");
         $("#email").val("");
+
+        resetEmailRows();
 }
 
 // Reset form 1
@@ -193,6 +243,8 @@ $(document).ready(function(){
         // Reset Form Values
         $("#name").val("");
         $("#email").val("");
+
+        resetEmailRows();
 
         event.preventDefault();
     });
