@@ -25,6 +25,8 @@ var emailCount = 1;
 var previousLine = 0;
 
 
+
+
 // First call
 $(document).ready(function(){
     $( "#step1" ).submit(function( event ) {
@@ -91,6 +93,7 @@ $(document).ready(function(){
 
 
 
+
 // Add emails imputs to DOM
 $(document).ready(function(){
     $( "#addRow" ).click(function( event ) {
@@ -132,6 +135,7 @@ $(document).ready(function(){
         // Reset the state so we can add in the current list of recipients
         currentState2.recipients = [];
 
+        // Add user endered emails
         for (var i = 0; i < emailCount; i++) {
             var line = i + 1;
             var name = '#name' + line;
@@ -164,6 +168,8 @@ $(document).ready(function(){
 });
 
 
+
+
 var MakeEmailItem = function(name, email) {
     var contact = {
         address: {
@@ -172,7 +178,10 @@ var MakeEmailItem = function(name, email) {
         }
     };
     return contact;
-}
+};
+
+
+
 
 var resetEmailRows = function() {
     if (emailCount > 1) {
@@ -189,7 +198,10 @@ var resetEmailRows = function() {
         }
     }
 
-}
+};
+
+
+
 
 var resetEverything = function() {
         currentState1 = state.call1schema;
@@ -213,7 +225,10 @@ var resetEverything = function() {
         $("#send2").attr("disabled", true);
         $("#reset2").attr("disabled", true);
         $("#addRow").attr("disabled", true);
-}
+};
+
+
+
 
 var resetForm2 = function() {
         currentState = state.alertEmailTypes;
@@ -224,7 +239,8 @@ var resetForm2 = function() {
         $("#name1").val("");
         $("#email1").val("");
 
-}
+};
+
 
 
 
@@ -248,6 +264,8 @@ $(document).ready(function(){
 });
 
 
+
+
 // Reset form 1
 $(document).ready(function(){
     $( "#reset1" ).click(function( event ) {
@@ -257,6 +275,8 @@ $(document).ready(function(){
         event.preventDefault();
     });
 });
+
+
 
 
 // Reset form 2
@@ -277,6 +297,8 @@ $(document).ready(function(){
 });
 
 
+
+
 // Reset the whole page
 $(document).ready(function(){
     $( "#resetAll" ).click(function( event ) {
@@ -286,6 +308,8 @@ $(document).ready(function(){
         event.preventDefault();
     });
 });
+
+
 
 
 
