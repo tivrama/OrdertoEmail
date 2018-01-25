@@ -206,9 +206,6 @@ module.exports = {
 	jcpenney_staging: {
 		48433: "delivered"
 	},
-	chicos: {
-		50647: "delayed"
-	},
 	chicos_staging: {
 		50647: "delayed"
 	},
@@ -221,6 +218,39 @@ module.exports = {
 		48944: "delayed",
 		48673: "delivered",
 		48672: "delayed"
+	},
+	rei: {
+		52465: "delivery attempted",
+		52464: "delivered",
+		52463: "delayed"
+	},
+	eddiebauer: {
+		54983: "delivery attempted",
+		54982: "delivered",
+		54981: "delayed"
+	},
+	chicos: {
+		50647: "delayed"
+	},
+	chicos_staging: {
+		50647: "delayed"
+	},
+	whitehouseblackmarket: {
+		55052: "delayed"
+	},
+	whitehouseblackmarket_staging: {
+		55052: "delayed"
+	},
+	soma: {
+		55037: "delayed"
+	},
+	soma_staging: {
+		55037: "delayed"
+	},
+	chicosofftherack: {
+		54972: "delayed"
+	},
+	chicosofftherack_staging: {
+		54972: "delayed"
 	}
-
 };
