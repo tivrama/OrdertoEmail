@@ -246,7 +246,7 @@ module.exports = {
             tempProcessorPayload.order_info.current_shipment = shipmentsAndItems.formattedShipments.pop();
             tempProcessorPayload.order_info.multi_shipment = shipmentsAndItems.formattedShipments;
             tempProcessorPayload.order_info.items_being_processed = shipmentsAndItems.remainingFormattedItems;
-console.log("tempProcessorPayload: ", tempProcessorPayload)
+
             return tempProcessorPayload;
         }
 

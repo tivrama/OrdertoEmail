@@ -45,11 +45,16 @@
                     <legend class="formBox">&nbsp;Select email type and recipients&nbsp;</legend>
                     Email Alert Type:<br>
                     <select name="emailTypes" class="fieldInput" id="emailList"></select><br>
-                    Name:<br>
-                    <input type="text" id="name" class="fieldInput" required="true" placeholder="Enter Name" disabled><br>
-                    email:<br>
-                    <input type="text" id="email" class="fieldInput" required="true" placeholder="Enter Email" disabled><br>
-                    <input type="submit" id="send2" value="Send Email" disabled><input id="reset2" type="reset">
+                    <div id=emailRecipients>
+                        Name:<br>
+                        <input type="text" id="name1" class="fieldInput-2" required="true" placeholder="Enter Name" disabled><br>
+                        email:<br>
+                        <input type="email" id="email1" class="fieldInput" required="true" placeholder="Enter Email" disabled><br>
+                    </div>
+                    <div id="controls">
+                        <input type="submit" id="send2" value="Send Email" disabled><input id="reset2" type="reset" disabled>
+                        <button id="addRow" type="button" disabled>Add More Emails</button>
+                    </div>
                 </fieldset>
             </form>
 

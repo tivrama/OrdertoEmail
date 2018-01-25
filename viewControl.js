@@ -10,35 +10,19 @@ var state = {
         retailer: "",
         alertEmailType: "",
         OrderAPIJSON: {},
-        recipients: [
-            {
-                address: {
-                    email: "",
-                    name: ""
-                }
-            }
-        ]
+        recipients: []
     },
     
     alertEmailTypes: {}
      
 };
 
+// Set initial state
 var currentState1 = state.call1schema;
 var currentState2 = state.call2schema;
 var currentState = state.alertEmailTypes;
-
-
-
-// put values in here for testing
-var sample1 = {
-    logon: "",
-    password: "",
-    retailer: "",
-    order: ""
-}
-
-
+var emailCount = 1;
+var previousLine = 0;
 
 
 // First call
@@ -56,8 +40,6 @@ $(document).ready(function(){
         currentState1.password = $("#password").val();
         currentState1.order = $("#order").val();
 
-        // Toggle this for testing
-        // $.post('/api/getorder', sample1, function(data, status){
         $.post('/api/getorder', currentState1, function(data, status){
 
             // catch if ordernumber does not exist
@@ -68,8 +50,6 @@ $(document).ready(function(){
             // catch if bad credentials
             if (data.status === null) {
                 alert("Sorry... Those credentials are not working");
-// $("#dialog").dialog("open");
-
                 return;
             }
             // catch if moniker not found
@@ -97,14 +77,45 @@ $(document).ready(function(){
                  $(emailList).append(emailListItem);
             }
             // remove disabled attribute from form 2
-            $("#name").removeAttr("disabled");
-            $("#email").removeAttr("disabled");
-            $("#send2").removeAttr("disabled");
+            $("#name1").attr("disabled", false);
+            $("#email1").attr("disabled", false);
+            $("#send2").attr("disabled", false);
+            $("#addRow").attr("disabled", false);
+            $("#reset2").attr("disabled", false);
+            $("#addRow").attr("disabled", false);
         });
 
-      event.preventDefault();
+        event.preventDefault();
     });
 });
+
+
+
+// Add emails imputs to DOM
+$(document).ready(function(){
+    $( "#addRow" ).click(function( event ) {
+        
+        if (emailCount >= 4) {
+            alert("That's all for this round");
+            return;
+        }
+
+        // make new item
+        previousLine = emailCount;
+        emailCount++;
+        var newLine = '<div id=' + emailCount + '>Name:<br><input type="text" id="name' + emailCount + '" class="fieldInput-2" placeholder="Enter Name"><br>email:<br><input type="email" id="email' + emailCount + '" class="fieldInput" placeholder="Enter Email"><br></div>';
+        $( emailRecipients ).append(newLine);
+
+        if (previousLine === 1) {
+            var deleteRowButton = '<button id="removeRow" type="button">Remove a Row</button>';
+            $( controls ).append(deleteRowButton);
+        }
+
+        event.preventDefault();
+    });
+});
+
+
 
 
 // Second call
@@ -118,35 +129,74 @@ $(document).ready(function(){
             }
         }
 
-        // add emails
-        currentState2.recipients[0].address.name = $("#name").val();
-        currentState2.recipients[0].address.email = $("#email").val();
+        // Reset the state so we can add in the current list of recipients
+        currentState2.recipients = [];
+
+        for (var i = 0; i < emailCount; i++) {
+            var line = i + 1;
+            var name = '#name' + line;
+            var email = '#email' + line;
+            name = $(name).val();
+            email = $(email).val();
+
+            if (name && email) {
+                var currentContact = new MakeEmailItem(name, email);
+                currentState2.recipients.push(currentContact);
+            }
+
+        }
 
         // send off to make an email
         $.post('/api/sendemail', currentState2, function(data, status){
             console.log("Data: " + data + "\nStatus: " + status);
             data = JSON.parse(data);
             if (data.results.total_accepted_recipients > 0) {
-                alert("The email was sent")
+                var recipientCount = "The email was sent to " + data.results.total_accepted_recipients + " recipient(s)";
+                alert(recipientCount);
             } else {
                 alert("Something went wrong.  Could be the order. Please try a different order or leave the order field blank.")
             }
 
         });
 
-    event.preventDefault();
+        event.preventDefault();
     });
 });
 
+
+var MakeEmailItem = function(name, email) {
+    var contact = {
+        address: {
+            email: email,
+            name: name
+        }
+    };
+    return contact;
+}
+
+var resetEmailRows = function() {
+    if (emailCount > 1) {
+        for (var i = emailCount; i > 1; i--) {
+            var id = '#' + emailCount;
+            $( id ).remove();
+            emailCount--;
+            previousLine--;
+
+            if (emailCount === 1) {
+                $( '#removeRow' ).remove();
+            }
+            currentState2.recipients.pop();
+        }
+    }
+
+}
 
 var resetEverything = function() {
         currentState1 = state.call1schema;
         currentState2 = state.call2schema;
         currentState = state.alertEmailTypes;
 
-        $("#name").attr("disabled");
-        $("#email").attr("disabled");
-        $("#send2").attr("disabled");
+        resetEmailRows();
 
         // Reset Form Values
         $("#retailer").val("");
@@ -155,17 +205,48 @@ var resetEverything = function() {
         $("#order").val("");
 
         $("option").remove();
-        $("#name").val("");
-        $("#email").val("");
+        $("#name1").val("");
+        $("#email1").val("");
+
+        $("#name1").attr("disabled", true);
+        $("#email1").attr("disabled", true);
+        $("#send2").attr("disabled", true);
+        $("#reset2").attr("disabled", true);
+        $("#addRow").attr("disabled", true);
 }
 
 var resetForm2 = function() {
         currentState = state.alertEmailTypes;
 
+        resetEmailRows();
+
         $("option").remove();
-        $("#name").val("");
-        $("#email").val("");
+        $("#name1").val("");
+        $("#email1").val("");
+
 }
+
+
+
+// Remove a row
+$(document).ready(function(){
+     $('body').on('click', "#removeRow", function () {
+
+        var id = '#' + emailCount;
+        $( id ).remove();
+        emailCount--;
+        previousLine--;
+
+        if (emailCount === 1) {
+            $( '#removeRow' ).remove();
+        }
+
+        currentState2.recipients.pop();
+
+        event.preventDefault();
+    });
+});
+
 
 // Reset form 1
 $(document).ready(function(){
@@ -189,9 +270,12 @@ $(document).ready(function(){
         $("#name").val("");
         $("#email").val("");
 
+        resetEmailRows();
+
         event.preventDefault();
     });
 });
+
 
 // Reset the whole page
 $(document).ready(function(){
@@ -204,13 +288,18 @@ $(document).ready(function(){
 });
 
 
+
 // MODAL Section
 //   $( function() {
 //     $( "#dialog" ).dialog();
 //   } );
 
+// Create element and append to the dom
 // <div id="dialog" title="Basic dialog">
 //   <p>TSorry... Those credentials are not working</p>
 // </div>
+
+// Open the modal
+// $("#dialog").dialog("open");
 
 
