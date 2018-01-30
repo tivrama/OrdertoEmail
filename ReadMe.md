@@ -78,4 +78,5 @@ Flow 3: (TODO)
 
 
 TODO:
+- Make guaranteed_delivery_date tomorrow's date.  
 - Display actual email in a new tab (find \" and replace with "). save as .html and serve in an new tab
