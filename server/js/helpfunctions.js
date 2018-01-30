@@ -21,6 +21,9 @@ module.exports = {
 
 
     FakeShipmentSchema: function (itemsArray) {
+        var today = new Date();
+        var yesterday = new Date(today.getTime() - (24 * 60 * 60 * 1000));
+        var tomorrow = new Date(today.getTime() + (48 * 60 * 60 * 1000));
 
         var newFakeShipment = {
             tracking_number: "1ZV90R483A26143820",
@@ -29,7 +32,7 @@ module.exports = {
             carrier_service: "UG",
             carrier_status: "",
             carrier_phone_number: "1.800.8000",
-            guaranteed_delivery_date: new Date().toString(),
+            guaranteed_delivery_date: tomorrow.toString(),
             shipped_to: {
                 first_name: "Joe",
                 last_name: "Schmoe",
@@ -44,7 +47,7 @@ module.exports = {
                     zip: "12345-6789"
                 }
             },
-            shipment_date: new Date().toString(),
+            shipment_date: yesterday.toString(),
             pre_shipment: false,
             items_info: [] // itemSchema goes here
         }
@@ -65,14 +68,17 @@ module.exports = {
 
 
     ShipmentSchema: function (shipementDetails, retailer) {
-        
+        var today = new Date();
+        var yesterday = new Date(today.getTime() - (24 * 60 * 60 * 1000));
+        var tomorrow = new Date(today.getTime() + (48 * 60 * 60 * 1000));
+
         var newShipment = {
             tracking_number: shipementDetails.tracking_number ? shipementDetails.tracking_number : "1ZV90R483A26143820",
             carrier_moniker: shipementDetails.carrier ? shipementDetails.carrier : "UPS",
             carrier_name: shipementDetails.carrier ? shipementDetails.carrier: "UPS",
             carrier_status: shipementDetails.carrier_service ? shipementDetails.carrier_service : "",
             carrier_phone_number: "1.800.8000",
-            guaranteed_delivery_date: shipementDetails.ship_date ? shipementDetails.ship_date : new Date().toString(),
+            guaranteed_delivery_date: tomorrow.toString(),
             tracking_url: shipementDetails.tracking_number ? "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number : "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=1ZV90R483A26143820",
             address: {
                 line1: shipementDetails.shipped_to.address.street_1 ? shipementDetails.shipped_to.address.street_1 : "123 Main St",
@@ -83,7 +89,7 @@ module.exports = {
                 zip: shipementDetails.shipped_to.address.zip ? shipementDetails.shipped_to.address.zip : "12345",
                 country: shipementDetails.shipped_to.address.country ? shipementDetails.shipped_to.address.country : ""
             },
-            shipment_date: shipementDetails.ship_date ? shipementDetails.ship_date : new Date().toString(),
+            shipment_date: shipementDetails.ship_date ? shipementDetails.ship_date : yesterday.toString(),
             order_items: [] // itemSchema goes here
         }
 
@@ -203,8 +209,6 @@ module.exports = {
             order_info: {
                 order_number: json.order_info.order_number,
                 order_date: json.order_info.order_date,
-                first_name: json.order_info.customer.first_name,  //TODO: Catch if no customer Object
-                last_name: json.order_info.customer.last_name ? json.order_info.customer.last_name : "",
                 address: {},
                 status: "",
                 current_shipment: {}, // this will get the first shipment object with matching items from shipmentSchema
@@ -214,28 +218,30 @@ module.exports = {
                 items_being_processed: [] // itemSchema goes here
             }
         }; 
+        // Grab name from the appropriate object from the Order API
+        if (json.order_info.customer !== undefined) {
+            if (json.order_info.customer.first_name !== undefined && json.order_info.customer.first_name !== "") {
+                tempProcessorPayload.order_info.first_name = json.order_info.customer.first_name;
+                tempProcessorPayload.order_info.last_name = json.order_info.customer.last_name;
+            } else {
+                tempProcessorPayload.order_info.first_name = json.order_info.billing.billed_to.first_name;
+                tempProcessorPayload.order_info.last_name = json.order_info.billing.billed_to.last_name;
+            }
+            // Check if customer object has values
+            if (json.order_info.customer.address !== undefined) {
+                tempProcessorPayload.order_info.address = new this.MakeAddress(json, "customer");
+            }
+            if (json.order_info.customer.customer_id !== undefined) {
+                tempProcessorPayload.order_info.customer_id = json.order_info.customer.customer_id;
+            }
 
-        if (json.order_info.customer.first_name) {
-            tempProcessorPayload.order_info.first_name = json.order_info.customer.first_name;
-            tempProcessorPayload.order_info.last_name = json.order_info.customer.last_name;
         } else {          
             tempProcessorPayload.order_info.first_name = json.order_info.billing.billed_to.first_name;
             tempProcessorPayload.order_info.last_name = json.order_info.billing.billed_to.last_name;
-        }
-
-
-        // Check if customer object has values
-        if (json.order_info.customer.address) {
-            tempProcessorPayload.order_info.customer_id = json.order_info.customer.customer_id ? json.order_info.customer.customer_id : "";
-            tempProcessorPayload.order_info.address = new this.MakeAddress(json, "customer");
-        } else {
-            if (json.order_info.customer) {
-                if(json.order_info.customer.customer_id) {
-                    tempProcessorPayload.order_info.customer_id = json.order_info.customer.customer_id;
-                }
-            }
             tempProcessorPayload.order_info.address = new this.MakeAddress(json, "order_info");
         }
+
+
         // call function to make formated shipments with items, and any remaining formatted items which have not shipped
         var shipmentsAndItems = this.matchShipmentWithItems(json.order_info.shipments, json.order_info.order_items, retailer);
 
