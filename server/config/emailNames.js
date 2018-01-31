@@ -173,12 +173,14 @@ module.exports = {
 	bananarepublic: {
 		24985: "delivered",
 		24984: "delayed",
-		25146: "delivery attempted"
+		25146: "delivery attempted",
+		24983: "delivery anticipation"
 	},
 	bananarepublic_staging: {
 		24985: "delivered",
 		24984: "delayed",
-		25146: "delivery attempted"
+		25146: "delivery attempted",
+		24983: "delivery anticipation"
 	},
 	athleta: {
 		25143: "delivery attempted",
