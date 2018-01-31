@@ -78,5 +78,7 @@ Flow 3: (TODO)
 
 
 TODO:
-- Make guaranteed_delivery_date tomorrow's date.  
+- Confirmation of success on step 1
+- Fix step 2 Reset button
+- Make a toggle between QA and Prod/Staging
 - Display actual email in a new tab (find \" and replace with "). save as .html and serve in an new tab
