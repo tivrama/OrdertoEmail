@@ -203,7 +203,9 @@ module.exports = {
 		29779: "delivery anticipation"
 	},
 	jcpenney: {
-		48433: "delivered"
+		48433: "delivered",
+		55663: "delayed",
+		55665: "delivery attempted"
 	},
 	jcpenney_staging: {
 		48433: "delivered"
