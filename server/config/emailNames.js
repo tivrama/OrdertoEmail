@@ -208,7 +208,9 @@ module.exports = {
 		55665: "delivery attempted"
 	},
 	jcpenney_staging: {
-		48433: "delivered"
+		48433: "delivered",
+		55663: "delayed",
+		55665: "delivery attempted"
 	},
 	chicos_staging: {
 		50647: "delayed"
