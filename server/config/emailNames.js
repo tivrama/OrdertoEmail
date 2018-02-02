@@ -212,9 +212,6 @@ module.exports = {
 		55663: "delayed",
 		55665: "delivery attempted"
 	},
-	chicos_staging: {
-		50647: "delayed"
-	},
 	toms: {
 		50317: "delivered",
 		50316: "delayed"
