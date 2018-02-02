@@ -255,5 +255,10 @@ module.exports = {
 	},
 	chicosofftherack_staging: {
 		54972: "delayed"
+	},
+	lenovo: {
+		57929: "delivered",
+		57928: "delayed",
+		57927: "delivery anticipation"
 	}
 };
