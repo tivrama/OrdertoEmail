@@ -283,12 +283,12 @@ $(document).ready(function(){
 $(document).ready(function(){
     $( "#reset2" ).click(function( event ) {
 
-        currentState1 = state.call1schema;
+        currentState2 = state.call2schema;
         currentState = state.alertEmailTypes;
 
         // Reset Form Values
-        $("#name").val("");
-        $("#email").val("");
+        $("#name1").val("");
+        $("#email1").val("");
 
         resetEmailRows();
 
