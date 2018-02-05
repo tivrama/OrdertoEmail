@@ -23,7 +23,14 @@ var fakeOrder = require('./config/order.js');
 
             // base 46 encode logon and password
             var auth = new Buffer(req.body.logon + ":" + req.body.password).toString('base64');
-            var url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
+
+            if (req.body.env === "qa") {
+                var url = "https://ws.narvar.qa/api/v1/orders/" + req.body.order
+            } else {
+                var url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
+            }
+
+
             request.get({
                 headers: { Authorization: "Basic " + auth },
                 url: url
