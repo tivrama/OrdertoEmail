@@ -38,8 +38,8 @@
                     <input type="radio" name="env" value="production" checked> Production / Staging &nbsp;
                     <input type="radio" name="env" value="qa"> QA <br>
 
-                    <input type="submit" value="Get Email Types">
-                    <input  id="reset1" type="reset">
+                    <input type="submit" class="buttonLarge" value="Get Email Types">
+                    <input  id="reset1" class="buttonLarge" type="reset">
                 </fieldset>
             </form>
 
@@ -49,23 +49,23 @@
                 <fieldset>
                     <legend class="formBox">&nbsp;Select email type and recipients&nbsp;</legend>
                     Email Alert Type:<br>
-                    <select name="emailTypes" class="fieldInput" id="emailList"></select><br>
+                    <select name="emailTypes" class="dropDown" id="emailList"></select><br>
                     <div id=emailRecipients>
                         Name:<br>
-                        <input type="text" id="name1" class="fieldInput-2" required="true" placeholder="Enter Name" disabled><br>
+                        <input type="text" id="name1" class="fieldInput" required="true" placeholder="Enter Name" disabled><br>
                         email:<br>
                         <input type="email" id="email1" class="fieldInput" required="true" placeholder="Enter Email" disabled><br>
                     </div>
                     <div id="controls">
-                        <input type="submit" id="send2" value="Send Email" disabled><input id="reset2" type="reset" disabled>
-                        <button id="addRow" type="button" disabled>Add More Emails</button>
+                        <input type="submit" id="send2" value="Send Email" class="buttonLarge" disabled><input class="buttonLarge" id="reset2" type="reset" disabled>
+                        <button id="addRow" type="button" class="buttonLarge" disabled>Add More Emails</button>
                     </div>
                 </fieldset>
             </form>
 
             <br>
 
-            <button id="resetAll" class="buttonLarge">Reset Everything</button>
+            <button id="resetAll" class="buttonXtraLarge">Reset Everything</button>
 
         </fieldset>
 

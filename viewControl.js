@@ -108,11 +108,11 @@ $(document).ready(function(){
         // make new item
         previousLine = emailCount;
         emailCount++;
-        var newLine = '<div id=' + emailCount + '>Name:<br><input type="text" id="name' + emailCount + '" class="fieldInput-2" placeholder="Enter Name"><br>email:<br><input type="email" id="email' + emailCount + '" class="fieldInput" placeholder="Enter Email"><br></div>';
+        var newLine = '<div id=' + emailCount + '>Name:<br><input type="text" id="name' + emailCount + '" class="fieldInput" placeholder="Enter Name"><br>email:<br><input type="email" id="email' + emailCount + '" class="fieldInput" placeholder="Enter Email"><br></div>';
         $( emailRecipients ).append(newLine);
 
         if (previousLine === 1) {
-            var deleteRowButton = '<button id="removeRow" type="button">Remove a Row</button>';
+            var deleteRowButton = '<button id="removeRow" class="buttonLarge" type="button">Remove a Row</button>';
             $( controls ).append(deleteRowButton);
         }
 
