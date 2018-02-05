@@ -21,7 +21,8 @@ No need to always use the front end.  All calls can be make with curl or Postman
   "logon": "<Retailer_Logon>",
   "password": "<Retailer_Password>",
   "retailer": "<Retailer_Moniker>",
-  "order": "<Valid_Order_Number>"
+  "order": "<Valid_Order_Number>",
+  "env": "<'production' or 'qa'>"
 }
 ```
 - Second Call: ```https://ordertoemail.herokuapp.com/api/sendemail``` or ```http://localhost:3000/api/sendemail```
