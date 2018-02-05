@@ -72,6 +72,12 @@ body {
     text-transform: uppercase;
 }
 
+.buttonLarge:active {
+	color: #fff;
+	border-color: #0e719e;
+    background-color: #0e719e;
+}
+
 #reset1 {
 	margin-left: 20px;
 }
