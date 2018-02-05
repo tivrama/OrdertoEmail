@@ -3,7 +3,8 @@ var state = {
         logon: "",
         password: "",
         retailer: "",
-        order: ""
+        order: "",
+        env: "production"
     },
 
     call2schema: {
@@ -41,6 +42,7 @@ $(document).ready(function(){
         currentState1.logon = $("#logon").val();
         currentState1.password = $("#password").val();
         currentState1.order = $("#order").val();
+        currentState1.env = $("input[name='env']:checked").val();
 
         $.post('/api/getorder', currentState1, function(data, status){
 
@@ -215,6 +217,9 @@ var resetEverything = function() {
         $("#logon").val("");
         $("#password").val("");
         $("#order").val("");
+        // Set env to Prod
+        $("[name=env]").filter("[value='production']").prop("checked",true);
+        $("[name=env]").filter("[value='qa']").prop("checked",false);
 
         $("option").remove();
         $("#name1").val("");
