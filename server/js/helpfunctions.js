@@ -77,6 +77,7 @@ module.exports = {
             carrier_moniker: shipementDetails.carrier ? shipementDetails.carrier : "UPS",
             carrier_name: shipementDetails.carrier ? shipementDetails.carrier: "UPS",
             carrier_status: shipementDetails.carrier_service ? shipementDetails.carrier_service : "",
+            ship_source: shipementDetails.ship_source ? shipementDetails.ship_source : "",
             carrier_phone_number: "1.800.8000",
             guaranteed_delivery_date: tomorrow.toString(),
             tracking_url: shipementDetails.tracking_number ? "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number : "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=1ZV90R483A26143820",
