@@ -264,5 +264,10 @@ module.exports = {
 	catbird: {
 		60715: "delivery anticipation",
 		60716: "delivered"
+	},
+	puritan: {
+		54032: "delivery anticipation",
+		54033: "delivered",
+		54034: "delivery attempted"
 	}
 };
