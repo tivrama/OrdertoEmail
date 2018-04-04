@@ -28,7 +28,7 @@ No need to always use the front end.  All calls can be make with curl or Postman
 - Second Call: ```https://ordertoemail.herokuapp.com/api/sendemail``` or ```http://localhost:3000/api/sendemail```
 ```
 {
-  "retailer": "<Retailer_Mooniker>",         // saved in front end state
+  "retailer": "<Retailer_Moniker>",         // saved in front end state
   "alertEmailType": "<alert_Email_Type>",    // numeric code of the email type
   "OrderAPIJSON": "<Response_From_OrderAPI>",
   "recipients": [
