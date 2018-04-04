@@ -269,5 +269,13 @@ module.exports = {
 		54032: "delivery anticipation",
 		54033: "delivered",
 		54034: "delivery attempted"
+	},
+	off5th: {
+		68939: "delivered",
+		68813: "delivery anticipation"
+	},
+	saksfifthavenue: {
+		71102: "delivery anticipation",
+		71103: "delivered"
 	}
 };
