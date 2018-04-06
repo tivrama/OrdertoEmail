@@ -277,5 +277,9 @@ module.exports = {
 	saksfifthavenue: {
 		71102: "delivery anticipation",
 		71103: "delivered"
+	},
+	lordandtaylor: {
+		72226: "delivered",
+		72227: "ship confirmation"
 	}
 };
