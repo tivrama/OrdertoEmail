@@ -272,7 +272,8 @@ module.exports = {
 	},
 	off5th: {
 		68939: "delivered",
-		68813: "delivery anticipation"
+		68813: "delivery anticipation",
+		72755: "ship confirmation"
 	},
 	saksfifthavenue: {
 		71102: "delivery anticipation",
