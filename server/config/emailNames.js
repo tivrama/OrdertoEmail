@@ -25,13 +25,15 @@ module.exports = {
 		536: "delivery attempted",
 		535: "delivered",
 		534: "delayed",
-		49882: "ship confirmation"
+		49882: "ship confirmation",
+		61707: "delivery anticipation"
 	},
 	finishline_staging: {
 		536: "delivery attempted",
 		535: "delivered",
 		534: "delayed",
-		49882: "ship confirmation"
+		49882: "ship confirmation",
+		61707: "delivery anticipation"
 	},
 	hankypanky: {
 		47: "delivered"
