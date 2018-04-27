@@ -64,6 +64,8 @@ $(document).ready(function(){
             // warning if order had not shipped
             if (!data.order_info.shipments) {
                 alert("Nothing on this order has shipped.  That's OK, we'll stub in a shipment.  But know that we'll be making that part up")
+            } else {
+                alert("Success!  See the template types in the 'Emails Alert Type' section below.")   
             }
 
             console.log("Data: " + data.order_info.order_number + "\nStatus: " + status);
