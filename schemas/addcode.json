@@ -1,0 +1,13 @@
+{
+	"auth": {
+	    "logon": "<Retailer_Logon>",
+	    "password": "<Retailer_Password>",
+	    "retailer": "<Retailer_Mooniker>",
+	    "env": "<production_or_qa>"
+	},
+	"codes": [
+		{"453": "delivered"},
+		{"6121": "delayed"},
+		{"454": "delivery attempted"}
+	]
+}

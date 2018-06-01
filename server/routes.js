@@ -5,7 +5,6 @@ var emailNames = require('./config/emailNames.js');
 var helper = require('./js/helpfunctions.js');
 var fakeOrder = require('./config/order.js');
 
-
     module.exports = function(app) {
 
 
@@ -109,6 +108,54 @@ var fakeOrder = require('./config/order.js');
                 }
             });
         });
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////Adding New Templates////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // Call to add alerts email templates
+        app.post('/api/addcode', function(req, res) {
+
+            // base 46 encode logon and password
+            var auth = new Buffer(req.body.logon + ":" + req.body.password).toString('base64');
+
+            if (req.body.env === "qa") {
+                var url = "https://ws.narvar.qa/api/v1/orders/" + req.body.order
+            } else {
+                var url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
+            }
+
+
+            request.get({
+                headers: { Authorization: "Basic " + auth },
+                url: url
+            }, function(error, response, body) {
+                if (error) {
+                    console.log('Call to the Order API failed', error);
+                    res.send(error);
+                  
+                } else {
+                    // add Alert types to the body
+                    body = JSON.parse(body);
+
+                    if (body.status === "ERROR") {
+                        body.status = "SUCCESS";
+                        body.code_added = helper.addCodes(res.retailer, res.codes);
+                    }
+
+                    res.json(body);
+                }
+            });
+        });
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////End Adding New Templates////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         // frontend routes =========================================================

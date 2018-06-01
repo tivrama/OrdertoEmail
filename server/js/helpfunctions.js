@@ -289,6 +289,53 @@ module.exports = {
         };
 
         return SparkpostPayload;
+    },
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////ADD CODES///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    addCodes: function (retailer, codes) {
+
+        var codeUpdated = false;
+        var partialUpdate = false;
+
+        var codeUpdates = {
+            updated: [],
+            already_exists: []
+        };
+
+        // make call to DB
+
+        // check if retialer exists
+
+            // if retailer exists, check if the code values or keys exist
+
+                // if so, do not overwrite
+
+                // if no then add the codes and chage codeUpdate to true
+
+                // if some exeist, only create the new ones, set partialUpdate to true
+
+        // If retailer does not exist, then add retailer and codes and chage codeUpdate to true
+
+
+        // If codeUpdated == true, then update the db
+
+                // return if update is success
+
+                // return err if update fails
+
+        // If codeUpdated == false & partialUpdate == true
+
+            // return list json of updates and codes already existing
+
+        // If codeUpdated == false & partialUpdate == false
+
+            // return  "Code Exists"
+
+
     }
 
 
