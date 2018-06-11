@@ -285,5 +285,8 @@ module.exports = {
 	lordandtaylor: {
 		72226: "delivered",
 		72227: "ship confirmation"
+	},
+	orvis: {
+		112146: "delivered"
 	}
 };
