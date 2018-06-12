@@ -287,6 +287,6 @@ module.exports = {
 		72227: "ship confirmation"
 	},
 	orvis: {
-		112146: "delivered"
+		114290: "delivered"
 	}
 };
