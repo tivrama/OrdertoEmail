@@ -1,9 +1,9 @@
 var path = require('path');
 var request = require('request');
-var keys = require('./config/config.js');
+var keys = process.env.SPARK_POST_KEY || require('./config/config.js').sparkpost;
 var emailNames = require('./config/emailNames.js');
 var helper = require('./js/helpfunctions.js');
-
+var fakeOrder = require('./config/order.js');
 
 
     module.exports = function(app) {
@@ -91,7 +91,13 @@ var helper = require('./js/helpfunctions.js');
 
             // base 46 encode logon and password
             var auth = new Buffer(req.body.logon + ":" + req.body.password).toString('base64');
-            var url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
+
+            if (req.body.env === "qa") {
+                var url = "https://ws.narvar.qa/api/v1/orders/" + req.body.order
+            } else {
+                var url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
+            }
+
 
             request.get({
                 headers: { Authorization: "Basic " + auth },
@@ -100,9 +106,16 @@ var helper = require('./js/helpfunctions.js');
                 if (error) {
                     console.log('Call to the Order API failed', error);
                     res.send(error);
+                  
                 } else {
                     // add Alert types to the body
                     body = JSON.parse(body);
+
+                    if (body.status === "ERROR") {
+                        body.status = "SUCCESS";
+                        body.order_info = fakeOrder;
+                    }
+
                     body.emailTypes = emailNames[req.body.retailer];
                     res.json(body);
                 }
@@ -121,7 +134,7 @@ var helper = require('./js/helpfunctions.js');
             // Call function to json, and format into post body for template processor
             var templatePayload = helper.MakeTempProcessorPayload(req.body.OrderAPIJSON, req.body.retailer);
             var sparkpostPayload;
-
+// console.log("TMPLATE: ", templatePayload)
 
             if (templatePayload === false) {
                 console.log('No items shipped, so no dice', templatePayload);
@@ -145,7 +158,7 @@ var helper = require('./js/helpfunctions.js');
                     // Post payload to Sparkpost
                     request.post({
                         headers: {
-                            "Authorization" : "Basic " + keys.sparkpost,
+                            "Authorization" : "Basic " + keys,
                             "Content-Type" : "application/json",
                             "Accept": "text/csv",
                         },
