@@ -13,6 +13,7 @@ This can only be used with Postman or curl as a post request.  There is no GUI:
 - First Call: http://localhost:3000/api/getpayload
 ```
 {
+  "retailer": "<Retailer_Moniker>",
   "logon": "<Retailer_Logon>",
   "password": "<Retailer_Password>",
   "order": "<Valid_Order_Number>",
@@ -20,11 +21,65 @@ This can only be used with Postman or curl as a post request.  There is no GUI:
 }
 ```
 
+Example Response:
+```
+{
+    "order_info": {
+        "order_number": "12345678",
+        "order_date": "2018-09-01T18:18:44Z",
+        "first_name": "Buckaroo",
+        "last_name": "Banzai",
+        "address": {
+            "line1": "50 Beale St",
+            "line2": "",
+            "line3": "",
+            "city": "San Francisco",
+            "state": "CA",
+            "zip": "94705",
+            "country": "US"
+        },
+        "status": "",
+        "current_shipment": {
+            "tracking_number": "12345678-1",
+            "carrier_moniker": "peninsula",
+            "carrier_name": "peninsula",
+            "carrier_status": "",
+            "carrier_phone_number": "1.800.8000",
+            "guaranteed_delivery_date": "2018-09-01T18:18:44Z",
+            "tracking_url": "https://tracking.narvar.com/peninsula/tracking/ups?tracking_numbers=12345678-1",
+            "address": {
+              "line1": "50 Beale St",
+              "line2": "",
+              "line3": "",
+              "city": "San Francisco",
+              "state": "CA",
+              "zip": "94705",
+              "country": "US"
+            },
+            "shipment_date": "2018-09-01T18:18:44Z",
+            "order_items": [
+                {
+                    "name": "Narvar Mug",
+                    "quantity": 1,
+                    "description_url": "Stylish Mug",
+                    "product_sku": "143866",
+                    "attributes": {
+                        "color": "white",
+                        "size": "M",
+                        "price": 12,
+                        "image_url": "https://assets.narvar.com/retailers/peninsula/peninsula_01.png"
+                    }
+                }
+            ]
+        },
+        "multi_shipment": [],
+        "items_being_processed": []
+    }
+}
+```
 
 
-
-
-
+---End Current Functionality---
 
 
 
@@ -70,8 +125,7 @@ Order number
 To email addresses and names
 select alert type
 
-
-Flow 1:
+Flow:
 1) Server presents homepage (only monker, auth and order number fields shown).
 2) User fills in the 4 fields.
 3) Post to server with user entered data.
@@ -83,19 +137,3 @@ Flow 1:
 9) Server makes call 2 to Template Processer with data from Order API, and code for email type.
 10) Server makes call 3 to Sparkpost to send the email.
 11) Call status to Sparkpost is sent to client and displayed to user.
-
-
-
-Alternative Possible Flow 2:
-1) Server presents homepage (all fields shown)
-2) User enters all fields.  The alert type dropdown activates when a retailer moniker is added.
-3) Post to server with all user entered data.
-4) Server makes call 1 to Order API with logon, password, order number.  Response has Order API JSON.
-5) Server converts Order API data into Sparkpost fromatted data.
-6) Server makes call 2 to Template Processer with data from Order API, and code for emay type.
-7) Server makes call 3 to Sparkpost to send the email.
-8) Call status to Sparkpost is sent to client and displayed to user.
-
-TODO:
-- If no shipment obj is on the order, then let the front end know
-- Allow user to add in shipment info
