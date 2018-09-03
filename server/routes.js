@@ -18,6 +18,58 @@ var helper = require('./js/helpfunctions.js');
 
 
 
+
+        // Call to get order info and returna transformed payload which works in Hub Templates GUI
+        app.post('/api/getpayload', function(req, res) {
+
+            // base 46 encode logon and password
+            var auth = new Buffer(req.body.logon + ":" + req.body.password).toString('base64');
+            // Point the url to the correct environment
+            var url = "";
+            var env = "";
+            if (!req.body.environment) {
+                env = "production"
+            } else {
+                env = req.body.environment.toLowerCase();
+            }
+
+            if (env === "qa") {
+                url = "https://ws.narvar.qa/api/v1/orders/" + req.body.order
+            } else {
+                url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
+            }
+
+
+
+            request.get({
+                headers: { Authorization: "Basic " + auth },
+                url: url
+            }, function(error, response, body) {
+                if (error) {
+                    console.log('Call to the Order API failed', error);
+                    res.send(error);
+                } else {
+
+                    // Call functions to transform the payload
+
+
+                    // add Alert types to the body
+                    body = JSON.parse(body);
+                    body.emailTypes = emailNames[req.body.retailer];
+                    res.json(body);
+                }
+            });
+        });
+
+
+
+
+
+
+
+
+
+
         // Call to get order info and return alerts type codes and names
         app.post('/api/getorder', function(req, res) {
 

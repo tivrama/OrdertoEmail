@@ -9,8 +9,16 @@
 # New Functionality
 # Input an order number and credentials, and get a template payload in the response
 
-
-
+This can only be used with Postman or curl as a post request.  There is no GUI:
+- First Call: http://localhost:3000/api/getpayload
+```
+{
+  "logon": "<Retailer_Logon>",
+  "password": "<Retailer_Password>",
+  "order": "<Valid_Order_Number>",
+  "environment": "<"qa" or "prodction">"
+}
+```
 
 
 
