@@ -5,6 +5,29 @@
 - nodemon
 - open on localhost:3000
 
+
+# New Functionality
+# Input an order number and credentials, and get a template payload in the response
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Old functionality
+## This flow worked when the Template Processor API was online.  It has since been disabled. 
+
 No need to always use the front end.  All calls can be make with curl or Postman.  All calls are Posts.  Use these schemas:
 - First Call: http://localhost:3000/api/getorder
 ```
