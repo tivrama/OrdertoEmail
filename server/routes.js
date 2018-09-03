@@ -18,6 +18,74 @@ var fakeOrder = require('./config/order.js');
 
 
 
+
+        // Call to get order info and returna transformed payload which works in Hub Templates GUI
+        app.post('/api/getpayload', function(req, res) {
+
+            
+            var retailer = "";
+            if (!req.body.retailer) {
+                retailer = "peninsula"
+            } else {
+                retailer = req.body.retailer.toLowerCase();
+            }
+
+
+            // base 46 encode logon and password
+            var auth = new Buffer(req.body.logon + ":" + req.body.password).toString('base64');
+            // Point the url to the correct environment
+            var url = "";
+            var env = "";
+            if (!req.body.environment) {
+                env = "production"
+            } else {
+                env = req.body.environment.toLowerCase();
+            }
+
+            if (env === "qa") {
+                url = "https://ws.narvar.qa/api/v1/orders/" + req.body.order
+            } else {
+                url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
+            }
+
+
+
+            request.get({
+                headers: { Authorization: "Basic " + auth },
+                url: url
+            }, function(error, response, body) {
+                if (error) {
+                    console.log('Call to the Order API failed', error);
+                    res.send(error);
+                } else {
+
+                    // Call functions to transform the payload
+                    body = JSON.parse(body);
+
+                    // Call function to json, and format into post body for template processor
+                    var templatePayload = helper.MakeTempProcessorPayload(body, retailer);
+
+
+                    if (!templatePayload.order_info.current_shipment) {
+                            console.log('No items shipped, so no dice', templatePayload);
+                            res.send("Looks like nothing has shipped on this order... sorry...");
+                    }
+
+                    // Send modified payload (body)
+                    res.json(templatePayload);
+                }
+            });
+        });
+
+
+
+
+
+
+
+
+
+
         // Call to get order info and return alerts type codes and names
         app.post('/api/getorder', function(req, res) {
 
