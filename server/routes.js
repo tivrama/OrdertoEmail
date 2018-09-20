@@ -57,11 +57,18 @@ var helper = require('./js/helpfunctions.js');
                 if (error) {
                     console.log('Call to the Order API failed', error);
                     res.send(error);
-                } else {
+                } 
 
-                    // Call functions to transform the payload
-                    body = JSON.parse(body);
+                // Call functions to transform the payload
+                body = JSON.parse(body);
+                
+                if (body.status === "FAILURE") {
+                    console.log("Can't find this order", body);
+                    res.send("I don't see this order in the Order API.  Maybe check if this is QA or Prod?");
+                    return
+                } 
 
+                else {
                     // Call function to json, and format into post body for template processor
                     var templatePayload = helper.MakeTempProcessorPayload(body, retailer);
 
