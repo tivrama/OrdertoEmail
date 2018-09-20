@@ -1,6 +1,6 @@
 var path = require('path');
 var request = require('request');
-var keys = require('./config/config.js');
+// var keys = require('./config/config.js');
 var emailNames = require('./config/emailNames.js');
 var helper = require('./js/helpfunctions.js');
 
