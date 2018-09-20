@@ -1,9 +1,9 @@
 var path = require('path');
 var request = require('request');
-var keys = process.env.SPARK_POST_KEY || require('./config/config.js').sparkpost;
+var keys = require('./config/config.js');
 var emailNames = require('./config/emailNames.js');
 var helper = require('./js/helpfunctions.js');
-var fakeOrder = require('./config/order.js');
+
 
 
     module.exports = function(app) {
@@ -57,11 +57,18 @@ var fakeOrder = require('./config/order.js');
                 if (error) {
                     console.log('Call to the Order API failed', error);
                     res.send(error);
-                } else {
+                } 
 
-                    // Call functions to transform the payload
-                    body = JSON.parse(body);
+                // Call functions to transform the payload
+                body = JSON.parse(body);
+                
+                if (body.status === "FAILURE") {
+                    console.log("Can't find this order", body);
+                    res.send("I don't see this order in the Order API.  Maybe check if this is QA or Prod?");
+                    return
+                } 
 
+                else {
                     // Call function to json, and format into post body for template processor
                     var templatePayload = helper.MakeTempProcessorPayload(body, retailer);
 
@@ -91,13 +98,7 @@ var fakeOrder = require('./config/order.js');
 
             // base 46 encode logon and password
             var auth = new Buffer(req.body.logon + ":" + req.body.password).toString('base64');
-
-            if (req.body.env === "qa") {
-                var url = "https://ws.narvar.qa/api/v1/orders/" + req.body.order
-            } else {
-                var url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
-            }
-
+            var url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
 
             request.get({
                 headers: { Authorization: "Basic " + auth },
@@ -106,16 +107,9 @@ var fakeOrder = require('./config/order.js');
                 if (error) {
                     console.log('Call to the Order API failed', error);
                     res.send(error);
-                  
                 } else {
                     // add Alert types to the body
                     body = JSON.parse(body);
-
-                    if (body.status === "ERROR") {
-                        body.status = "SUCCESS";
-                        body.order_info = fakeOrder;
-                    }
-
                     body.emailTypes = emailNames[req.body.retailer];
                     res.json(body);
                 }
@@ -134,7 +128,7 @@ var fakeOrder = require('./config/order.js');
             // Call function to json, and format into post body for template processor
             var templatePayload = helper.MakeTempProcessorPayload(req.body.OrderAPIJSON, req.body.retailer);
             var sparkpostPayload;
-// console.log("TMPLATE: ", templatePayload)
+
 
             if (templatePayload === false) {
                 console.log('No items shipped, so no dice', templatePayload);
@@ -158,7 +152,7 @@ var fakeOrder = require('./config/order.js');
                     // Post payload to Sparkpost
                     request.post({
                         headers: {
-                            "Authorization" : "Basic " + keys,
+                            "Authorization" : "Basic " + keys.sparkpost,
                             "Content-Type" : "application/json",
                             "Accept": "text/csv",
                         },
