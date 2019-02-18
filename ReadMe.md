@@ -17,7 +17,7 @@ This can only be used with Postman or curl as a post request.  There is no GUI:
   "logon": "<Retailer_Logon>",
   "password": "<Retailer_Password>",
   "order": "<Valid_Order_Number>",
-  "environment": "<"qa" or "prodction">"
+  "environment": "<"qa" or "production">"
 }
 ```
 
@@ -137,3 +137,7 @@ Flow:
 9) Server makes call 2 to Template Processer with data from Order API, and code for email type.
 10) Server makes call 3 to Sparkpost to send the email.
 11) Call status to Sparkpost is sent to client and displayed to user.
+
+# TODO:
+- Add order number to the track url
+- Add price to items
