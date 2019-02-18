@@ -25,7 +25,15 @@ module.exports = {
 		536: "delivery attempted",
 		535: "delivered",
 		534: "delayed",
-		49882: "ship confirmation"
+		49882: "ship confirmation",
+		61707: "delivery anticipation"
+	},
+	finishline_staging: {
+		536: "delivery attempted",
+		535: "delivered",
+		534: "delayed",
+		49882: "ship confirmation",
+		61707: "delivery anticipation"
 	},
 	hankypanky: {
 		47: "delivered"
@@ -49,7 +57,20 @@ module.exports = {
 		1462: "delivery attempted",
 		1461: "delivered"
 	},
+	brownells_staging: {
+		1459: "delayed",
+		1460: "delivered shipped",
+		1458: "delivery anticipation",
+		2245: "ship confirmation",
+		1462: "delivery attempted",
+		1461: "delivered"
+	},
 	samsclub: {
+		3738: "delivery attempted",
+		3737: "delivered",
+		3736: "delayed"
+	},
+	samsclub_staging: {
 		3738: "delivery attempted",
 		3737: "delivered",
 		3736: "delayed"
@@ -70,6 +91,11 @@ module.exports = {
 		6871: "delivery anticipation"
 	},
 	oldnavy: {
+		4153: "delivery attempted",
+		4152: "delivered",
+		4151: "delayed"
+	},
+	oldnavy_staging:  {
 		4153: "delivery attempted",
 		4152: "delivered",
 		4151: "delayed"
@@ -101,7 +127,19 @@ module.exports = {
 		13795: "Damaged",
 		11415: "delivery anticipation"
 	},
+	purchasingpowerstaging: {
+		13680: "Undeliverable",
+		11417: "delivered",
+		11416: "delayed",
+		13795: "Damaged",
+		11415: "delivery anticipation"
+	},
 	dwr: {
+		16124: "delivered",               
+		16123: "delayed",               
+		16122: "delivery anticipation"
+	},
+	dwr_staging: {
 		16124: "delivered",               
 		16123: "delayed",               
 		16122: "delivery anticipation"
@@ -112,7 +150,16 @@ module.exports = {
 		17234: "delivery anticipation",
 		24979: "ship confirmation"
 	},
+	academystaging: {          
+		17236: "delivered",
+		17235: "delayed",
+		17234: "delivery anticipation",
+		24979: "ship confirmation"
+	},
 	nativecos: {
+		17280: "delivered"
+	},
+	nativecos_staging: {
 		17280: "delivered"
 	},
 	gap: {
@@ -120,12 +167,29 @@ module.exports = {
 		20966: "delivered",
 		20965: "delayed"
 	},
+	gap_staging: {
+		20967: "delivery attempted",
+		20966: "delivered",
+		20965: "delayed"
+	},
 	bananarepublic: {
 		24985: "delivered",
 		24984: "delayed",
-		25146: "delivery attempted"
+		25146: "delivery attempted",
+		24983: "delivery anticipation"
+	},
+	bananarepublic_staging: {
+		24985: "delivered",
+		24984: "delayed",
+		25146: "delivery attempted",
+		24983: "delivery anticipation"
 	},
 	athleta: {
+		25143: "delivery attempted",
+		25142: "delivered",
+		25141: "delayed"
+	},
+	athleta_staging: {
 		25143: "delivery attempted",
 		25142: "delivered",
 		25141: "delayed"
@@ -135,11 +199,20 @@ module.exports = {
 		29780: "delayed",
 		29779: "delivery anticipation"
 	},
-	jcpenney: {
-		48433: "delivered"
+	ralphlauren_staging: {
+		29781: "delivered",
+		29780: "delayed",
+		29779: "delivery anticipation"
 	},
-	chicos: {
-		50647: "delayed"
+	jcpenney: {
+		48433: "delivered",
+		55663: "delayed",
+		55665: "delivery attempted"
+	},
+	jcpenney_staging: {
+		48433: "delivered",
+		55663: "delayed",
+		55665: "delivery attempted"
 	},
 	toms: {
 		50317: "delivered",
@@ -150,6 +223,70 @@ module.exports = {
 		48944: "delayed",
 		48673: "delivered",
 		48672: "delayed"
+	},
+	rei: {
+		52465: "delivery attempted",
+		52464: "delivered",
+		52463: "delayed"
+	},
+	eddiebauer: {
+		54983: "delivery attempted",
+		54982: "delivered",
+		54981: "delayed"
+	},
+	chicos: {
+		50647: "delayed"
+	},
+	chicos_staging: {
+		50647: "delayed"
+	},
+	whitehouseblackmarket: {
+		55052: "delayed"
+	},
+	whitehouseblackmarket_staging: {
+		55052: "delayed"
+	},
+	soma: {
+		55037: "delayed"
+	},
+	soma_staging: {
+		55037: "delayed"
+	},
+	chicosofftherack: {
+		54972: "delayed"
+	},
+	chicosofftherack_staging: {
+		54972: "delayed"
+	},
+	lenovo: {
+		57929: "delivered",
+		57928: "delayed",
+		57927: "delivery anticipation"
+	},
+	catbird: {
+		60715: "delivery anticipation",
+		60716: "delivered"
+	},
+	puritan: {
+		54032: "delivery anticipation",
+		54033: "delivered",
+		54034: "delivery attempted"
+	},
+	off5th: {
+		68939: "delivered",
+		68813: "delivery anticipation",
+		72755: "ship confirmation"
+	},
+	saksfifthavenue: {
+		71102: "delivery anticipation",
+		71103: "delivered",
+		76523: "ship confirmation"
+	},
+	lordandtaylor: {
+		72226: "delivered",
+		72227: "ship confirmation"
+	},
+	orvis: {
+		114290: "delivered"
 	}
-
 };

@@ -1,58 +1,75 @@
 <!doctype html>
 <html class="no-js" lang="">
+
     <head>
         <meta charset="utf-8">
         <title>Orders Into Emails</title>
         <meta name="description" content="Turn an order into an email">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="viewControl.js"></script>
-    <script type="text/javascript" src="state.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script type="text/javascript" src="viewControl.js"></script>
+        <script type="text/javascript" src="state.js"></script>
+        <link type="text/css" rel="stylesheet" href="styles.css"></link>
     </head>
+
     <body>
-        <h1>Order Into Emails!</h1>
 
+        <header class="header">
+            <h1 class="topHeader">Order Into Emails</h1>
+        </header>   
 
-        <br>
+        <fieldset class="flow1">
 
-        <form id="step1">
-            <fieldset>
-                <legend>Personal information:</legend>
-                Retailer Moniker:<br>
-                <input type="text" id="retailer" required="true" placeholder="Enter Retailer Moniker"><br>
-                Logon:<br>
-                <input type="text" id="logon" required="true" placeholder="Enter Logon"><br>
-                Password:<br>
-                <input type="password" id="password" required="true" placeholder="Enter Password"><br>
-                Order:<br>
-                <input type="text" id="order" required="true" placeholder="Enter Order"><br>
-                <input type="submit" value="Get Email Types"><input type="reset">
-            </fieldset>
-        </form>
+            <legend class="boarderBox">&nbsp;Send Email by Order&nbsp;</legend>
 
+            <form id="step1">
+                <fieldset>
+                    <legend class="formBox">&nbsp;Enter credentials&nbsp;</legend>
+                    Retailer Moniker:<br>
+                    <input type="text" id="retailer" class="fieldInput" required="true" placeholder="Enter Retailer Moniker"><br>
+                    Logon:<br>
+                    <input type="text" id="logon" class="fieldInput" required="true" placeholder="Enter Logon"><br>
+                    Password:<br>
+                    <input type="password" id="password" class="fieldInput" required="true" placeholder="Enter Password"><br>
+                    Order:<br>
+                    <input type="text" id="order" class="fieldInput" placeholder="Enter Order Number - It's OK to leave this blank"><br>
 
+                    <input type="radio" name="env" value="production" checked> Production / Staging &nbsp;
+                    <input type="radio" name="env" value="qa"> QA <br>
 
+                    <input type="submit" class="buttonLarge" value="Get Email Types">
+                    <input  id="reset1" class="buttonLarge" type="reset">
+                </fieldset>
+            </form>
 
-        <form id="step2">
-            <fieldset>
-                <legend>Select email type and recipients:</legend>
-                Email Alert Type:<br>
-                <select name="emailTypes" id="emailList">
-<!--                     <option value="delivery">Delivery</option>
-                    <option value="anticipation">Anticipation</option>
-                    <option value="delay">Delayed</option>
-                    <option value="undeliverable">Undeliverable</option> -->
-                </select><br>
-                Name:<br>
-                <input type="text" id="name" required="true" placeholder="Enter Name" disabled><br>
-                email:<br>
-                <input type="text" id="email" required="true" placeholder="Enter Email" disabled><br>
-                <input type="submit" id="send2" value="Send Email" disabled><input type="reset">
-            </fieldset>
-        </form>
+            <br>
 
-        <!-- <button id="resetAll">Reset Everything</button> -->
+            <form id="step2">
+                <fieldset>
+                    <legend class="formBox">&nbsp;Select email type and recipients&nbsp;</legend>
+                    Email Alert Type:<br>
+                    <select name="emailTypes" class="dropDown" id="emailList"></select><br>
+                    <div id=emailRecipients>
+                        Name:<br>
+                        <input type="text" id="name1" class="fieldInput" required="true" placeholder="Enter Name" disabled><br>
+                        email:<br>
+                        <input type="email" id="email1" class="fieldInput" required="true" placeholder="Enter Email" disabled><br>
+                    </div>
+                    <div id="controls">
+                        <input type="submit" id="send2" value="Send Email" class="buttonLarge" disabled><input class="buttonLarge" id="reset2" type="reset" disabled>
+                        <button id="addRow" type="button" class="buttonLarge" disabled>Add More Emails</button>
+                    </div>
+                </fieldset>
+            </form>
 
+            <br>
+
+            <button id="resetAll" class="buttonXtraLarge">Reset Everything</button>
+
+        </fieldset>
 
 
     </body>
+
 </html>
