@@ -13,7 +13,7 @@ var helper = require('./js/helpfunctions.js');
         app.get('/api/test', function(req, res) {
             console.log('INSIDE GET!!!');
             var test = "Hello from inside /api/test - GET";
-                res.send(test);
+            res.send(test);
         });
 
 
@@ -44,6 +44,8 @@ var helper = require('./js/helpfunctions.js');
 
             if (env === "qa") {
                 url = "https://ws.narvar.qa/api/v1/orders/" + req.body.order
+            } else if (env === "staging") {
+                url = "https://ws-st01.narvar.qa/api/v1/orders/" + req.body.order
             } else {
                 url = "https://ws.narvar.com/api/v1/orders/" + req.body.order
             }
@@ -57,7 +59,19 @@ var helper = require('./js/helpfunctions.js');
                 if (error) {
                     console.log('Call to the Order API failed', error);
                     res.send(error);
+                    return;
+                }
+                if (response.statusCode === 401) {
+                    var badAuth = "Call to the Order API failed - bad Auth.  Try checking that you are using the correct env."
+                    console.log(badAuth);
+                    res.send(badAuth);
+                    return;
                 } 
+
+
+
+
+
 
                 // Call functions to transform the payload
                 body = JSON.parse(body);
