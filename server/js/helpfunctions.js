@@ -20,77 +20,27 @@ module.exports = {
     },
 
 
-    FakeShipmentSchema: function (itemsArray) {
-        var today = new Date();
-        var yesterday = new Date(today.getTime() - (24 * 60 * 60 * 1000));
-        var tomorrow = new Date(today.getTime() + (48 * 60 * 60 * 1000));
-
-        var newFakeShipment = {
-            tracking_number: "1ZV90R483A26143820",
-            carrier: "UPS",
-            carrier_name: "UPS",
-            carrier_service: "UG",
-            carrier_status: "",
-            carrier_phone_number: "1.800.8000",
-            guaranteed_delivery_date: tomorrow.toString(),
-            shipped_to: {
-                first_name: "Joe",
-                last_name: "Schmoe",
-                phone: "",
-                email: "test@narvar.com",
-                fax: "",
-                address: {
-                    street_1: "123 Main St",
-                    street_2: "",
-                    city: "Springfield",
-                    state: "IL",
-                    zip: "12345-6789"
-                }
-            },
-            shipment_date: yesterday.toString(),
-            pre_shipment: false,
-            items_info: [] // itemSchema goes here
-        }
-
-        // Loop through itemsArray and make sure everything shipped
-        for (var i = 0; i < itemsArray.length; i++) {
-            var item = {
-                quantity: itemsArray[i].quantity,
-                item_id: itemsArray[i].item_id ? itemsArray[i].item_id : null,
-                sku: itemsArray[i].sku ? itemsArray[i].sku : null
-            };
-            newFakeShipment.items_info.push(item)
-        }
-
-        return newFakeShipment;
-    },
-
-
 
     ShipmentSchema: function (shipementDetails, retailer) {
-        var today = new Date();
-        var yesterday = new Date(today.getTime() - (24 * 60 * 60 * 1000));
-        var tomorrow = new Date(today.getTime() + (48 * 60 * 60 * 1000));
-
+        
         var newShipment = {
-            tracking_number: shipementDetails.tracking_number ? shipementDetails.tracking_number : "1ZV90R483A26143820",
-            carrier_moniker: shipementDetails.carrier ? shipementDetails.carrier : "UPS",
-            carrier_name: shipementDetails.carrier ? shipementDetails.carrier: "UPS",
+            tracking_number: shipementDetails.tracking_number,
+            carrier_moniker: shipementDetails.carrier,
+            carrier_name: shipementDetails.carrier,
             carrier_status: shipementDetails.carrier_service ? shipementDetails.carrier_service : "",
-            ship_source: shipementDetails.ship_source ? shipementDetails.ship_source : "",
             carrier_phone_number: "1.800.8000",
-            guaranteed_delivery_date: tomorrow.toString(),
-            tracking_url: shipementDetails.tracking_number ? "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number : "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=1ZV90R483A26143820",
+            guaranteed_delivery_date: shipementDetails.ship_date,   // This field will populate date on Delayed emails TODO: make function to increment date forward
+            tracking_url: "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number,
             address: {
-                line1: shipementDetails.shipped_to.address.street_1 ? shipementDetails.shipped_to.address.street_1 : "123 Main St",
+                line1: shipementDetails.shipped_to.address.street_1 ? shipementDetails.shipped_to.address.street_1 : "",
                 line2: shipementDetails.shipped_to.address.street_2 ? shipementDetails.shipped_to.address.street_2 : "",
                 line3: shipementDetails.shipped_to.address.street_3 ? shipementDetails.shipped_to.address.street_3 : "",
-                city: shipementDetails.shipped_to.address.city ? shipementDetails.shipped_to.address.city : "Springfield",
-                state: shipementDetails.shipped_to.address.state ? shipementDetails.shipped_to.address.state : "IL",
-                zip: shipementDetails.shipped_to.address.zip ? shipementDetails.shipped_to.address.zip : "12345",
+                city: shipementDetails.shipped_to.address.city ? shipementDetails.shipped_to.address.city : "",
+                state: shipementDetails.shipped_to.address.state ? shipementDetails.shipped_to.address.state : "",
+                zip: shipementDetails.shipped_to.address.zip ? shipementDetails.shipped_to.address.zip : "",
                 country: shipementDetails.shipped_to.address.country ? shipementDetails.shipped_to.address.country : ""
             },
-            shipment_date: shipementDetails.ship_date ? shipementDetails.ship_date : yesterday.toString(),
+            shipment_date: shipementDetails.ship_date ? shipementDetails.ship_date : "",
             order_items: [] // itemSchema goes here
         }
 
@@ -102,7 +52,7 @@ module.exports = {
     matchShipmentWithItems: function(shipmentsArray, itemsArray, retailer) {
         
         var remainingItems = itemsArray;    // make a copy which can be changed
-        var itemOrSku = "";                 // var will remember if sku or item_id is the primary key
+        var itemOrSku = "";                 // make var with will remember if sku or item_id is the primary key
         var newShipmentOrCurrent = false;   // flag for determining if we make a new shipment, or add to current
 
         var shipmentsWithRemainingItems = { // object returned: has formatted shipments and any remaining items
@@ -110,16 +60,11 @@ module.exports = {
             remainingFormattedItems: []
         };
 
-        if (shipmentsArray === undefined) {
-            shipmentsArray = [];
-            var fakeShipment = new this.FakeShipmentSchema(itemsArray);
-            shipmentsArray.push(fakeShipment);
-        }
-
-        // Error catch
+        // Add check for shipments
         if (shipmentsArray) {
             // loop through shipments
             for (var i = 0; i < shipmentsArray.length; i++) {
+
                 // loop through items in current shipment
                 for (var j = 0; j < shipmentsArray[i].items_info.length; j++) {
 
@@ -138,7 +83,7 @@ module.exports = {
 
                             // check if we are in a current shipment
                             if (!newShipmentOrCurrent) {
-                                // create the shipment object
+                                // create the shipment object 
                                 var newShipment = new this.ShipmentSchema(shipmentsArray[i], retailer);
                                 newShipmentOrCurrent = true;
                             } 
@@ -146,24 +91,24 @@ module.exports = {
                             // create a new item
                             var newItem = new this.ItemSchema(remainingItems[k], shipmentsArray[i].items_info[j].quantity)
                             // subtract the amount of  shipped items from the copy array of items
-                            remainingItems[k].quantity = remainingItems[k].quantity - shipmentsArray[i].items_info[j].quantity;
+                            remainingItems[k].quantity = shipmentsArray[i].items_info[j].quantity - remainingItems[k].quantity;
 
                             // add new item to current shipment
                             newShipment.order_items.push(newItem);
                         }
+
+                        // reset newShipment
+                        newShipmentOrCurrent = false;
                     }
                 }
-                // reset newShipment
-                newShipmentOrCurrent = false;
-                // unshift the current shipment into the array to be returned
-                shipmentsWithRemainingItems.formattedShipments.unshift(newShipment);
-
             } 
 
-
+                // unshift the current shipment into the array to be returned
+                shipmentsWithRemainingItems.formattedShipments.unshift(newShipment);
         } else {
             return false;
         }
+
         // format any remaining items
         for (var l = 0; l < remainingItems.length; l++) {
             if (remainingItems[l].quantity > 0) {
@@ -177,40 +122,25 @@ module.exports = {
 
     },
 
-    MakeAddress: function (json, source) {
 
-        if (source === "customer"){
-            var address = {
-                line1: json.order_info.customer.address.street_1 ? json.order_info.customer.address.street_1 : "",
-                line2: json.order_info.customer.address.street_2 ? json.order_info.customer.address.street_2 : "",
-                line3: json.order_info.customer.address.street_3 ? json.order_info.customer.address.street_3 : "",
-                city: json.order_info.customer.address.city ? json.order_info.customer.address.city: "",
-                state: json.order_info.customer.address.state ? json.order_info.customer.address.state: "",
-                zip: json.order_info.customer.address.zip ? json.order_info.customer.address.zip : "",
-                country: json.order_info.customer.address.country ? json.order_info.customer.address.country : ""
-            };
-        } else { // Otherwise, ues address info from the billing object
-            var address = {
-                line1: json.order_info.billing.billed_to.address.street_1 ? json.order_info.billing.billed_to.address.street_1 : "",
-                line2: json.order_info.billing.billed_to.address.street_2 ? json.order_info.billing.billed_to.address.street_2 : "",
-                line3: json.order_info.billing.billed_to.address.street_3 ? json.order_info.billing.billed_to.address.street_3 : "",
-                city: json.order_info.billing.billed_to.address.city ? json.order_info.billing.billed_to.address.city: "",
-                state: json.order_info.billing.billed_to.address.state ? json.order_info.billing.billed_to.address.state: "",
-                zip: json.order_info.billing.billed_to.address.zip ? json.order_info.billing.billed_to.address.zip : "",
-                country: json.order_info.billing.billed_to.address.country ? json.order_info.billing.billed_to.address.country : ""
-            };
-        }
-
-        return address;
-    },
 
     MakeTempProcessorPayload: function (json, retailer) {
-        
+
         var tempProcessorPayload = {
             order_info: {
                 order_number: json.order_info.order_number,
                 order_date: json.order_info.order_date,
-                address: {},
+                first_name: json.order_info.customer.first_name,
+                last_name: json.order_info.customer.last_name ? json.order_info.customer.last_name : "",
+                address: {
+                    line1: json.order_info.customer.address.street_1 ? json.order_info.customer.address.street_1 : "",
+                    line2: json.order_info.customer.address.street_2 ? json.order_info.customer.address.street_2 : "",
+                    line3: json.order_info.customer.address.street_3 ? json.order_info.customer.address.street_3 : "",
+                    city: json.order_info.customer.address.city ? json.order_info.customer.address.city: "",
+                    state: json.order_info.customer.address.state,
+                    zip: json.order_info.customer.address.zip,
+                    country: json.order_info.customer.address.country ? json.order_info.customer.address.country : ""
+                },
                 status: "",
                 current_shipment: {}, // this will get the first shipment object with matching items from shipmentSchema
 
@@ -219,36 +149,12 @@ module.exports = {
                 items_being_processed: [] // itemSchema goes here
             }
         }; 
-        // Grab name from the appropriate object from the Order API
-        if (json.order_info.customer !== undefined) {
-            if (json.order_info.customer.first_name !== undefined && json.order_info.customer.first_name !== "") {
-                tempProcessorPayload.order_info.first_name = json.order_info.customer.first_name;
-                tempProcessorPayload.order_info.last_name = json.order_info.customer.last_name;
-            } else {
-                tempProcessorPayload.order_info.first_name = json.order_info.billing.billed_to.first_name;
-                tempProcessorPayload.order_info.last_name = json.order_info.billing.billed_to.last_name;
-            }
-            // Check if customer object has values
-            if (json.order_info.customer.address !== undefined) {
-                tempProcessorPayload.order_info.address = new this.MakeAddress(json, "customer");
-            }
-            if (json.order_info.customer.customer_id !== undefined) {
-                tempProcessorPayload.order_info.customer_id = json.order_info.customer.customer_id;
-            }
-
-        } else {          
-            tempProcessorPayload.order_info.first_name = json.order_info.billing.billed_to.first_name;
-            tempProcessorPayload.order_info.last_name = json.order_info.billing.billed_to.last_name;
-            tempProcessorPayload.order_info.address = new this.MakeAddress(json, "order_info");
-        }
-
 
         // call function to make formated shipments with items, and any remaining formatted items which have not shipped
         var shipmentsAndItems = this.matchShipmentWithItems(json.order_info.shipments, json.order_info.order_items, retailer);
-
+        
         if (shipmentsAndItems === false) {
             return false
-            
         } else {
             tempProcessorPayload.order_info.current_shipment = shipmentsAndItems.formattedShipments.pop();
             tempProcessorPayload.order_info.multi_shipment = shipmentsAndItems.formattedShipments;
@@ -267,8 +173,7 @@ module.exports = {
     MakeSparkpostPayload: function (templateResponse, retailer, recipients) {
 
         templateResponse = JSON.parse(templateResponse);
-        retailer = retailer.replace(/[_]/gi, '-')
-
+     
         var SparkpostPayload = {
             options: {
                 open_tracking: true,
@@ -283,7 +188,7 @@ module.exports = {
                 },
                 text: "",
                 html: templateResponse.body,
-                subject: templateResponse.subject ? templateResponse.subject : "Update on your package",
+                subject: templateResponse.subject ? templateResponse.subject : "Update on you package",
                 reply_to: "no-reply@narvar.com"   
             }
         };
