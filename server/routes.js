@@ -22,6 +22,12 @@ var helper = require('./js/helpfunctions.js');
         // Call to get order info and returna transformed payload which works in Hub Templates GUI
         app.post('/api/getpayload', function(req, res) {
 
+            if (!req.body.logon) {
+                var wrongPayload = "I think there may be something off about your payload.  Is it formatted as JSON (application/json)?";
+                console.log(wrongPayload);
+                res.send(wrongPayload);
+                return;
+            }
             
             var retailer = "";
             if (!req.body.retailer) {
@@ -51,7 +57,6 @@ var helper = require('./js/helpfunctions.js');
             }
 
 
-
             request.get({
                 headers: { Authorization: "Basic " + auth },
                 url: url
@@ -62,17 +67,17 @@ var helper = require('./js/helpfunctions.js');
                     return;
                 }
                 if (response.statusCode === 401) {
-                    var badAuth = "Call to the Order API failed - bad Auth.  Try checking that you are using the correct env."
+                    var badAuth = "Call to the Order API failed - bad Auth.  If you're sure about the logon and password, then try checking that you are using the correct env."
                     console.log(badAuth);
                     res.send(badAuth);
                     return;
                 } 
-
-
-
-
-
-
+                if (response.statusCode === 405) {
+                    var noOrder = "Looks like the order number wasn't included - please include an order."
+                    console.log(noOrder);
+                    res.send(noOrder);
+                    return;
+                } 
                 // Call functions to transform the payload
                 body = JSON.parse(body);
                 
@@ -88,8 +93,8 @@ var helper = require('./js/helpfunctions.js');
 
 
                     if (!templatePayload.order_info.current_shipment) {
-                            console.log('No items shipped, so no dice', templatePayload);
-                            res.send("Looks like nothing has shipped on this order... sorry...");
+                        console.log('No items shipped, so no dice', templatePayload);
+                        res.send("Looks like nothing has shipped on this order... sorry...");
                     }
 
                     // Send modified payload (body)
