@@ -173,7 +173,7 @@ module.exports = {
     MakeSparkpostPayload: function (templateResponse, retailer, recipients) {
 
         templateResponse = JSON.parse(templateResponse);
-// console.log("templateResponse: ", templateResponse)        
+     
         var SparkpostPayload = {
             options: {
                 open_tracking: true,
