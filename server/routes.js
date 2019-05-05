@@ -86,16 +86,14 @@ var helper = require('./js/helpfunctions.js');
                     res.send("I don't see this order in the Order API.  Maybe check if this is QA or Prod?");
                     return
                 } 
+                // Check to see if the order has shipped
+                if (typeof body.order_info.shipments === 'undefined' || body.order_info.shipments.length < 1) {           
+                    res.send("Looks like nothing has shipped on this order... sorry...  You could repost with a shipments object - that would work");
+                }
 
                 else {
                     // Call function to json, and format into post body for template processor
                     var templatePayload = helper.MakeTempProcessorPayload(body, retailer);
-
-
-                    if (!templatePayload.order_info.current_shipment) {
-                        console.log('No items shipped, so no dice', templatePayload);
-                        res.send("Looks like nothing has shipped on this order... sorry...");
-                    }
 
                     // Send modified payload (body)
                     res.json(templatePayload);
