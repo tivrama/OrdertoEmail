@@ -21,7 +21,7 @@ module.exports = {
 
 
 
-    ShipmentSchema: function (shipementDetails, retailer) {
+    ShipmentSchema: function (shipementDetails, retailer, orderNumber) {
         
         var newShipment = {
             tracking_number: shipementDetails.tracking_number,
@@ -30,8 +30,15 @@ module.exports = {
             carrier_status: shipementDetails.carrier_service ? shipementDetails.carrier_service : "",
             carrier_phone_number: "1.800.8000",
             guaranteed_delivery_date: shipementDetails.ship_date,   // This field will populate date on Delayed emails TODO: make function to increment date forward
-            tracking_url: "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number,
-            address: {
+            tracking_url: "https://tracking.narvar.com/" + retailer + "/tracking/ups?tracking_numbers=" + shipementDetails.tracking_number + "&order_number=" + orderNumber,
+            shipment_date: shipementDetails.ship_date ? shipementDetails.ship_date : "",
+            order_items: [] // itemSchema goes here
+        }
+
+        if (typeof shipementDetails.shipped_to.address === 'undefined' || !shipementDetails.shipped_to.address) {
+            shipementDetails.shipped_to.address = null
+        } else {
+            shipementDetails.shipped_to.address = {
                 line1: shipementDetails.shipped_to.address.street_1 ? shipementDetails.shipped_to.address.street_1 : "",
                 line2: shipementDetails.shipped_to.address.street_2 ? shipementDetails.shipped_to.address.street_2 : "",
                 line3: shipementDetails.shipped_to.address.street_3 ? shipementDetails.shipped_to.address.street_3 : "",
@@ -39,9 +46,7 @@ module.exports = {
                 state: shipementDetails.shipped_to.address.state ? shipementDetails.shipped_to.address.state : "",
                 zip: shipementDetails.shipped_to.address.zip ? shipementDetails.shipped_to.address.zip : "",
                 country: shipementDetails.shipped_to.address.country ? shipementDetails.shipped_to.address.country : ""
-            },
-            shipment_date: shipementDetails.ship_date ? shipementDetails.ship_date : "",
-            order_items: [] // itemSchema goes here
+            }
         }
 
         return newShipment;
@@ -49,7 +54,7 @@ module.exports = {
 
 
 
-    matchShipmentWithItems: function(shipmentsArray, itemsArray, retailer) {
+    matchShipmentWithItems: function(shipmentsArray, itemsArray, retailer, orderNumber) {
         
         var remainingItems = itemsArray;    // make a copy which can be changed
         var itemOrSku = "";                 // make var with will remember if sku or item_id is the primary key
@@ -84,7 +89,7 @@ module.exports = {
                             // check if we are in a current shipment
                             if (!newShipmentOrCurrent) {
                                 // create the shipment object 
-                                var newShipment = new this.ShipmentSchema(shipmentsArray[i], retailer);
+                                var newShipment = new this.ShipmentSchema(shipmentsArray[i], retailer, orderNumber);
                                 newShipmentOrCurrent = true;
                             } 
 
@@ -126,21 +131,17 @@ module.exports = {
 
     MakeTempProcessorPayload: function (json, retailer) {
 
+        // Check if there is a customer object.  If not, make the cust obj same as billing obj
+        if (typeof json.order_info.customer === 'undefined') {
+            json.order_info.customer = json.order_info.billing.billed_to
+        }
+
         var tempProcessorPayload = {
             order_info: {
                 order_number: json.order_info.order_number,
                 order_date: json.order_info.order_date,
                 first_name: json.order_info.customer.first_name,
                 last_name: json.order_info.customer.last_name ? json.order_info.customer.last_name : "",
-                address: {
-                    line1: json.order_info.customer.address.street_1 ? json.order_info.customer.address.street_1 : "",
-                    line2: json.order_info.customer.address.street_2 ? json.order_info.customer.address.street_2 : "",
-                    line3: json.order_info.customer.address.street_3 ? json.order_info.customer.address.street_3 : "",
-                    city: json.order_info.customer.address.city ? json.order_info.customer.address.city: "",
-                    state: json.order_info.customer.address.state,
-                    zip: json.order_info.customer.address.zip,
-                    country: json.order_info.customer.address.country ? json.order_info.customer.address.country : ""
-                },
                 status: "",
                 current_shipment: {}, // this will get the first shipment object with matching items from shipmentSchema
 
@@ -150,8 +151,24 @@ module.exports = {
             }
         }; 
 
+        // Check if there is an address
+        if (typeof json.order_info.customer.address === 'undefined') {
+            tempProcessorPayload.order_info.address = null
+        } else {
+            tempProcessorPayload.order_info.address = {
+                line1: json.order_info.customer.address.street_1 ? json.order_info.customer.address.street_1 : "",
+                line2: json.order_info.customer.address.street_2 ? json.order_info.customer.address.street_2 : "",
+                line3: json.order_info.customer.address.street_3 ? json.order_info.customer.address.street_3 : "",
+                city: json.order_info.customer.address.city ? json.order_info.customer.address.city: "",
+                state: json.order_info.customer.address.state,
+                zip: json.order_info.customer.address.zip,
+                country: json.order_info.customer.address.country ? json.order_info.customer.address.country : ""
+            }
+        }
+
+
         // call function to make formated shipments with items, and any remaining formatted items which have not shipped
-        var shipmentsAndItems = this.matchShipmentWithItems(json.order_info.shipments, json.order_info.order_items, retailer);
+        var shipmentsAndItems = this.matchShipmentWithItems(json.order_info.shipments, json.order_info.order_items, retailer, json.order_info.order_number);
         
         if (shipmentsAndItems === false) {
             return false

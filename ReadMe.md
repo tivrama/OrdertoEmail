@@ -139,5 +139,4 @@ Flow:
 11) Call status to Sparkpost is sent to client and displayed to user.
 
 # TODO:
-- Add order number to the track url
 - Add price to items
